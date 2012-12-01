@@ -1,0 +1,48 @@
+﻿<script type="text/template" id="device-class-create-edit-template">
+    <h4>Detail view of device "<%= name%>"</h4>
+    <table class="values-table">
+    <tr>
+        <td class="title-column">name:</td>
+        <td><span class="device-value"><%= name%></span><input type="text" class="new-value name" value="<%= name%>"/></td>
+    </tr>
+    <tr>
+        <td class="title-column">status:</td>
+        <td><span class="device-value"><%= status%></span><input type="text" class="new-value status" value="<%= status%>"/></td>
+    </tr>
+    <tr>
+        <td class="title-column">network:</td>
+        <td><span class="device-value"><%= network.name%></span>
+
+        <select class="new-value network">
+            <% _.each(networks,function(net){ 
+                if(net.id == network.id){ %>
+                    <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>    
+                <%}else{ %>
+                    <option value="<%= net.id %>"> <%= net.name %> </option>
+            <%}}); %>
+        </select>
+        
+        </td>
+    </tr>
+    <tr>
+        <td class="title-column">device class:</td>
+        <td><span class="device-value"><%= deviceClass.name%> (v <%= deviceClass.version %>)</span>
+        
+        <select class="new-value dclass">
+            <% _.each(classes,function(cls){ 
+                if(cls.id == deviceClass.id){ %>
+                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>)</option>    
+                <%}else{ %>
+                    <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
+            <%}}); %>
+        </select>
+        
+        </td>
+    </tr>
+    </table>
+
+    <a href="javascript:void(0)" class="edit-device view-button">Edit</a>
+    <a href="javascript:void(0)" class="close-action view-button">Close without saving</a>
+    <a href="javascript:void(0)" class="save-device edit-button">Save</a>
+    
+</script>

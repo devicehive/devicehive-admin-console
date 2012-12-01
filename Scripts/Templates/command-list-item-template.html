@@ -1,0 +1,17 @@
+﻿<script type="text/template" id="command-list-item-template">
+            <td class="name-column"><span class="data-zone"><%= command %></span>
+                <span class="editable-zone"><input class="new-command-name" value="<%=command%>"/></span>
+            </td>
+            <td class="time-column"><span class="data-zone"><%= timestamp %></span></td>
+            <td class="parameters-column"><span class="data-zone"><%= parameters %></span>
+                <span class="editable-zone"><textarea class="new-command-params"><%=parameters %></textarea></span>
+            </td>
+            <td class="status-column"><span class="data-zone"><%= status %></span></td>
+            <td class="result-column"><span class="data-zone"><%= result %></span></td>
+            <td class="buttons-column">
+                <a href="javascript:void(0)" class="copy view-button">copy</a>
+                <a href="javascript:void(0)" class="refresh view-button">refresh</a>
+                <a href="javascript:void(0)" class="push edit-button">push</a>
+                <a href="javascript:void(0)" class="close view-button">close</a>
+            </td>
+</script>

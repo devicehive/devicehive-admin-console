@@ -1,0 +1,23 @@
+﻿<script type="text/template" id="time-filters-template">
+        <table>
+            <tr>
+                <td>from:</td>
+                <td><input type="text" class="start-datetime" value="<%= startDate%>"></td>
+            </tr>
+            <tr>
+                <td>to:</td>
+                <td><input type="text" class="end-datetime" value="<%= endDate%>"></td>
+            </tr>
+        </table>
+        <div class="defaut-filter-values">
+            <h5>set default ranges:</h5>
+                <a href="javascript:void(0)" class="set-day time-filter-value">day...</a>
+                <a href="javascript:void(0)" class="set-week time-filter-value">week...</a>
+                <a href="javascript:void(0)" class="set-month time-filter-value">month...</a>
+                <a href="javascript:void(0)" class="set-year time-filter-value">year...</a>
+        </div>
+        <a href="javascript:void(0)" class="apply-datetime-filter view-button">apply</a>
+        <a href="javascript:void(0)" class="close-datetime-filter view-button">close</a>
+        <br />
+        * - if "to" value isn't set - collection will pull latest request from the server in real-time.
+</script>

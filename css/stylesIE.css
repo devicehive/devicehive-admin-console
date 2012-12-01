@@ -1,0 +1,56 @@
+﻿body 
+{
+    text-align: center;
+}
+
+.main-menu
+{
+    padding-left: 1%;
+    
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#F7F7F7', endColorstr='#8F8F8F');
+    height: 47px;
+}
+
+.main-menu .menu-item
+{
+    display: inline;
+
+    cursor: pointer;
+}
+
+.main-menu .menu-item .navigation-link
+{
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#E3E3E3', endColorstr='gray');
+    height: 47px;
+}
+
+.main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link
+{
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#C3DCF7', endColorstr='#F0F0F0');
+}
+
+.device-panels-switcher
+{
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#F7F7F7', endColorstr='#8F8F8F');
+    text-align: center;
+    
+    height: 22px;
+}
+
+.device-panels-switcher .menu-item
+{
+    display: inline;
+}
+
+.device-panels-switcher .menu-item.selected
+{
+    padding-top: 3px;
+    padding-bottom:3px; 
+    
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#C3DCF7', endColorstr='#F0F0F0');
+}
+
+#top-work-area, #bottom-work-area
+{
+    text-align: left;
+}

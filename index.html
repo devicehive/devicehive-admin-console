@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>ECloud Web Admin</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css"><link href="css/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css" />
+
+ <!--[if IE]>
+
+<link rel="stylesheet" type="text/css" href="css/stylesIE.css">
+
+<![endif]-->
+
+<!-- libs -->
+<script type="text/javascript" src="scripts/libs/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="scripts/libs/underscore.js"></script>
+<script type="text/javascript" src="scripts/libs/backbone.js"></script>
+<script type="text/javascript" src="Scripts/libs/backbone.marionette.js"></script>
+
+<!-- ui -->
+<script type="text/javascript" src="Scripts/libs/jquery.ui.core.js"></script>
+<script src="Scripts/libs/jquery.ui.datepicker.js" type="text/javascript"></script>
+<script src="Scripts/libs/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="Scripts/libs/jquery.ui.mouse.js" type="text/javascript"></script>
+<script src="Scripts/libs/jquery.ui.slider.js" type="text/javascript"></script>
+<script src="Scripts/libs/jquery.ui.timepicker.js" type="text/javascript"></script>
+
+<!-- backbone extensions -->
+<script type="text/javascript" src="scripts/libs/backbone.extensions.js"></script>
+<!-- functions -->
+<script type="text/javascript" src="scripts/libs/date.format.js"></script>
+<script type="text/javascript" src="scripts/libs/json2.js"></script>
+<script type="text/javascript" src="scripts/libs/funcs.js"></script>
+<!-- asynch support -->
+<script type="text/javascript" src="Scripts/libs/backbone.marionette.async.js"></script>
+<script type="text/javascript" src="Scripts/libs/backbone.marionette.template.loading.js"></script>
+
+
+
+<!-- bootstrap -->
+<script type="text/javascript" src="scripts/app/application.js"></script>
+
+<!-- models -->
+<script type="text/javascript" src="Scripts/models/MenuItem.js"></script>
+<script type="text/javascript" src="Scripts/models/TimeFilters.js"></script>
+<script type="text/javascript" src="Scripts/models/enums.js"></script>
+<script type="text/javascript" src="Scripts/models/Network.js"></script>
+<script type="text/javascript" src="Scripts/models/User.js"></script>
+<script type="text/javascript" src="Scripts/models/UserInNetwork.js"></script>
+<script type="text/javascript" src="Scripts/models/Equipment.js"></script>
+<script type="text/javascript" src="Scripts/models/DeviceClass.js"></script>
+<script type="text/javascript" src="Scripts/models/Device.js"></script>
+<script type="text/javascript" src="Scripts/models/DeviceEquipment.js"></script>
+<script type="text/javascript" src="Scripts/models/Command.js"></script>
+<script type="text/javascript" src="Scripts/models/Notification.js"></script>
+<!-- views -->
+<script type="text/javascript" src="Scripts/Views/MenuItem.js"></script>
+<script type="text/javascript" src="Scripts/Views/Menu.js"></script>
+
+<script type="text/javascript" src="Scripts/Views/AppendUserToNetworks.js"></script>
+<script type="text/javascript" src="Scripts/Views/UserCreateEdit.js"></script>
+<script type="text/javascript" src="Scripts/Views/UserNetworks.js"></script>
+<script type="text/javascript" src="Scripts/Views/Users.js"></script>
+
+<script type="text/javascript" src="Scripts/Views/Networks.js"></script>
+
+<script type="text/javascript" src="Scripts/Views/DeviceClasses.js"></script>
+<script type="text/javascript" src="Scripts/Views/EquipmentListItem.js"></script>
+<script type="text/javascript" src="Scripts/Views/DeviceClassEquipments.js"></script>
+
+<script type="text/javascript" src="Scripts/Views/Devices.js"></script>
+<script type="text/javascript" src="Scripts/Views/Device.js"></script>
+<script type="text/javascript" src="Scripts/Views/DevicePanels.js"></script>
+<script type="text/javascript" src="Scripts/Views/DeviceEquipments.js"></script>
+<script type="text/javascript" src="Scripts/Views/Commands.js"></script>
+<script type="text/javascript" src="Scripts/Views/Notifications.js"></script>
+<script type="text/javascript" src="Scripts/Views/TimeFilters.js"></script>
+
+<!-- modules -->
+<script type="text/javascript" src="scripts/modules/notifications.js"></script>
+<script type="text/javascript" src="scripts/modules/navigation.js"></script>
+<script type="text/javascript" src="scripts/modules/users.js"></script>
+<script type="text/javascript" src="scripts/modules/networks.js"></script>
+<script type="text/javascript" src="scripts/modules/deviceClasses.js"></script>
+<script type="text/javascript" src="scripts/modules/devices.js"></script>
+
+</head>
+<body>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        app.addRegions({
+                menuArea: "#menu-area",
+                topWorkArea: "#top-work-area",
+                bottomWorkArea: "#bottom-work-area"
+            });
+            
+
+        app.start({rootUrl: "/admin/",pushState: false,restEndpoint:"/api/"});
+    });
+
+    
+</script>
+
+<div id="app-wrapper">
+    <div id="menu-area"></div>
+    <div id="status-area"></div>
+    <div id="top-work-area"></div>
+    <div id="bottom-work-area"></div>
+</div>
+</body>
+</html>

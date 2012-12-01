@@ -1,0 +1,27 @@
+﻿<script type="text/template" id="device-class-equipments-template">
+    <h3>Equipments for device "<%= name%>"</h3>
+
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th class="name-column">name</th>
+                    <th class="code-column">code</th>
+                    <th class="type-column">type</th>
+                    <th class="buttons-column"></th>
+                </tr>
+            </thead>
+            <tbody class="equipment-table-body">
+            </tbody>
+        </table>
+        
+        <a href="javascript:void(0)" class="add-equipment view-button">add new equipment</a>
+        <a href="javascript:void(0)" class="close-equipments view-button">close equipments</a>
+    
+    <% if(isPermanent == true) {%>
+    <div class="hint-is-permanent">
+    * - equipments can not be modified for permanent device classes
+    </div>
+    <%} %>
+
+    
+</script>

@@ -1,0 +1,75 @@
+﻿<script type="text/template" id="user-create-edit-template">
+     <h4 class="user-edit-heading"><%= HeadingText %></h1>
+
+     <table class="values-table">
+     <tr>
+     <td class="title-column">
+     <label>login:</label>
+     </td>
+     <td>
+     <input type="text" id="login" value="<%= login %>"/>
+     </td>
+     </tr>
+     <tr>
+     <td class="title-column">
+     <label>role:</label>
+     </td>
+     <td>
+     <select id="role">
+        <% _.each(Roles,function(value,key){ 
+            if(value == role){
+                %>
+                <option value=<%=value%> selected="selected"><%=key %></option>
+                <%
+            }
+            else{
+                %>
+                <option value=<%=value%>><%=key %></option>
+                <%
+            }
+        }); %>
+     </select>
+     </td>
+     </tr>
+     <tr>
+     <td class="title-column">
+     <label>status:</label>
+     </td>
+     <td>
+     <select id="status">
+        <% _.each(Statuses,function(value,key){
+            if(value == status){
+                %>
+                <option value=<%=value%> selected="selected"><%=key %></option>
+                <%
+            }
+            else{
+                %>
+                <option value=<%=value%>><%=key %></option>
+                <%
+            }
+        }); %>
+     </select>
+     </td>
+     </tr>
+     <tr>
+     <td class="title-column">
+     <label>password:</label>
+     </td>
+     <td>
+     <input id="password" type="password"/>
+     </td>
+     </tr>
+     <tr>
+     <td class="title-column">
+     <label>password confirmation:</label>
+     </td>
+     <td>
+     <input id="password-confirmation" type="password"/>
+     </td>
+     </tr>
+     </table>
+     <a href="javascript:void(0)" class="save edit-button"><%= saveButtonText %></a>
+     <a href="javascript:void(0)" class="close view-button">Close</a>
+     
+</script>
