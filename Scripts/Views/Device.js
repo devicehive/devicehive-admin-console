@@ -6,7 +6,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         "click .close-action": "closeAction"
     },
     initialize: function (options) {
-        this.bindTo(this.model,"change", function () {
+        this.bindTo(this.model, "change", function () {
             this.model.collection.sort();
         }, this);
 
@@ -21,8 +21,13 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     template: "device-template",
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        base.networks = this.networksList.toJSON({ escape: true }); ;
-        base.classes = this.classesList.toJSON({ escape: true }); ;
+        if (!_.has(base, "network"))
+            base["network"] = { id: 0, name: "No network" };
+
+        base.networks = [{ id: 0, name: "No network"}];
+        base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
+
+        base.classes = this.classesList.toJSON({ escape: true });
         return base;
     },
     editDevice: function () {
@@ -46,8 +51,9 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         var status = this.$el.find(".new-value.status").val();
 
         var netwId = this.$el.find(".new-value.network :selected").val();
+
         var classId = this.$el.find(".new-value.dclass :selected").val();
-        var network = this.networksList.find(function (net) { return net.id == netwId; });
+        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; });
         var dclass = this.classesList.find(function (cls) { return cls.id == classId; });
 
         var that = this;

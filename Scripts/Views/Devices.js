@@ -33,7 +33,8 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
 
         var netwId = this.$el.find(".new-device-network :selected").val();
         var classId = this.$el.find(".new-device-class :selected").val();
-        var network = this.networksList.find(function (net) { return net.id == netwId; });
+
+        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; });
         var dclass = this.classesList.find(function (cls) { return cls.id == classId; });
 
         var that = this;
@@ -62,11 +63,15 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         this.$el.find(".current-value").hide();
     },
     serializeData: function () {
-        var data = this.model.toJSON({ escape: true });
-        data.networks = this.networksList.toJSON({ escape: true }); ;
-        data.classes = this.classesList.toJSON({ escape: true }); ;
+        var base = this.model.toJSON({ escape: true });
+        if (!_.has(base, "network"))
+            base["network"] = { id: 0, name: "No network" };
 
-        return data;
+        base.networks = [{ id: 0, name: "No network"}];
+        base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
+
+        base.classes = this.classesList.toJSON({ escape: true });
+        return base;
     }
 });
 
