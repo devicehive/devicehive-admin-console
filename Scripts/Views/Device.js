@@ -6,10 +6,6 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         "click .close-action": "closeAction"
     },
     initialize: function (options) {
-        this.bindTo(this.model, "change", function () {
-            this.model.collection.sort();
-        }, this);
-
         //lists are necessary to render the select boxes throught editing
         this.networksList = options.networks;
         this.classesList = options.classes;
@@ -21,10 +17,10 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     template: "device-template",
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        if (!_.has(base, "network"))
-            base["network"] = { id: 0, name: "No network" };
+        if (base.network == null)
+            base["network"] = { id: 0, name: "---No network---" };
 
-        base.networks = [{ id: 0, name: "No network"}];
+        base.networks = [{ id: 0, name: "---No network---"}];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
         base.classes = this.classesList.toJSON({ escape: true });
@@ -59,7 +55,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         var that = this;
         this.model.save({ name: name, status: status, network: network, deviceClass: dclass }, {
             success: function () {
-
+		that.render();
             }, error: function (model, response) {
                 that.render();
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);

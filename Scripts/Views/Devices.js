@@ -10,7 +10,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         "click .cancel": "cancelAction"
     },
     initialize: function (options) {
-        this.model.bind("change", function () { this.render(); }, this);
+        this.bindTo(this.model,"change", function () { this.render(); }, this);
 
         this.networksList = options.networks;
         this.classesList = options.classes;
@@ -64,10 +64,10 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        if (!_.has(base, "network"))
-            base["network"] = { id: 0, name: "No network" };
+        if (base.network == null)
+            base["network"] = { id: 0, name: "---No network---" };
 
-        base.networks = [{ id: 0, name: "No network"}];
+        base.networks = [{ id: 0, name: "---No network---"}];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
         base.classes = this.classesList.toJSON({ escape: true });
