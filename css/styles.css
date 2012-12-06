@@ -341,11 +341,11 @@ table
 
 .notifications-table .name-column{ width: 20%;}
 .notifications-table .time-column{ width: 20%;}
-.notifications-table .parameters-column{ width: 60%;}
+.notifications-table .parameters-column{ width: 60%; word-break: break-all;}
 
 .commands-table .name-column{ width: 10%;}
 .commands-table .time-column{ width: 14%;}
-.commands-table .parameters-column{ width: 44%;}
+.commands-table .parameters-column{ width: 44%; word-break: break-all;}
 .commands-table .status-column{ width: 10%;}
 .commands-table .result-column{ width: 10%;}
 .commands-table .buttons-column{ width: 12%;}
