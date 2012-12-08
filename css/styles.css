@@ -250,8 +250,10 @@ table
 
 /*device-class-template*/
 .device-class-table .name{ width: 20%;}
-.device-class-table .version{ width: 20%;}
-.device-class-table .offline-timeout{ width: 20%;}
+.device-class-table .version{ width: 10%;}
+.device-class-table .version *{ max-width: 100px;}
+.device-class-table .offline-timeout{ width: 11%;}
+.device-class-table .data{ width: 20%;}
 .device-class-table .is-permanent{ width: 10%;}
 .device-class-table .buttons-column{ width: 30%;}
 
@@ -267,9 +269,10 @@ table
 /*devices-template*/
 
 .devices-table td.name{ width: 20%;}
-.devices-table td.status{ width: 20%;}
-.devices-table td.network{ width: 20%;}
+.devices-table td.status{ width: 5%;}
+.devices-table td.network{ width: 15%;}
 .devices-table td.device-class{ width: 20%;}
+.devices-table td.data{ width: 20%;}
 .devices-table td.buttons-column{ width: 20%;}
 
 /*device-detail-template*/

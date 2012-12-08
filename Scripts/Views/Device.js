@@ -17,6 +17,12 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     template: "device-template",
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
+
+        if (_.has(base, "data") && !_.isNull(base.data))
+            base["data"] = JSON.stringify(base.data);
+        else
+            base["data"] = "";
+
         if (base.network == null)
             base["network"] = { id: 0, name: "---No network---" };
 
@@ -45,9 +51,10 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     saveDevice: function () {
         var name = this.$el.find(".new-value.name").val();
         var status = this.$el.find(".new-value.status").val();
+        var data = this.$el.find(".new-value.data").val();
+        if (!this.model.setStrData(data)) { return; }
 
         var netwId = this.$el.find(".new-value.network :selected").val();
-
         var classId = this.$el.find(".new-value.dclass :selected").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; });
         var dclass = this.classesList.find(function (cls) { return cls.id == classId; });
@@ -55,7 +62,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         var that = this;
         this.model.save({ name: name, status: status, network: network, deviceClass: dclass }, {
             success: function () {
-		that.render();
+                that.render();
             }, error: function (model, response) {
                 that.render();
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);

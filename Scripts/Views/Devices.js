@@ -30,6 +30,8 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     saveDevice: function () {
         var name = this.$el.find(".new-device-name").val();
         var status = this.$el.find(".new-device-status").val();
+        var data = this.$el.find(".new-device-data").val();
+        if (!this.model.setStrData(data)) { return; }
 
         var netwId = this.$el.find(".new-device-network :selected").val();
         var classId = this.$el.find(".new-device-class :selected").val();
@@ -64,6 +66,12 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
+
+        if (_.has(base, "data") && !_.isNull(base.data))
+            base["data"] = JSON.stringify(base.data);
+        else
+            base["data"] = "";
+
         if (base.network == null)
             base["network"] = { id: 0, name: "---No network---" };
 
