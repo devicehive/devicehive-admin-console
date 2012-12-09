@@ -22,14 +22,18 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     serializeData: function () {
         var data = this.model.toJSON({ escape: true });
 
-        if (!_.has(data, "result") || _.isNull(data.result))
-            data.result = "";
+        //add backslashes to &quot; entity created during escaping  
+		if (_.has(data, "result") && !_.isNull(data.result))
+            data["result"] = JSON.stringify(data.result).replace(/&quot;/g,"\\&quot;");
+        else
+            data["result"] = "";
 
+		
         if (!_.has(data, "status") || _.isNull(data.status))
             data.status = "";
-
+		//add backslashes to &quot; entity created during escaping   
         if (_.has(data, "parameters") && !_.isNull(data.parameters))
-            data["parameters"] = JSON.stringify(data.parameters);
+            data["parameters"] = JSON.stringify(data.parameters).replace(/&quot;/g,"\\&quot;");
         else
             data["parameters"] = "";
 
@@ -98,7 +102,7 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
                 },
                 success: function () {
                     that.model.collection.remove(that.model);
-                    alert("Cammand has been succesfully send to server");
+                    app.vent.trigger("notification", app.Enums.NotificationType.Notify, "Cammand " + name + " has been succesfully send to device " + that.model.device.get("id"));
                 }
             });
         }

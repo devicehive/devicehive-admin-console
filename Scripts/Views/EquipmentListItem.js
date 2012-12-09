@@ -78,9 +78,9 @@ app.Views.EquipmentListItem = Backbone.Marionette.ItemView.extend({
             data["code"] = "";
         if (!_.has(data, "type"))
             data["type"] = "";
-
+        //add backslashes to &quot; entity created during escaping 
         if (_.has(data, "data") && !_.isNull(data.data))
-            data["data"] = JSON.stringify(data.data);
+            data["data"] = JSON.stringify(data.data).replace(/&quot;/g,"\\&quot;");
         else
             data["data"] = "";
 

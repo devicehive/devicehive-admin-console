@@ -66,9 +66,9 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-
+        //add backslashes to &quot; entity created during escaping 
         if (_.has(base, "data") && !_.isNull(base.data))
-            base["data"] = JSON.stringify(base.data);
+            base["data"] = JSON.stringify(base.data).replace(/&quot;/g,"\\&quot;");
         else
             base["data"] = "";
 
