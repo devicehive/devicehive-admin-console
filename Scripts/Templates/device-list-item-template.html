@@ -1,6 +1,6 @@
 ﻿<script type="text/template" id="network-list-item-template">
     <td class="name"><span class="current-value"><%= name %></span><span class="new-value"><input type="text" class="new-device-name" value="<%= name %>"/></span></td>
-    <td class="status"><span class="current-value"><%= status %></span><span class="new-value"><textarea class="new-device-status"><%= status %></textarea></span></td>
+    <td class="status"><span class="current-value"><%= status %></span><span class="new-value"><input type="text" class="new-device-status" value="<%= status %>"></input></span></td>
 
     <td class="network">
     
@@ -33,6 +33,8 @@
     </span>
     
     </td>
+
+    <td class="status"><span class="current-value"><%= data %></span><span class="new-value"><textarea class="new-device-data"><%= data %></textarea></span></td>
 
     <td class="buttons-column">
         <span class="current-value"><a href="javascript:void(0)" class="detail view-button">detail</a><a href="javascript:void(0)" class="edit view-button">edit</a><a href="javascript:void(0)" class="delete delete-button">delete</a></span>

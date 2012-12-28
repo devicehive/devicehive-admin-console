@@ -31,6 +31,10 @@ app.Views.EquipmentListItem = Backbone.Marionette.ItemView.extend({
         var name = this.$el.find(".name-equip").val();
         var code = this.$el.find(".code-equip").val();
         var type = this.$el.find(".type-equip").val();
+        var data = this.$el.find(".data-equip").val();
+        if (!this.model.setStrData(data)) { return; }
+
+
         var that = this;
 
         this.model.save({ name: name, code: code, type: type }, {
@@ -74,6 +78,11 @@ app.Views.EquipmentListItem = Backbone.Marionette.ItemView.extend({
             data["code"] = "";
         if (!_.has(data, "type"))
             data["type"] = "";
+        //add backslashes to &quot; entity created during escaping 
+        if (_.has(data, "data") && !_.isNull(data.data))
+            data["data"] = JSON.stringify(data.data).replace(/&quot;/g,"\\&quot;");
+        else
+            data["data"] = "";
 
         return data;
     }

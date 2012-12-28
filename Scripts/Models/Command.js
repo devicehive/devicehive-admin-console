@@ -20,13 +20,21 @@
     urlRoot: function () {
         return app.restEndpoint + '/device/' + this.device.get("id") + "/command";
     },
-    defaults: { status: "", result: "" },
     copyIt: function () {
         var fields = {
             command: this.get("command"),
             parameters: this.get("parameters")
         };
         return new app.Models.Command(fields, { device: this.device });
+    },
+    setStrParameters: function (value) {
+        try {
+            this.set("parameters", jQuery.parseJSON(value));
+            return true;
+        } catch (e) {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+            return false;
+        }
     }
 });
 

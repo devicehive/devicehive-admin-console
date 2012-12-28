@@ -1,7 +1,12 @@
 (function () {
     //escape all strings in an object. And all strings in child objects.
     var deepEscape = function (object) {
-        var copy = {};
+    	var copy;
+    	if(_.isArray(object))
+         	copy = [];
+        else
+         	copy = {};
+         	
         _.each(object, function (val, key) {
             if (_.isString(val))
                 copy[key] = _.escape(val);

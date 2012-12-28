@@ -26,16 +26,24 @@
             return parseInt(value);
         }
     },
-
     validate: function (attrs) {
         var integer = /^[0-9]*$/;
         if (attrs.offlineTimeout == "")
             attrs.offlineTimeout = null;
-
+            
         if (attrs.offlineTimeout) {
             if (!integer.test(attrs.offlineTimeout)) {
                 return "offline timeout should be integer value";
             }
+        }
+    },
+    setStrData: function (value) {
+        try {
+            this.set("data", jQuery.parseJSON(value));
+            return true;
+        } catch (e) {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+            return false;
         }
     }
 });

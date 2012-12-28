@@ -10,7 +10,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         "click .cancel": "cancelAction"
     },
     initialize: function (options) {
-        this.model.bind("change", function () { this.render(); }, this);
+        this.bindTo(this.model,"change", function () { this.render(); }, this);
 
         this.networksList = options.networks;
         this.classesList = options.classes;
@@ -30,10 +30,13 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     saveDevice: function () {
         var name = this.$el.find(".new-device-name").val();
         var status = this.$el.find(".new-device-status").val();
+        var data = this.$el.find(".new-device-data").val();
+        if (!this.model.setStrData(data)) { return; }
 
         var netwId = this.$el.find(".new-device-network :selected").val();
         var classId = this.$el.find(".new-device-class :selected").val();
-        var network = this.networksList.find(function (net) { return net.id == netwId; });
+
+        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; });
         var dclass = this.classesList.find(function (cls) { return cls.id == classId; });
 
         var that = this;
@@ -62,11 +65,21 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         this.$el.find(".current-value").hide();
     },
     serializeData: function () {
-        var data = this.model.toJSON({ escape: true });
-        data.networks = this.networksList.toJSON({ escape: true }); ;
-        data.classes = this.classesList.toJSON({ escape: true }); ;
+        var base = this.model.toJSON({ escape: true });
+        //add backslashes to &quot; entity created during escaping 
+        if (_.has(base, "data") && !_.isNull(base.data))
+            base["data"] = JSON.stringify(base.data).replace(/&quot;/g,"\\&quot;");
+        else
+            base["data"] = "";
 
-        return data;
+        if (base.network == null)
+            base["network"] = { id: 0, name: "---No network---" };
+
+        base.networks = [{ id: 0, name: "---No network---"}];
+        base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
+
+        base.classes = this.classesList.toJSON({ escape: true });
+        return base;
     }
 });
 

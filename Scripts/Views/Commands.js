@@ -22,14 +22,18 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     serializeData: function () {
         var data = this.model.toJSON({ escape: true });
 
-        if (!_.has(data, "result") || _.isNull(data.result))
-            data.result = "";
+        //add backslashes to &quot; entity created during escaping  
+		if (_.has(data, "result") && !_.isNull(data.result))
+            data["result"] = JSON.stringify(data.result).replace(/&quot;/g,"\\&quot;");
+        else
+            data["result"] = "";
 
+		
         if (!_.has(data, "status") || _.isNull(data.status))
             data.status = "";
-
+		//add backslashes to &quot; entity created during escaping   
         if (_.has(data, "parameters") && !_.isNull(data.parameters))
-            data["parameters"] = JSON.stringify(data.parameters);
+            data["parameters"] = JSON.stringify(data.parameters).replace(/&quot;/g,"\\&quot;");
         else
             data["parameters"] = "";
 
@@ -74,7 +78,7 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     refreshAction: function () {
         this.model.fetch({
             error: function (mod, response) {
-                vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
             }
         });
     },
@@ -84,22 +88,24 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     pushAction: function () {
         var fields = {};
         var name = this.$el.find(".new-command-name").val();
+
         var parameters = this.$el.find(".new-command-params").val();
-        if (_.isEmpty(parameters))
-            parameters = null;
+
 
         var that = this;
 
-        this.model.save({ parameters: parameters, command: name }, {
-            error: function (mod, response) {
-                that.model.collection.remove(that.model);
-                app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
-            },
-            success: function () {
-                that.model.collection.remove(that.model);
-                alert("Cammand was succesfully send to server");
-            }
-        });
+        if (this.model.setStrParameters(parameters)) {
+            this.model.save({command: name }, {
+                error: function (mod, response) {
+                    that.model.collection.remove(that.model);
+                    app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                },
+                success: function () {
+                    that.model.collection.remove(that.model);
+                    app.vent.trigger("notification", app.Enums.NotificationType.Notify, "Cammand " + name + " has been succesfully send to device " + that.model.device.get("id"));
+                }
+            });
+        }
     }
 });
 
