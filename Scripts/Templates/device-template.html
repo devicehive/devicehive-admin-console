@@ -3,15 +3,15 @@
     <table class="values-table">
     <tr>
         <td class="title-column">name:</td>
-        <td><span class="device-value"><%= name%></span><input type="text" class="new-value name" value="<%= name%>"/></td>
+        <td class="value-column"><span class="device-value"><%= name%></span><input type="text" class="new-value name" value="<%= name%>"/></td>
     </tr>
     <tr>
         <td class="title-column">status:</td>
-        <td><span class="device-value"><%= status%></span><input type="text" class="new-value status" value="<%= status%>"/></td>
+        <td class="value-column"><span class="device-value"><%= status%></span><input type="text" class="new-value status" value="<%= status%>"/></td>
     </tr>
     <tr>
         <td class="title-column">network:</td>
-        <td><span class="device-value"><%= network.name%></span>
+        <td class="value-column"><span class="device-value"><%= network.name%></span>
 
         <select class="new-value network">
             <% _.each(networks,function(net){ 
@@ -26,7 +26,7 @@
     </tr>
     <tr>
         <td class="title-column">device class:</td>
-        <td><span class="device-value"><%= deviceClass.name%> (v <%= deviceClass.version %>)</span>
+        <td class="value-column"><span class="device-value"><%= deviceClass.name%> (v <%= deviceClass.version %>)</span>
         
         <select class="new-value dclass">
             <% _.each(classes,function(cls){ 
@@ -41,7 +41,7 @@
     </tr>
     <tr>
         <td class="title-column">data:</td>
-        <td><span class="device-value"><%= data%></span><textarea class="new-value data"><%= data%></textarea></td>
+        <td class="value-column"><span class="device-value"><%= data%></span><textarea class="new-value data"><%= data%></textarea></td>
     </tr>
     </table>
 
