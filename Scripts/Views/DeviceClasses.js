@@ -150,7 +150,7 @@ app.Views.DeviceClasses = Backbone.Marionette.CompositeView.extend({
     emptyView: Backbone.Marionette.ItemView.extend(
         {
             render: function () {
-                this.$el.html("<td colspan='4'>there are no device classes has been registered yet. Create first one!</td>");
+                this.$el.html("<td colspan='6'>there are no device classes has been registered yet. Create first one!</td>");
                 return this;
             },
             tagName: "tr"
