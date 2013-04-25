@@ -89,6 +89,11 @@ table
     border-right: 2px solid gray;
 }
 
+.values-table .value-column
+{
+    word-break: break-all;
+}
+
 /*buttons*/
 .view-button, .edit-button, .delete-button
 {
@@ -272,7 +277,7 @@ table
 .devices-table td.status{ width: 5%;}
 .devices-table td.network{ width: 15%;}
 .devices-table td.device-class{ width: 20%;}
-.devices-table td.data{ width: 20%;}
+.devices-table td.data{ width: 20%; word-break: break-all;}
 .devices-table td.buttons-column{ width: 20%;}
 
 /*device-detail-template*/

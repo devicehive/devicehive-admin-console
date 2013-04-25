@@ -53,7 +53,11 @@ app.Models.CommandsCollection = Backbone.Collection.extend({
 
     },
     url: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/command";
+        return app.restEndpoint + '/device/' + this.device.get("id") + "/command?take=100&sortOrder=DESC";
+    },
+    parse: function (resp, xhr) {
+        // reverse items order back to ascending
+        return resp.reverse();
     },
     closePolling: function () {
         if (!_.isEmpty(this.jqXhr)) {

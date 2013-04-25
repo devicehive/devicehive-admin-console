@@ -36,8 +36,8 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var netwId = this.$el.find(".new-device-network :selected").val();
         var classId = this.$el.find(".new-device-class :selected").val();
 
-        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; });
-        var dclass = this.classesList.find(function (cls) { return cls.id == classId; });
+        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        var dclass = this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
 
         var that = this;
         this.model.save({ name: name, status: status, network: network, deviceClass: dclass }, {

@@ -32,11 +32,11 @@ app.Models.NotificationsCollection = Backbone.Collection.extend({
         }
     },
     url: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/notification";
+        return app.restEndpoint + '/device/' + this.device.get("id") + "/notification?take=100&sortOrder=DESC";
     },
     parse: function (resp, xhr) {
-        //take only 100 last records as freshest
-        return _.last(resp,100);
+        // reverse items order back to ascending
+        return resp.reverse();
     },
     closePolling: function () {
         if (!_.isEmpty(this.jqXhr)) {
