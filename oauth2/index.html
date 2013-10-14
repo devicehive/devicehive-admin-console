@@ -193,14 +193,14 @@
 
                 // issues new grant
                 issueGrant: function () {
-                    var networkList = null;
+                    var networkIds = null;
                     if ($("#cb-limit-networks").is(":checked")) {
                         var items = $("#network-list input:checked");
                         if (items.length == 0) {
                             alert("Please select at least one network!");
                             return;
                         }
-                        networkList = $.map(items, function (i) { return i.id.substring(8); }).join(',');
+                        networkIds = $.map(items, function (i) { return parseInt(i.id.substring(8)); });
                     }
 
                     var self = this;
@@ -211,7 +211,7 @@
                             accessType: self.oauthAccessType,
                             redirectUri: self.oauthRedirectUrl,
                             scope: self.oauthScope,
-                            networkList: networkList
+                            networkIds: networkIds
                     }).pipe(
                         function (data) {
                             if (data.authCode) {
