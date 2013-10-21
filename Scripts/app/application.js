@@ -7,6 +7,7 @@ _.extend(app, {
     Models: {},
     Views: {},
     Regions: {},
+    User: null,
     // override addRegion function to attach new regions
     addRegions: function (regions) {
         var regionValue, regionObj, region;
@@ -52,6 +53,10 @@ _.extend(app, {
         }
 
         return retIt;
+    },
+    // checks whether app.User is populated
+    isLoggedIn: function() {
+        return app.User && !app.User.isNew();
     }
 });
 
@@ -69,6 +74,9 @@ app.bind("initialize:before", function (options) {
             app.restEndpoint = val;
         }
     }
+
+    // fetch current user
+    (app.User = new app.Models.User()).fetch();
 });
 
 app.bind("initialize:after", function (options) {
