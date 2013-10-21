@@ -1,5 +1,6 @@
 ﻿app.Models.User = Backbone.Model.extend({
     urlRoot: function () { return app.restEndpoint + "/user"; },
+    urlCurrent: function () { return app.restEndpoint + "/user/current"; },
     defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [] },
     getters: {
         networksCollection: function () {
@@ -10,6 +11,11 @@
 
             return this.networksColl;
         }
+    },
+    // override read method to get current user for empty model
+    fetch: function(options) {
+        var opts = this.isNew() && _.extend({}, options, { url: this.urlCurrent() }) || options;
+        Backbone.Model.prototype.fetch.apply(this, [ opts ]);
     },
     //put connector to server and add network record to appropriate collection(to just keep views in sync)
     //This and the next method is the result of many-to-many relationshipd, that isn't supported directly. 
