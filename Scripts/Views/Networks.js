@@ -14,10 +14,15 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
     template: "network-list-item-template",
     tagName: "tr",
     onRender: function () {
-        if (this.model.isNew())
-            this.showEditableAreas();
-        else
-            this.showValuesAreas();
+        if (app.hasRole(app.Enums.UserRole.Administrator)) {
+            if (this.model.isNew())
+                this.showEditableAreas();
+            else
+                this.showValuesAreas();
+        }
+        else {
+            this.showValuesAreas(false);
+        }
     },
     deleteNetwork: function () {
         if (confirm("are you realy wont to delete this networks? All associations with users will be lost"))
@@ -54,9 +59,10 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
     editNetwork: function () {
         this.showEditableAreas();
     },
-    showValuesAreas: function () {
+    showValuesAreas: function (canEdit) {
         this.$el.find(".current-value").show();
         this.$el.find(".new-value").hide();
+        this.$el.find(".buttons-column>span.current-value").toggle(_.isUndefined(canEdit) || canEdit);
     },
     showEditableAreas: function () {
         this.$el.find(".new-value").show();
@@ -84,7 +90,10 @@ app.Views.Networks = Backbone.Marionette.CompositeView.extend({
     emptyView: Backbone.Marionette.ItemView.extend(
         {
             render: function () {
-                this.$el.html("<td colspan='4'>there are no networks has been registered yet. Create first one!</td>");
+                var text = app.hasRole(app.Enums.UserRole.Administrator)
+                    ? "there are no networks has been registered yet. Create first one!"
+                    : "there are no networks has been registered yet.";
+                this.$el.html("<td colspan='4'>" + text + "</td>");
                 return this;
             },
             tagName: "tr"
@@ -93,6 +102,9 @@ app.Views.Networks = Backbone.Marionette.CompositeView.extend({
     itemViewContainer: "tbody",
     addNetwork: function () {
         this.collection.add(new app.Models.Network());
+    },
+    onRender: function () {
+        this.$el.find(".add").toggle(app.hasRole(app.Enums.UserRole.Administrator));
     }
 });
 
