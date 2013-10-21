@@ -57,6 +57,19 @@ _.extend(app, {
     // checks whether app.User is populated
     isLoggedIn: function() {
         return app.User && !app.User.isNew();
+    },
+    // checks whether app.User has access to specified role
+    hasRole: function(roles) {
+        if (!this.isLoggedIn())
+            return false;
+
+        if (roles == null)
+            return true;
+
+        if (_.isArray(roles))
+            return _.indexOf(roles, app.User.get("role")) != -1;
+
+        return roles == app.User.get("role");
     }
 });
 

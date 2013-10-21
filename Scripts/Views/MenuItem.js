@@ -16,9 +16,7 @@ app.Views.MenuItem = Backbone.Marionette.ItemView.extend({
         else 
             this.$el.removeClass("selected");
 
-        var requiredRoles = this.model.get("roles");
-        this.$el.toggle(
-            app.isLoggedIn() && (requiredRoles == null || _.indexOf(requiredRoles, app.User.get("role")) != -1));
+        this.$el.toggle(app.hasRole(this.model.get("roles")));
     },
     template: "menu-item-template"
 });
