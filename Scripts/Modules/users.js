@@ -161,7 +161,7 @@
     });
 
     app.bind("initialize:after", function (options) {
-        app.vent.trigger("addResource", "user", "Users");
+        app.vent.trigger("addResource", "user", "Users", [ app.Enums.UserRole.Administrator ]);
     });
 
 });

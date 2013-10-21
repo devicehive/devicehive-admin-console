@@ -6,8 +6,8 @@
     var statusView = null;
 
     //events handlers
-    var registerResource = function (resourcePath, resourceName) {
-        var newItem = new app.Models.MenuItem({ path: resourcePath, name: resourceName });
+    var registerResource = function (resourcePath, resourceName, roles) {
+        var newItem = new app.Models.MenuItem({ path: resourcePath, name: resourceName, roles: roles });
 
         //when new item added call navigatedTo to refresh main menu view
         navigationCollection.bind("add", function () {
