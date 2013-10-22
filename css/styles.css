@@ -100,7 +100,8 @@ table
     margin: 0px 0.1em;
     color: white;
     border-radius: 3px;
-    padding: 2px 6px 4px;
+    padding: 1px 5px 3px;
+    border: 1px solid;
     text-decoration: none;
     box-shadow: 1px 1px 2px darkGray;
     display: inline-block;
@@ -108,18 +109,16 @@ table
 
 .view-button:hover, .edit-button:hover, .delete-button:hover
 {
-    padding: 1px 5px 3px;
     color: black;
     background-color: white;
-    border: 1px solid black;
 }
 
-.view-button{background-color: green;}
-.edit-button{background-color: orange;}
-.delete-button{background-color: red;}
-.view-button:hover{color: green;border-color: green;}
-.edit-button:hover{color: orange;border-color: orange;}
-.delete-button:hover{color: red;border-color: red;}
+.view-button{background-color: green;border-color: green;}
+.edit-button{background-color: orange;border-color: orange;}
+.delete-button{background-color: red;border-color: red;}
+.view-button:hover{color: green;}
+.edit-button:hover{color: orange;}
+.delete-button:hover{color: red;}
 
 
 /* panel */
