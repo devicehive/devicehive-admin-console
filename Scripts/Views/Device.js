@@ -9,6 +9,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         //lists are necessary to render the select boxes throught editing
         this.networksList = options.networks;
         this.classesList = options.classes;
+        this.classEditable = options.classEditable;
     },
     onRender: function () {
         this.closeAction();
@@ -29,7 +30,8 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         base.networks = [{ id: 0, name: "---No network---"}];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
-        base.classes = this.classesList.toJSON({ escape: true });
+        base.classEditable = this.classEditable;
+        base.classes = base.classEditable ? this.classesList.toJSON({ escape: true }) : [];
         return base;
     },
     editDevice: function () {
@@ -49,18 +51,26 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         this.$el.find(".edit-device").show();
     },
     saveDevice: function () {
-        var name = this.$el.find(".new-value.name").val();
-        var status = this.$el.find(".new-value.status").val();
         var data = this.$el.find(".new-value.data").val();
         if (!this.model.setStrData(data)) { return; }
 
         var netwId = this.$el.find(".new-value.network :selected").val();
-        var classId = this.$el.find(".new-value.dclass :selected").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
-        var dclass = this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
+
+        var changes = {
+            name: this.$el.find(".new-value.name").val(),
+            status: this.$el.find(".new-value.status").val(),
+            network: network
+        };
+
+        if (this.classEditable) {
+            var classId = this.$el.find(".new-value.dclass :selected").val();
+            changes.deviceClass =
+                this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
+        }
 
         var that = this;
-        this.model.save({ name: name, status: status, network: network, deviceClass: dclass }, {
+        this.model.save(changes, {
             success: function () {
                 that.render();
             }, error: function (model, response) {

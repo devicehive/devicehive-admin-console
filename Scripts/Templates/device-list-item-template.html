@@ -22,6 +22,7 @@
     
     <span class="current-value"><%= deviceClass.name %> (v <%= deviceClass.version %>)</span>
     <span class="new-value">
+        <% if (classEditable) { %>
         <select class="new-device-class">
             <% _.each(classes,function(cls){ 
                 if(cls.id == deviceClass.id){ %>
@@ -30,6 +31,9 @@
                     <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
             <%}}); %>
         </select>
+        <% } else { %>
+        <%= deviceClass.name %> (v <%= deviceClass.version %>)
+        <% } %>
     </span>
     
     </td>

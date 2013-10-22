@@ -14,6 +14,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
 
         this.networksList = options.networks;
         this.classesList = options.classes;
+        this.classEditable = options.classEditable;
     },
     template: "device-list-item-template",
     tagName: "tr",
@@ -28,19 +29,26 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             });
     },
     saveDevice: function () {
-        var name = this.$el.find(".new-device-name").val();
-        var status = this.$el.find(".new-device-status").val();
         var data = this.$el.find(".new-device-data").val();
         if (!this.model.setStrData(data)) { return; }
 
         var netwId = this.$el.find(".new-device-network :selected").val();
-        var classId = this.$el.find(".new-device-class :selected").val();
-
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
-        var dclass = this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
+
+        var changes = {
+            name: this.$el.find(".new-device-name").val(),
+            status: this.$el.find(".new-device-status").val(),
+            network: network
+        };
+
+        if (this.classEditable) {
+            var classId = this.$el.find(".new-device-class :selected").val();
+            changes.deviceClass =
+                this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
+        }
 
         var that = this;
-        this.model.save({ name: name, status: status, network: network, deviceClass: dclass }, {
+        this.model.save(changes, {
             success: function () {
 
             }, error: function (model, response) {
@@ -78,7 +86,8 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         base.networks = [{ id: 0, name: "---No network---"}];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
-        base.classes = this.classesList.toJSON({ escape: true });
+        base.classEditable = this.classEditable;
+        base.classes = base.classEditable ? this.classesList.toJSON({ escape: true }) : [];
         return base;
     }
 });
@@ -89,7 +98,8 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     itemViewOptions: function () {
         return {
             networks: this.networks,
-            classes: this.classes
+            classes: this.classes,
+            classEditable: this.classEditable
         };
     },
     emptyView: Backbone.Marionette.ItemView.extend(
@@ -105,6 +115,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     initialize: function (options) {
         this.networks = options.networks;
         this.classes = options.classes;
+        this.classEditable = options.classEditable;
     }
 });
 

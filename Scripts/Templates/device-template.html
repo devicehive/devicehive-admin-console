@@ -27,16 +27,22 @@
     <tr>
         <td class="title-column">device class:</td>
         <td class="value-column"><span class="device-value"><%= deviceClass.name%> (v <%= deviceClass.version %>)</span>
-        
-        <select class="new-value dclass">
-            <% _.each(classes,function(cls){ 
-                if(cls.id == deviceClass.id){ %>
-                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>)</option>    
-                <%}else{ %>
-                    <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
-            <%}}); %>
-        </select>
-        
+
+        <span class="new-value">
+            <% if (classEditable) { %>
+            <select class="dclass">
+                <% _.each(classes,function(cls){
+                    if(cls.id == deviceClass.id){ %>
+                        <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>)</option>
+                    <%}else{ %>
+                        <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
+                <%}}); %>
+            </select>
+            <% } else { %>
+            <%= deviceClass.name %> (v <%= deviceClass.version %>)
+            <% } %>
+        </span>
+
         </td>
     </tr>
     <tr>

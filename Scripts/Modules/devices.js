@@ -9,6 +9,10 @@
     var panelsView;
     var selectedDevice;
 
+    var deviceClassEditable = function() {
+        return app.hasRole(app.Enums.UserRole.Administrator);
+    }
+
     var showDevices = function () {
         var retIt = $.Deferred();
 
@@ -21,7 +25,12 @@
                 app.getCollection("DevicesCollection").done(function (res) {
                     devicesCollection = res;
                     if (devicesCollection != null) {
-                        devicesView = new app.Views.Devices({ collection: devicesCollection, networks: networksCollection, classes: classesCollection });
+                        devicesView = new app.Views.Devices({
+                            collection: devicesCollection,
+                            networks: networksCollection,
+                            classes: classesCollection,
+                            classEditable: deviceClassEditable()
+                        });
 
                         devicesView.on("itemview:showDetail", function(itemView) {
                             var path = "devices/" + itemView.model.get("id");
@@ -51,7 +60,12 @@
                 selectedDevice = new app.Models.Device({ id: id });
                 selectedDevice.fetch({
                     success: function () {
-                        detailDeviceView = new app.Views.Device({ model: selectedDevice, networks: networksCollection, classes: classesCollection });
+                        detailDeviceView = new app.Views.Device({
+                            model: selectedDevice,
+                            networks: networksCollection,
+                            classes: classesCollection,
+                            classEditable: deviceClassEditable()
+                        });
 
                         app.Regions.topWorkArea.show(detailDeviceView);
                         showPanels(mode);
@@ -77,11 +91,18 @@
     var initLists = function (success) {
         app.getCollection("NetworksCollection").done(function (res) {
             networksCollection = res;
-            app.getCollection("DeviceClassesCollection").done(function (clres) {
-                classesCollection = clres;
+            if (deviceClassEditable()) {
+                app.getCollection("DeviceClassesCollection").done(function (clres) {
+                    classesCollection = clres;
+                    if (_.isFunction(success))
+                        success();
+                });
+            }
+            else {
+                classesCollection = [];
                 if (_.isFunction(success))
                     success();
-            });
+            }
         });
     };
 
