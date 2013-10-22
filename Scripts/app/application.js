@@ -98,7 +98,6 @@ app.bind("initialize:after", function (options) {
 });
 
 app.bind("login", function (options) {
-    console.log('login');
     var params = { root: app.rootUrl };
 
     if (_.isObject(options)) {
