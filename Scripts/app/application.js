@@ -87,12 +87,18 @@ app.bind("initialize:before", function (options) {
             app.restEndpoint = val;
         }
     }
-
-    // fetch current user
-    (app.User = new app.Models.User()).fetch();
 });
 
 app.bind("initialize:after", function (options) {
+    // fetch current user
+    (app.User = new app.Models.User()).fetch({ success: function() {
+        if (app.User.id != null)
+            app.trigger("login", options);
+    }});
+});
+
+app.bind("login", function (options) {
+    console.log('login');
     var params = { root: app.rootUrl };
 
     if (_.isObject(options)) {
@@ -100,10 +106,8 @@ app.bind("initialize:after", function (options) {
             params.pushState = options.pushState;
         }
     }
-    
+
     if (Backbone.history) {
         Backbone.history.start(params);
     }
 });
-
-

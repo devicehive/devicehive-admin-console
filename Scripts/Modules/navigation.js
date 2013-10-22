@@ -11,7 +11,8 @@
 
         //when new item added call navigatedTo to refresh main menu view
         navigationCollection.bind("add", function () {
-            navigatedTo(Backbone.history.getFragment());
+            if (Backbone.history.started)
+                navigatedTo(Backbone.history.getFragment());
         });
 
         navigationCollection.add(newItem);
