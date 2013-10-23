@@ -169,13 +169,16 @@ table
     box-shadow: black 0px -1px 4px;
 }
 
-
+#menu-area
+{
+    text-align: center;
+}
 
 .main-menu .menu-item
 {
     display: inline-block;
-    width: 24%;
-    margin: 0px 1% 0 0;
+    width: 19%;
+    margin: 0px 0 0 1%;
     list-style: none;
     list-style-type: none;
     text-align: center;
@@ -183,8 +186,8 @@ table
 
 .main-menu .menu-item:first-child
 {
-    width: 23%;
-    margin: 0px 1% 0 1%;
+    width: 18%;
+    margin: 0;
 }
 
 .main-menu .menu-item .navigation-link
