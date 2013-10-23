@@ -184,6 +184,11 @@ table
     text-align: center;
 }
 
+.main-menu .menu-item.hidden
+{
+    display: none;
+}
+
 .main-menu .menu-item:first-child
 {
     width: 18%;

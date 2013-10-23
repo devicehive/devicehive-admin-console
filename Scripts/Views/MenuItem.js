@@ -16,7 +16,7 @@ app.Views.MenuItem = Backbone.Marionette.ItemView.extend({
         else 
             this.$el.removeClass("selected");
 
-        this.$el.toggle(app.hasRole(this.model.get("roles")));
+        this.$el.toggleClass("hidden", !app.hasRole(this.model.get("roles")));
     },
     template: "menu-item-template"
 });
