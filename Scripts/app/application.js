@@ -108,5 +108,6 @@ app.bind("login", function (options) {
 
     if (Backbone.history) {
         Backbone.history.start(params);
+        Backbone.history.trigger("navigatedTo", Backbone.history.getFragment());
     }
 });
