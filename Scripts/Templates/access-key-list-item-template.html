@@ -1,0 +1,24 @@
+﻿<script type="text/template" id="access-key-list-item-template">
+    <tr>
+        <td class="label-column"><%= label %></td>
+        <td class="expiration-column"><%= expirationDate %></td>
+        <td class="buttons-column"><a href="javascript:void(0)" class="details view-button">details</a><a href="javascript:void(0)" class="delete delete-button">delete</a></td>
+    </tr>
+    <tr class="details-row panel">
+        <td colspan="3">
+            <table class="main-table access-key-permissions-table">
+                <thead>
+                    <tr>
+                        <th class="domains">Domains</th>
+                        <th class="subnets">Subnets</th>
+                        <th class="actions">Actions</th>
+                        <th class="networks">Networks</th>
+                        <th class="devices">Devices</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</script>

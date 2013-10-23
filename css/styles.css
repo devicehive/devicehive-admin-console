@@ -79,6 +79,16 @@ table
     margin: 0px 0.4em;
 }
 
+.main-table.multi-table tbody  tr:nth-child(2n+1)
+{
+    background-color: white;
+}
+
+.main-table.multi-table tbody:nth-child(2n+1) tr
+{
+    background-color: #E7ECF1;
+}
+
 .values-table td 
 {
     padding: 4px;
@@ -431,3 +441,47 @@ table
     height: 70px;
 }
 
+/* access keys tables */
+.access-key-permissions-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.access-key-permissions-table th.domains {
+    width: 20%;
+}
+
+.access-key-permissions-table th.subnets {
+    width: 20%;
+}
+
+.access-key-permissions-table th.actions {
+    width: 20%;
+}
+
+.access-key-permissions-table th.networks {
+    width: 20%;
+}
+
+.access-key-permissions-table th.devices {
+    width: 20%;
+}
+
+.access-key-permissions-table thead tr
+{
+    background-color: #272768 !important;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 0.2em;
+}
+
+.access-key-permissions-table tbody tr:first-child
+{
+    border: none;
+}
+
+.access-key-permissions-table tbody tr
+{
+    border-top: 1px solid #272768;
+}
