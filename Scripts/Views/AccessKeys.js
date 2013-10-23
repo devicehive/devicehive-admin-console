@@ -67,6 +67,8 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
 
         if (!_.has(data, "label"))
             data["label"] = "";
+        if (!_.has(data, "key"))
+            data["key"] = "";
 
         if (_.has(data, "expirationDate") && !_.isEmpty(data["expirationDate"]))
             data["expirationDate"] = app.f.parseUTCstring(data["expirationDate"]).format("mm/dd/yyyy HH:MM:ss")
