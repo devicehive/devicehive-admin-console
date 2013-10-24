@@ -9,7 +9,7 @@ app.Views.AccessKeyPermissionListItem = Backbone.Marionette.ItemView.extend({
     serializeData: function() {
         var data = this.model.toJSON({ escape: true });
         var initArray = function(obj, keys) {
-            _.each(keys, function(item) { if (!_.has(obj, item)) { obj[item] = []; } });
+            _.each(keys, function(item) { if (!_.has(obj, item) || obj[item] == null) { obj[item] = []; } });
         };
         initArray(data, ["domains", "subnets", "actions", "networkIds", "deviceGuids"]);
         data.networks = this.networks;
@@ -25,6 +25,9 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
     events: {
         "click .details": "toggleDetails",
         "click .delete": "deleteAccessKey"
+    },
+    triggers: {
+        "click .edit": "edit"
     },
     itemView: app.Views.AccessKeyPermissionListItem,
     itemViewContainer: "tbody",

@@ -489,7 +489,40 @@ table
     border: none;
 }
 
-.access-key-permissions-table tbody tr
+.access-key-permissions-edit-table tbody tr
 {
     border-top: 1px solid #272768;
+}
+
+.access-key-permissions-edit-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.access-key-permissions-edit-table th.domains {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.subnets {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.actions {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.networks {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.devices {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.buttons-columns {
+    width: 5%;
+}
+
+.access-key-permissions-edit-container {
+    margin-bottom: 10px;
 }

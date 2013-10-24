@@ -28,6 +28,10 @@
                                 networks: networks,
                                 devices: devices
                             });
+                            accessKeysView.on("itemview:edit", function (viewObject) {
+                                var path = "accesskeys/" + viewObject.model.id;
+                                Backbone.history.navigate(path, { trigger: true });
+                            });
                             app.Regions.topWorkArea.show(accessKeysView);
 
                             retIt.resolve();
@@ -43,6 +47,38 @@
         return retIt;
     };
 
+    var editAccessKey = function(id) {
+        var retIt = $.Deferred();
+
+        var bwacv = app.Regions.bottomWorkArea.currentView;
+        if (!(_.isUndefined(bwacv)) && bwacv == accessKeysView) {
+            retIt.resolve();
+        }
+        else {
+            var accessKey = accessKeysCollection.find(function(ak) {
+                return ak.id == id;
+            });
+
+            var editView = new app.Views.AccessKey({
+                model: accessKey,
+                networks: networksCollection,
+                devices: devicesCollection
+            });
+
+            editView.on("cancel", function() {
+                if (app.Regions.bottomWorkArea.currentView == editView)
+                    app.Regions.bottomWorkArea.close();
+                var path = "accesskeys";
+                Backbone.history.navigate(path, { trigger: false });
+            });
+
+            app.Regions.bottomWorkArea.show(editView);
+            retIt.resolve();
+        }
+
+        return retIt;
+    };
+
     var controller = {
         accessKeys_show: function () {
             app.vent.trigger("startLoading");
@@ -51,11 +87,22 @@
                 app.vent.trigger("stopLoading");
                 app.Regions.bottomWorkArea.close();
             });
+        },
+
+        accessKeys_edit: function (id) {
+            app.vent.trigger("startLoading");
+
+            showAccessKeys().pipe(function() {
+                editAccessKey(id);
+            }).done(function() {
+                app.vent.trigger("stopLoading");
+            });
         }
     };
 
     var routes = {
-        "accesskeys": "accessKeys_show"
+        "accesskeys": "accessKeys_show",
+        "accesskeys/:id": "accessKeys_edit"
     };
 
     var router = Backbone.Marionette.AppRouter.extend({ controller: controller, appRoutes: routes });
