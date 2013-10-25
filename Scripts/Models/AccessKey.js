@@ -39,7 +39,30 @@ app.Models.AccessKeysCollection = Backbone.Collection.extend({
 
 
 app.Models.AccessKeyPermission = Backbone.Model.extend({
-    defaults: { }
+    defaults: { },
+    validate: function() {
+        var domainRegexp = /^([0-9a-zA-Z\\-]+\.?)+[0-9a-zA-Z\\-]+$/;
+        var subnetRegexp = /^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/([0-2]?[0-9]|3[0-2])$/;
+        var validationError = null;
+
+        // check domains
+        var domains = this.get("domains");
+        if (domains) {
+            for (var i = 0; i < domains.length && !validationError; ++i) {
+                validationError = !domainRegexp.test(domains[i]) && (domains[i] + " doesn\'t look like a valid domain name");
+            }
+        }
+
+        // check subnets
+        var subnets = this.get("subnets");
+        if (subnets) {
+            for (var i = 0; i < subnets.length && !validationError; ++i) {
+                validationError = !subnetRegexp.test(subnets[i]) && (subnets[i] + " doesn\'t look like a valid subnet");
+            }
+        }
+
+        return validationError;
+    }
 });
 
 app.Models.AccessKeyPermission.actions =  {
