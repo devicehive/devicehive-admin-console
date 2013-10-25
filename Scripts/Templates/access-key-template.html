@@ -4,11 +4,11 @@
      <table class="values-table">
          <tr>
              <td class="title-column"><label>label:</label></td>
-             <td><input type="text" id="label" value="<%= label %>"/></td>
+             <td><input type="text" class="label" value="<%= label %>"/></td>
          </tr>
          <tr>
              <td class="title-column"><label>expiration date:</label></td>
-             <td><input id="expirationDate" value="<%= expirationDate %>" type="text"/></td>
+             <td><input class="expiration-date" value="<%= expirationDate || "" %>" type="text"/></td>
          </tr>
      </table>
      <div class="access-key-permissions-edit-container panel">
