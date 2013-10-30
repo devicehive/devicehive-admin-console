@@ -53,12 +53,10 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
                     that.deviceEquipmentsView = new app.Views.DeviceEquipments({ model: that.model });
                 }
 
-                that.deviceEquipmentsView.renderModel().then(
-                    function (smth) {
-                        that.deviceEquipmentsView.$el.html(smth);
-                        that.$el.append(that.deviceEquipmentsView.$el);
-                        that.deviceEquipmentsView.collection.fetch();
-                    });
+                var smth = that.deviceEquipmentsView.renderModel();
+                that.deviceEquipmentsView.$el.html(smth);
+                that.$el.append(that.deviceEquipmentsView.$el);
+                that.deviceEquipmentsView.collection.fetch();
                 break;
             case "commands":
 
@@ -74,13 +72,10 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
                 if (that.commandsView == null) 
                     that.commandsView = new app.Views.Commands({ model: that.model, timeFilters: that.commandsTimeFilters });
                 
-                that.commandsView.renderModel().then(
-                    function (smth) {
-                        that.commandsView.$el.html(smth);
-                        that.$el.append(that.commandsView.$el);
-                        that.commandsView.refreshCollection();
-                    });
-
+                smth = that.commandsView.renderModel();
+                that.commandsView.$el.html(smth);
+                that.$el.append(that.commandsView.$el);
+                that.commandsView.refreshCollection();
                 break;
             case "notifications":
 
@@ -97,13 +92,10 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
                 if (that.notificationsView == null) 
                     that.notificationsView = new app.Views.Notifications({ model: that.model, timeFilters: that.notificationsTimeFilters });
                 
-                that.notificationsView.renderModel().then(
-                    function (smth) {
-                        that.notificationsView.$el.html(smth);
-                        that.$el.append(that.notificationsView.$el);
-                        that.notificationsView.refreshCollection();
-                    });
-
+                smth = that.notificationsView.renderModel();
+                that.notificationsView.$el.html(smth);
+                that.$el.append(that.notificationsView.$el);
+                that.notificationsView.refreshCollection();
                 break;
         }
     },

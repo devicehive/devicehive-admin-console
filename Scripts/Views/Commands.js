@@ -138,9 +138,8 @@ app.Views.Commands = Backbone.Marionette.CompositeView.extend({
         this.timeFiltersView = new app.Views.TimeFilters({ model: this.timeFiltersModel });
         var that = this;
 
-        this.timeFiltersView.render().then(function () {
-            that.$el.append(that.timeFiltersView.$el);
-        });
+        this.timeFiltersView.render();
+        this.$el.append(that.timeFiltersView.$el);
 
         this.timeFiltersView.on("applyFilters", function () {
             that.applyDateTimeFilter();
