@@ -1,8 +1,10 @@
 app.Models.AccessKey = Backbone.Model.extend({
-    defaults: { },
+    defaults: function() {
+        return { permissions: new app.Models.AccessKeyPermissionsCollection() };
+    },
     parse: function(response, xhr) {
-        if (response) {
-            response["permissions"] = new app.Models.AccessKeyPermissionsCollection(response["permissions"] || []);
+        if (response && response.permissions) {
+            response["permissions"] = new app.Models.AccessKeyPermissionsCollection(response["permissions"]);
         }
         return response;
     },

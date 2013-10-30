@@ -2,6 +2,7 @@
     var accessKeysCollection;
     var networksCollection;
     var devicesCollection;
+    var currentAccessKey;
 
     var accessKeysView;
 
@@ -32,6 +33,10 @@
                                 var path = "accesskeys/" + viewObject.model.id;
                                 Backbone.history.navigate(path, { trigger: true });
                             });
+                            accessKeysView.on("addClicked", function () {
+                                var path = "accesskeys/create";
+                                Backbone.history.navigate(path, { trigger: true });
+                            });
                             app.Regions.topWorkArea.show(accessKeysView);
 
                             retIt.resolve();
@@ -51,16 +56,21 @@
         var retIt = $.Deferred();
 
         var bwacv = app.Regions.bottomWorkArea.currentView;
-        if (!(_.isUndefined(bwacv)) && bwacv == accessKeysView) {
+        if (!(_.isUndefined(bwacv)) && bwacv == accessKeysView && currentAccessKey != null && id == currentAccessKey.id) {
             retIt.resolve();
         }
         else {
-            var accessKey = accessKeysCollection.find(function(ak) {
-                return ak.id == id;
-            });
+            if (id == "create") {
+                currentAccessKey = new app.Models.AccessKey({ }, { collection: accessKeysCollection });
+            }
+            else {
+                currentAccessKey = accessKeysCollection.find(function(ak) {
+                    return ak.id == id;
+                });
+            }
 
             var editView = new app.Views.AccessKey({
-                model: accessKey,
+                model: currentAccessKey,
                 networks: networksCollection,
                 devices: devicesCollection
             });
@@ -72,7 +82,11 @@
                 Backbone.history.navigate(path, { trigger: false });
             });
 
-            editView.on("success", function() {
+            editView.on("success", function(accessKey) {
+                if (!accessKeysCollection.find(function (ak) { return ak.id == accessKey.id; }))
+                {
+                    accessKeysCollection.add(accessKey);
+                }
                 if (app.Regions.bottomWorkArea.currentView == editView)
                     app.Regions.bottomWorkArea.close();
                 var path = "accesskeys";

@@ -164,7 +164,7 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
             this.originalModel.get("permissions").reset(this.model.get("permissions").toJSON(), { silent: true });
             this.originalModel.save(changes, {
                 success: function (model, response) {
-                    that.trigger("success");
+                    that.trigger("success", model);
                     model.trigger("change", model);
                 },
                 error: function (model, response) {

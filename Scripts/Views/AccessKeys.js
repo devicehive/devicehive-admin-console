@@ -88,6 +88,9 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
 
 //collection is an app.Models.AccessKeysCollection
 app.Views.AccessKeys = Backbone.Marionette.CompositeView.extend({
+    triggers: {
+        "click .add": "addClicked"
+    },
     itemView: app.Views.AccessKeyListItem,
     emptyView: Backbone.Marionette.ItemView.extend(
         {
