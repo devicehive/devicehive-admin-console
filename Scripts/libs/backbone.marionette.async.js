@@ -82,6 +82,7 @@ Backbone.Marionette.Async = (function (Backbone, Marionette, _, $) {
 
             this.triggerBeforeRender();
 
+            this.closeEmptyView();  // note: already fixed in newer versions of backbone.marionette
             this.closeChildren();
             delete this._waitingForRender;
 

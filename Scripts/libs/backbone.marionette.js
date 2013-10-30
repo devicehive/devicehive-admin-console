@@ -300,6 +300,7 @@ Backbone.Marionette = (function (Backbone, _, $) {
         // the collection view.
         render: function () {
             this.triggerBeforeRender();
+            this.closeEmptyView();  // note: already fixed in newer versions of backbone.marionette
             this.closeChildren();
             delete this._waitingForRender;
 
