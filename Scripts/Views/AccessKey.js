@@ -8,7 +8,8 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
         "change .subnets": "changeSubnets",
         "keyup .subnets": "changeSubnets",
         "change .domains": "changeDomains",
-        "keyup .domains": "changeDomains"
+        "keyup .domains": "changeDomains",
+        "change .action": "changeActions"
     },
     triggers: {
         "click .remove-access-key-permission": "removePermission"
@@ -94,6 +95,10 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
         var subnetsList = _.without(this.subnetsText.split("\n").map(function(subnet) { return $.trim(subnet); }), "");
         subnetsList = _.isEmpty(subnetsList) ? null : subnetsList;
         this.model.set("subnets", subnetsList, { silent: true });
+    },
+    changeActions: function() {
+        var actions = this.$el.find(".action:checked").map(function(cb) { return $(this).val(); }).toArray();
+        this.model.set("actions", actions, { silent: true });
     },
     change: function(attr) {
         if (attr && !_.isEmpty(attr))

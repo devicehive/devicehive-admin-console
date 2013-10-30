@@ -9,7 +9,7 @@
     </td>
     <td>
         <% _.each(availableActions, function(description, action) { %>
-        <input id="<%= cid + '_' + action %>" type="checkbox" value="<%= action %>" title="<%= description %>" <% if (actions.indexOf(action) != -1) { %>checked="checked"<% } %>/>
+        <input class="action" id="<%= cid + '_' + action %>" type="checkbox" value="<%= action %>" title="<%= description %>" <% if (_.indexOf(actions, action) != -1) { %>checked="checked"<% } %>/>
         <label for="<%= cid + '_' + action %>" title="<%= description %>"><%= action %></label><br/>
         <% }); %>
     </td>
