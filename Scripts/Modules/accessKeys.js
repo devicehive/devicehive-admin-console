@@ -5,6 +5,7 @@
     var currentAccessKey;
 
     var accessKeysView;
+    var accessKeyEditView;
 
     var showAccessKeys = function () {
         var retIt = $.Deferred();
@@ -37,6 +38,14 @@
                                 var path = "accesskeys/create";
                                 Backbone.history.navigate(path, { trigger: true });
                             });
+                            accessKeysView.on("itemview:deleted", function (source, id) {
+                                // close open view on delete
+                                var bwacv = app.Regions.bottomWorkArea.currentView;
+                                if (!(_.isUndefined(bwacv)) && bwacv == accessKeyEditView && currentAccessKey != null && id == currentAccessKey.id) {
+                                    var path = "accesskeys";
+                                    Backbone.history.navigate(path, { trigger: true });
+                                }
+                            });
                             app.Regions.topWorkArea.show(accessKeysView);
 
                             retIt.resolve();
@@ -56,7 +65,7 @@
         var retIt = $.Deferred();
 
         var bwacv = app.Regions.bottomWorkArea.currentView;
-        if (!(_.isUndefined(bwacv)) && bwacv == accessKeysView && currentAccessKey != null && id == currentAccessKey.id) {
+        if (!(_.isUndefined(bwacv)) && bwacv == accessKeyEditView && currentAccessKey != null && id == currentAccessKey.id) {
             retIt.resolve();
         }
         else {
@@ -69,31 +78,32 @@
                 });
             }
 
-            var editView = new app.Views.AccessKey({
+            accessKeyEditView = new app.Views.AccessKey({
                 model: currentAccessKey,
                 networks: networksCollection,
                 devices: devicesCollection
             });
 
-            editView.on("cancel", function() {
-                if (app.Regions.bottomWorkArea.currentView == editView)
+            accessKeyEditView.on("cancel", function() {
+                if (app.Regions.bottomWorkArea.currentView == accessKeyEditView)
                     app.Regions.bottomWorkArea.close();
                 var path = "accesskeys";
                 Backbone.history.navigate(path, { trigger: false });
             });
 
-            editView.on("success", function(accessKey) {
+            accessKeyEditView.on("success", function(accessKey) {
                 if (!accessKeysCollection.find(function (ak) { return ak.id == accessKey.id; }))
                 {
                     accessKeysCollection.add(accessKey);
                 }
-                if (app.Regions.bottomWorkArea.currentView == editView)
+                accessKeysCollection.sort();
+                if (app.Regions.bottomWorkArea.currentView == accessKeyEditView)
                     app.Regions.bottomWorkArea.close();
                 var path = "accesskeys";
                 Backbone.history.navigate(path, { trigger: false });
             });
 
-            app.Regions.bottomWorkArea.show(editView);
+            app.Regions.bottomWorkArea.show(accessKeyEditView);
             retIt.resolve();
         }
 

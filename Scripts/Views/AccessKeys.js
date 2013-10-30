@@ -53,6 +53,9 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
         this.devices = options.devices;
         this.detailsVisible = false;
         this.bindTo(this.model, "change", this.render);
+        this.bindTo(this.model, "destroy", function(model) {
+            this.trigger("deleted", model.id);
+        });
     },
     onRender: function() {
         this.toggleDetails(null, this.detailsVisible)
