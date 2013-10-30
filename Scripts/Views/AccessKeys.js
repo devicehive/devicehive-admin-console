@@ -51,18 +51,19 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
         this.collection = this.model.get("permissions");
         this.networks = options.networks;
         this.devices = options.devices;
-        this.detailsVisible = false;
+        if (_.isUndefined(this.model.detailsVisible))
+            this.model.detailsVisible = false;
         this.bindTo(this.model, "change", this.render);
         this.bindTo(this.model, "destroy", function(model) {
             this.trigger("deleted", model.id);
         });
     },
     onRender: function() {
-        this.toggleDetails(null, this.detailsVisible)
+        this.toggleDetails(null, this.model.detailsVisible)
     },
     toggleDetails: function(event, visible) {
-        this.detailsVisible = !_.isUndefined(visible) ? visible : !this.detailsVisible;
-        this.$el.find(".details-row").toggle(this.detailsVisible);
+        this.model.detailsVisible = !_.isUndefined(visible) ? visible : !this.model.detailsVisible;
+        this.$el.find(".details-row").toggle(this.model.detailsVisible);
     },
     deleteAccessKey: function () {
         if (confirm("Do you really want to delete this access key?"))
