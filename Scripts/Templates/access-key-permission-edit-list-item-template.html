@@ -1,9 +1,11 @@
 <script type="text/template" id="access-key-permission-list-item">
     <td>
-        <textarea id="<%= cid %>_domains" class="domains" rows="10" cols="23"><%= domainsText %></textarea>
+        <textarea id="<%= cid %>_domains" class="domains" rows="10" cols="23">
+<%= domainsText %></textarea>
     </td>
     <td>
-        <textarea id="<%= cid %>_subnets" class="subnets" rows="10" cols="23"><%= subnetsText %></textarea>
+        <textarea id="<%= cid %>_subnets" class="subnets" rows="10" cols="23">
+<%= subnetsText %></textarea>
     </td>
     <td>
         <% _.each(availableActions, function(description, action) { %>

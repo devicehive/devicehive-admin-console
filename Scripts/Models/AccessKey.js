@@ -61,7 +61,7 @@ app.Models.AccessKeyPermission = Backbone.Model.extend({
             }
         }
 
-        return validationError;
+        return validationError || void 0;
     }
 });
 

@@ -18,13 +18,10 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
     initialize: function(options) {
         this.networks = options.networks;
         this.devices = options.devices;
-        /*this.bindTo(this.model, "change:domains", this.prepareViewModel);
-        this.bindTo(this.model, "change:subnets", this.prepareViewModel);*/
         this.bindTo(this.model, "change", this.render);
         this.prepareViewModel();
     },
     prepareViewModel: function() {
-        console.log("prepare");
         this.domainsText = (this.model.get("domains") || []).join("\n");
         this.subnetsText = (this.model.get("subnets") || []).join("\n");
     },
@@ -48,7 +45,7 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
             var networkIds = this.model.get("networkIds") || [];
             if (id != null && _.indexOf(networkIds, id) == -1) {
                 networkIds.push(id);
-                this.model.set("networkIds", networkIds);
+                this.model.set("networkIds", networkIds, { silent: true });
                 this.change();
             }
         }
@@ -59,7 +56,7 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
             var deviceGuids = this.model.get("deviceGuids") || [];
             if (id != null && _.indexOf(deviceGuids, id) == -1) {
                 deviceGuids.push(id);
-                this.model.set("deviceGuids", deviceGuids);
+                this.model.set("deviceGuids", deviceGuids, { silent: true });
                 this.change();
             }
         }
@@ -71,7 +68,7 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
         if (index != -1) {
             networkIds.splice(index, 1);
             if (_.isEmpty(networkIds))
-                this.model.set("networkIds", null);
+                this.model.set("networkIds", null, { silent: true });
             this.change("networkIds");
         }
     },
@@ -82,7 +79,7 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
         if (index != -1) {
             deviceGuids.splice(index, 1);
             if (_.isEmpty(deviceGuids))
-                this.model.set("deviceGuids", null);
+                this.model.set("deviceGuids", null, { silent: true });
             this.change("deviceGuids");
         }
     },
@@ -133,14 +130,7 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
         };
     },
     onRender: function() {
-        this.$el.find(".expiration-date").datetimepicker({
-            onClose: function (dateText) {
-                //if (!_.isEmpty(dateText))
-                    //that.model.set("startDate", that.parseDate(dateText));
-                //else
-                    //that.model.set("startDate", null);
-            }
-        });
+        this.$el.find(".expiration-date").datetimepicker();
     },
     saveAccessKey: function() {
         //app.vent.trigger("notification", app.Enums.NotificationType.Error, "hello :)");
@@ -156,6 +146,16 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
         if (!_.isEmpty(this.$el.find(".expiration-date").val()))
             expDate = this.$el.find(".expiration-date").datetimepicker("getDate");
         this.model.set("expirationDate", expDate);
+    },
+    serializeData: function() {
+        var data = this.model.toJSON({ escape: true });
+        if (!_.has(data, "label"))
+            data["label"] = "";
+        if (_.has(data, "expirationDate") && !_.isEmpty(data["expirationDate"]))
+            data["expirationDate"] = app.f.parseUTCstring(data["expirationDate"]).format("mm/dd/yyyy HH:MM");
+        else
+            data["expirationDate"] = "";
+        return data;
     }
 
 });
