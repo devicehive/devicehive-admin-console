@@ -512,17 +512,32 @@ table
 }
 
 .access-key-permissions-edit-table th.networks {
-    width: 19%;
+    width: 18%;
 }
 
 .access-key-permissions-edit-table th.devices {
-    width: 19%;
+    width: 18%;
 }
 
 .access-key-permissions-edit-table th.buttons-columns {
-    width: 5%;
+    width: 7%;
 }
 
 .access-key-permissions-edit-container {
     margin-bottom: 10px;
+}
+
+.access-key-permissions-edit-table .networks ul,
+.access-key-permissions-edit-table .devices ul {
+    list-style: none;
+    padding: 0;
+}
+
+.access-key-permissions-edit-table .networks select.networks,
+.access-key-permissions-edit-table .devices select.devices {
+    max-width: 150px;
+}
+
+.access-key-permissions-edit-table .devices select.devices {
+    max-width: 150px;
 }
