@@ -138,7 +138,40 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
         this.$el.find(".expiration-date").datetimepicker();
     },
     saveAccessKey: function() {
-        //app.vent.trigger("notification", app.Enums.NotificationType.Error, "hello :)");
+        var validationErrors = _.reduce(this.children, function(errors, child) {
+            var result = child.model.validate();
+            if (!_.isUndefined(result))
+                errors.push(result);
+            return errors;
+        }, []);
+
+        if (validationErrors.length) {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error, validationErrors.join("\n"));
+        }
+        else {
+            var expirationDate = null;
+            var expirationDateEl = this.$el.find(".expiration-date");
+            if (!_.isEmpty($.trim(expirationDateEl.val()))) {
+                expirationDate = app.f.toISOString(expirationDateEl.datetimepicker("getDate"));
+            }
+
+            var changes = {
+                label: this.$el.find(".label").val(),
+                expirationDate: expirationDate
+            };
+
+            var that = this;
+            this.originalModel.get("permissions").reset(this.model.get("permissions").toJSON(), { silent: true });
+            this.originalModel.save(changes, {
+                success: function (model, response) {
+                    that.trigger("success");
+                },
+                error: function (model, response) {
+                    app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                },
+                wait: true
+            });
+        }
     },
     addPermission: function() {
         this.model.get("permissions").add({ domains: null, subnets: null, actions: null, networkIds: null, deviceGuids: null });

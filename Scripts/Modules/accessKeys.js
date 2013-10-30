@@ -72,6 +72,14 @@
                 Backbone.history.navigate(path, { trigger: false });
             });
 
+            editView.on("success", function() {
+                if (app.Regions.bottomWorkArea.currentView == editView)
+                    app.Regions.bottomWorkArea.close();
+                var path = "accesskeys";
+                Backbone.history.navigate(path, { trigger: false });
+
+            });
+
             app.Regions.bottomWorkArea.show(editView);
             retIt.resolve();
         }
