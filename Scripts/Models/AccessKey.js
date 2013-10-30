@@ -56,7 +56,7 @@ app.Models.AccessKeyPermission = Backbone.Model.extend({
         // check subnets
         var subnets = this.get("subnets");
         if (subnets) {
-            for (var i = 0; i < subnets.length && !validationError; ++i) {
+            for (i = 0; i < subnets.length && !validationError; ++i) {
                 validationError = !subnetRegexp.test(subnets[i]) && (subnets[i] + " doesn\'t look like a valid subnet");
             }
         }

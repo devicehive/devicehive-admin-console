@@ -77,7 +77,6 @@
                     app.Regions.bottomWorkArea.close();
                 var path = "accesskeys";
                 Backbone.history.navigate(path, { trigger: false });
-
             });
 
             app.Regions.bottomWorkArea.show(editView);

@@ -165,6 +165,7 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
             this.originalModel.save(changes, {
                 success: function (model, response) {
                     that.trigger("success");
+                    model.trigger("change", model);
                 },
                 error: function (model, response) {
                     app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
