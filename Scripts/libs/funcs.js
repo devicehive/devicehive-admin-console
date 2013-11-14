@@ -26,13 +26,13 @@ Backbone.Marionette.Application.prototype.f = {
     },
     //use for utc-formatted strings
     parseUTCstring: function (datetimeString) {
-        return new Date(datetimeString.substring(0, 4),
+        return new Date(Date.UTC(datetimeString.substring(0, 4),
                         parseInt(datetimeString.substring(5, 7),10) - 1,
                         datetimeString.substring(8, 10),
                         datetimeString.substring(11, 13),
                         datetimeString.substring(14, 16),
                         datetimeString.substring(17, 19),
-                        datetimeString.substring(20, 23));
+                        datetimeString.substring(20, 23)));
     },
     toISOString: function (date) {
         return date.format(dateFormat.masks.isoUtcDateTime);
