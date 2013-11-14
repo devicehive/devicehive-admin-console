@@ -35,16 +35,7 @@ Backbone.Marionette.Application.prototype.f = {
                         datetimeString.substring(20, 23));
     },
     toISOString: function (date) {
-        function pad(n) {
-            return n < 10 ? '0'+n : n;
-        }
-
-        return date.getUTCFullYear()+'-'
-                + pad(date.getUTCMonth()+1)+'-'
-                + pad(date.getUTCDate())+'T'
-                + pad(date.getUTCHours())+':'
-                + pad(date.getUTCMinutes())+':'
-                + pad(date.getUTCSeconds())+'Z';
+        return date.format(dateFormat.masks.isoUtcDateTime);
     }
 };
 
