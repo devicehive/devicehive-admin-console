@@ -29,27 +29,30 @@ _.extend(app, {
         }
     },
     //to cache the collections of data, that expected to be used in several places in application
-    getCollection: function (type) {
+    getCollection: function (type, options) {
         var retIt = $.Deferred();
 
-        if (_.isFunction(this.Models[type]) && this.DataCollections[type] == null) {
-            this.DataCollections[type] = new this.Models[type]();
+        var optionsHash = options != null && JSON.stringify(options) || "";
+        var key = type + optionsHash;
+
+        if (_.isFunction(this.Models[type]) && this.DataCollections[key] == null) {
+            this.DataCollections[key] = new this.Models[type](options);
             var that = this;
-            this.DataCollections[type].fetch({
+            this.DataCollections[key].fetch({
                 success: function () {
-                    retIt.resolve(that.DataCollections[type]);
+                    retIt.resolve(that.DataCollections[key]);
 
                 },
                 error: function (obj, xhr) {
                     app.vent.trigger("notification", app.Enums.NotificationType.Error, xhr);
-                    that.DataCollections[type] = null;
-                    retIt.resolve(that.DataCollections[type]);
+                    that.DataCollections[key] = null;
+                    retIt.resolve(that.DataCollections[key]);
 
                 }
             });
         }
         else {
-            retIt.resolve(this.DataCollections[type]);
+            retIt.resolve(this.DataCollections[key]);
         }
 
         return retIt;
