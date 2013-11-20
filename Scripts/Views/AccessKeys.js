@@ -93,7 +93,8 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
 //collection is an app.Models.AccessKeysCollection
 app.Views.AccessKeys = Backbone.Marionette.CompositeView.extend({
     triggers: {
-        "click .add": "addClicked"
+        "click .add": "addClicked",
+        "click .back": "backClicked"
     },
     itemView: app.Views.AccessKeyListItem,
     emptyView: Backbone.Marionette.ItemView.extend(
@@ -109,11 +110,19 @@ app.Views.AccessKeys = Backbone.Marionette.CompositeView.extend({
     initialize: function (options) {
         this.networks = options.networks;
         this.devices = options.devices;
+        this.user = options.user;
     },
     itemViewOptions: function() {
         return {
             networks: this.networks,
             devices: this.devices
         };
+    },
+    onRender: function() {
+        this.$el.find(".user-data").toggle(!!this.user);
+    },
+    serializeData: function() {
+        var data = { login: this.user && this.user.get("login") || "" };
+        return data;
     }
 });

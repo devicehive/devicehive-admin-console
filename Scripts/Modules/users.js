@@ -33,6 +33,10 @@
                         var path = "user/" + viewObject.model.get("id") + "/networks";
                         Backbone.history.navigate(path, { trigger: true });
                     });
+                    usersView.on("itemview:accessKeysClicked", function (viewObject) {
+                        var path = "user/" + viewObject.model.get("id") + "/accesskeys";
+                        Backbone.history.navigate(path, { trigger: true });
+                    });
                     usersView.on("itemview:editClicked", function (viewObject) {
                         var path = "user/" + viewObject.model.get("id");
                         Backbone.history.navigate(path, { trigger: true });

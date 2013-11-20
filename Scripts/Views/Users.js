@@ -3,7 +3,8 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
     tagName: "tr",
     triggers: {
         "click .networks": "networksClicked",
-        "click .edit": "editClicked"
+        "click .edit": "editClicked",
+        "click .accessKeys": "accessKeysClicked"
     },
     template: "user-list-item-template",
     serializeData: function () {

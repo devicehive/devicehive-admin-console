@@ -126,12 +126,28 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
         this.networks = options.networks;
         this.devices = options.devices;
         this.collection = this.model.get("permissions");
+        this.user = options.user;
         this.on("itemview:removePermission", this.removePermission);
     },
     itemViewOptions: function() {
+        var networks;
+        var devices;
+        if (!this.user || this.user.get("role") == app.Enums.UserRole.Administrator) {
+            networks = this.networks.toJSON();
+            devices = this.devices.toJSON();
+        }
+        else {
+            if (this.user.get("networks") != null && this.user.get("networks").length) {
+                networks = _.map(this.user.get("networks"), function(network) { return network.network; });
+                var userNetworkIds = _.map(networks, function(network) { return network.id } );
+                devices = _.filter(
+                    this.devices.toJSON(), function(device) { return _.indexOf(userNetworkIds, device.network.id) != -1 });
+            }
+        }
+
         return {
-            networks: _.reduce(this.networks.toJSON(), function(obj, network) { obj[network.id] = network; return obj; }, {}),
-            devices: _.reduce(this.devices.toJSON(), function(obj, device) { obj[device.id] = device; return obj; }, {})
+            networks: _.reduce(networks || [], function(obj, network) { obj[network.id] = network; return obj; }, {}),
+            devices:  _.reduce(devices || [], function(obj, device) { obj[device.id] = device; return obj; }, {})
         };
     },
     onRender: function() {
