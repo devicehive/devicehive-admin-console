@@ -1,5 +1,5 @@
 ﻿Backbone.Marionette.TemplateCache.prototype.loadTemplate = function (templateId, callback) {
-    var url = app.rootUrl + "/scripts/templates/" + templateId + ".html";
+    var url = app.rootUrl + "/Scripts/Templates/" + templateId + ".html";
 
     var templateHtml = "";
     $.ajax({ url: url, async: false, success: function (data) {
