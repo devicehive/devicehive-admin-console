@@ -93,10 +93,25 @@ app.bind("initialize:before", function (options) {
 });
 
 app.bind("initialize:after", function (options) {
+    // if no credentials currently set
+    if (!sessionStorage.user || !sessionStorage.password) {
+        console.log('no credentials on app initialize:after in sessionStorage');
+        console.log('Now credentials are set');
+        sessionStorage.user='dhadmin';
+        sessionStorage.password="dhadmin_#911";
+    } else {
+        console.log('lets think that we have credentials');
+    }
     // fetch current user
     (app.User = new app.Models.User()).fetch({ success: function() {
         if (app.User.id != null)
             app.trigger("login", options);
+    },
+    error: function(child, reply, obj) {
+        console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
+        if (reply.status == 401) {
+            console.log('need auth');
+        }
     }});
 });
 

@@ -1,6 +1,16 @@
 ﻿app.Models.User = Backbone.Model.extend({
     urlRoot: function () { return app.restEndpoint + "/user"; },
     urlCurrent: function () { return app.restEndpoint + "/user/current"; },
+    authHeader: function () { 
+        if (sessionStorage.user && sessionStorage.password) {
+            return {
+                'Authorization': 'Basic '+btoa(sessionStorage.user+':'+sessionStorage.password)
+            }
+        } else {
+            return {};
+        }
+    },
+    error: function(e) {console.log('User error %o', e)},
     defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [] },
     getters: {
         networksCollection: function () {
@@ -12,8 +22,9 @@
             return this.networksColl;
         }
     },
-    // override read method to get current user for empty model
+    // override read method to get current user for empty model and add auth header
     fetch: function(options) {
+        options = _.extend(options, {headers: this.authHeader()});
         var opts = this.isNew() && _.extend({}, options, { url: this.urlCurrent() }) || options;
         Backbone.Model.prototype.fetch.apply(this, [ opts ]);
     },
