@@ -96,9 +96,6 @@ app.bind("initialize:after", function (options) {
     // if no credentials currently set
     if (!sessionStorage.user || !sessionStorage.password) {
         console.log('no credentials on app initialize:after in sessionStorage');
-        console.log('Now credentials are set');
-        sessionStorage.user='dhadmin';
-        sessionStorage.password="dhadmin_#911";
     } else {
         console.log('lets think that we have credentials');
     }
@@ -111,11 +108,10 @@ app.bind("initialize:after", function (options) {
         console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
         if (reply.status == 401) {
             console.log('need auth');
+            app.trigger('needAuth', reply);
         }
     }});
-});
 
-app.bind("login", function (options) {
     var params = { root: app.rootUrl };
 
     if (_.isObject(options)) {
@@ -128,4 +124,76 @@ app.bind("login", function (options) {
         Backbone.history.start(params);
         Backbone.history.trigger("navigatedTo", Backbone.history.getFragment());
     }
+
+});
+
+app.bind("login", function (options) {
+    console.log('login event');
+});
+
+app.bind('needAuth', function(opts) {
+    console.log('needAuth method bind');
+    Backbone.history.navigate('auth', { trigger: true });
+});
+
+app.Views.Login = Backbone.Marionette.ItemView.extend({
+    template: 'user-login',
+    onRender: function() {
+        console.log('render login view this %o, el, %o', this, this.$el);
+        this.$el.find('form').on('submit', function(e) {
+            e.preventDefault();
+            console.log('form submit event %o', e);
+            var login = $(e.target).find('[name=login]').val();
+            var password = $(e.target).find('[name=password]').val();
+            console.log('login %o pass %o', login, password);
+            var options = {
+                headers: {'Authorization': 'Basic '+btoa(login+':'+password)},
+                success: function(resp, status) {
+                    console.log('success %o', resp);
+                    sessionStorage.user=login;
+                    sessionStorage.password=password;
+                    sessionStorage.lastActivity=(new Date()).valueOf();
+                    Backbone.history.navigate('', { trigger: false });
+                    location.reload(true);
+                },
+                error: function(resp, status) {
+                    console.log('fail %o', resp);
+                    if (status == 401) {
+                        alert('Invalid login or password');
+                    } else {
+                        alert('Server error');
+                    }
+                }
+            };
+
+            $.ajax(app.Models.User.prototype.urlCurrent(), options);
+        });
+    }
+});
+
+
+app.module("Modules.Login", function (users, app) {
+    console.log("Modules.Login users %o, app %o", users, app);
+    var loginView = new app.Views.Login();
+
+    var controller = {
+        'auth': function() {
+            app.Regions.topWorkArea.show(loginView);
+        },
+        'logout': function() {
+            delete sessionStorage.user;
+            delete sessionStorage.password;
+            Backbone.history.navigate('', { trigger: false });
+            location.reload(true);
+        }
+    };
+    var routes = {
+        auth: 'auth',
+        logout: 'logout'
+    };
+    var router = Backbone.Marionette.AppRouter.extend({ controller: controller, appRoutes: routes });
+    app.addInitializer(function (options) {
+        console.log('inited module.login and rtr is started');
+        var rtr = new router();
+    });
 });
