@@ -1,4 +1,4 @@
-﻿app.Models.UserInNetwork = Backbone.Model.extend({
+﻿app.Models.UserInNetwork = Backbone.AuthModel.extend({
     url: function () {
         return app.restEndpoint + '/user/' + this.get("UserId") + "/network/" + this.get("NetworkId");
     },

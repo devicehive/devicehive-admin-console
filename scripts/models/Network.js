@@ -1,9 +1,9 @@
-﻿app.Models.Network = Backbone.Model.extend({
+﻿app.Models.Network = Backbone.AuthModel.extend({
     urlRoot: function () { return app.restEndpoint + "/network"; },
     defaults: { devices: [], key: "" }
 });
 
-app.Models.NetworksCollection = Backbone.Collection.extend({
+app.Models.NetworksCollection = Backbone.AuthCollection.extend({
     url: function () { return app.restEndpoint + "/network"; },
     model: app.Models.Network,
     comparator: function (network) {

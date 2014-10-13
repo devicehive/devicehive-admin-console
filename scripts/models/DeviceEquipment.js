@@ -1,4 +1,4 @@
-﻿app.Models.DeviceEquipment = Backbone.Model.extend({
+﻿app.Models.DeviceEquipment = Backbone.AuthModel.extend({
     initialize: function (attributes, options) {
         if (!_.isUndefined(attributes) && _.has(attributes, "device")) {
             this.device = attributes.device;
@@ -18,7 +18,7 @@
     }
 });
 
-app.Models.DeviceEquipmentsCollection = Backbone.Collection.extend({
+app.Models.DeviceEquipmentsCollection = Backbone.AuthCollection.extend({
     initialize: function (attributes, options) {
         if (!_.isUndefined(attributes) && _.has(attributes, "device")) {
             this.device = attributes.device;

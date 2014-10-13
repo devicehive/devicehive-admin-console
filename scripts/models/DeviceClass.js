@@ -1,4 +1,4 @@
-﻿app.Models.DeviceClass = Backbone.Model.extend({
+﻿app.Models.DeviceClass = Backbone.AuthModel.extend({
     urlRoot: function () {
         return app.restEndpoint + "/device/class";
     },
@@ -48,7 +48,7 @@
     }
 });
 
-app.Models.DeviceClassesCollection = Backbone.Collection.extend({
+app.Models.DeviceClassesCollection = Backbone.AuthCollection.extend({
     url: function () {
         return app.restEndpoint + "/device/class";
     },

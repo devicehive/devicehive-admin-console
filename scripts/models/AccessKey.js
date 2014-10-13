@@ -1,4 +1,4 @@
-app.Models.AccessKey = Backbone.Model.extend({
+app.Models.AccessKey = Backbone.AuthModel.extend({
     defaults: function() {
         return { permissions: new app.Models.AccessKeyPermissionsCollection() };
     },
@@ -20,7 +20,7 @@ app.Models.AccessKey = Backbone.Model.extend({
 });
 
 
-app.Models.AccessKeysCollection = Backbone.Collection.extend({
+app.Models.AccessKeysCollection = Backbone.AuthCollection.extend({
     initialize: function (options) {
         if (options && _.has(options, "userId")) {
             this.userId = options.userId;
@@ -40,7 +40,7 @@ app.Models.AccessKeysCollection = Backbone.Collection.extend({
 });
 
 
-app.Models.AccessKeyPermission = Backbone.Model.extend({
+app.Models.AccessKeyPermission = Backbone.AuthModel.extend({
     defaults: { },
     validate: function() {
         var domainRegexp = /^([0-9a-zA-Z\\-]+\.?)+[0-9a-zA-Z\\-]+$/;
@@ -80,6 +80,6 @@ app.Models.AccessKeyPermission.actions =  {
 };
 
 
-app.Models.AccessKeyPermissionsCollection = Backbone.Collection.extend({
+app.Models.AccessKeyPermissionsCollection = Backbone.AuthCollection.extend({
     model: app.Models.AccessKeyPermission
 });

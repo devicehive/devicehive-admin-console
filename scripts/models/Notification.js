@@ -1,4 +1,4 @@
-﻿app.Models.Notification = Backbone.Model.extend({
+﻿app.Models.Notification = Backbone.AuthModel.extend({
     initialize: function (attributes, options) {
         if (!_.isUndefined(attributes) && _.has(attributes, "device")) {
             this.device = attributes.device;
@@ -18,7 +18,7 @@
     }
 });
 
-app.Models.NotificationsCollection = Backbone.Collection.extend({
+app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
     initialize: function (attributes, options) {
         if (!_.isUndefined(attributes) && _.has(attributes, "device")) {
             this.device = attributes.device;

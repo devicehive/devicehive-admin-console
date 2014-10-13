@@ -1,15 +1,6 @@
-﻿app.Models.User = Backbone.Model.extend({
+﻿app.Models.User = Backbone.AuthModel.extend({
     urlRoot: function () { return app.restEndpoint + "/user"; },
     urlCurrent: function () { return app.restEndpoint + "/user/current"; },
-    authHeader: function () { 
-        if (sessionStorage.user && sessionStorage.password) {
-            return {
-                'Authorization': 'Basic '+btoa(sessionStorage.user+':'+sessionStorage.password)
-            }
-        } else {
-            return {};
-        }
-    },
     error: function(e) {console.log('User error %o', e)},
     defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [] },
     getters: {
@@ -24,9 +15,8 @@
     },
     // override read method to get current user for empty model and add auth header
     fetch: function(options) {
-        options = _.extend(options, {headers: this.authHeader()});
         var opts = this.isNew() && _.extend({}, options, { url: this.urlCurrent() }) || options;
-        Backbone.Model.prototype.fetch.apply(this, [ opts ]);
+        Backbone.AuthModel.prototype.fetch.apply(this, [opts]);
     },
     //put connector to server and add network record to appropriate collection(to just keep views in sync)
     //This and the next method is the result of many-to-many relationshipd, that isn't supported directly. 
@@ -64,7 +54,7 @@
     }
 });
 
-app.Models.UsersCollection = Backbone.Collection.extend({
+app.Models.UsersCollection = Backbone.AuthCollection.extend({
     url: function () { return app.restEndpoint + "/user"; },
     model: app.Models.User,
     comparator: function (user) {
