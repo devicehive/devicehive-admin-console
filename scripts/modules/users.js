@@ -164,7 +164,7 @@
         var rtr = new router();
     });
 
-    app.bind("initialize:after", function (options) {
+    app.bind("login", function (options) {
         app.vent.trigger("addResource", "user", "Users", [ app.Enums.UserRole.Administrator ]);
     });
 

@@ -61,6 +61,15 @@ _.extend(app, {
     isLoggedIn: function() {
         return app.User && !app.User.isNew();
     },
+    hasCredentials: function() {
+        // if no credentials currently set
+        if (!sessionStorage.userLogin || !sessionStorage.userPassword) {
+            return false;
+        } else {
+            console.log('lets think that we have credentials');
+            return true;
+        }
+    },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {
         if (!this.isLoggedIn())
@@ -93,25 +102,7 @@ app.bind("initialize:before", function (options) {
 });
 
 app.bind("initialize:after", function (options) {
-    // if no credentials currently set
-    if (!sessionStorage.user || !sessionStorage.password) {
-        console.log('no credentials on app initialize:after in sessionStorage');
-    } else {
-        console.log('lets think that we have credentials');
-    }
-    // fetch current user
-    (app.User = new app.Models.User()).fetch({ success: function() {
-        if (app.User.id != null)
-            app.trigger("login", options);
-    },
-    error: function(child, reply, obj) {
-        console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
-        if (reply.status == 401) {
-            console.log('need auth');
-            app.trigger('needAuth', reply);
-        }
-    }});
-
+    app.User = new app.Models.User();
     var params = { root: app.rootUrl };
 
     if (_.isObject(options)) {
@@ -120,15 +111,32 @@ app.bind("initialize:after", function (options) {
         }
     }
 
+
     if (Backbone.history) {
         Backbone.history.start(params);
-        Backbone.history.trigger("navigatedTo", Backbone.history.getFragment());
+        if (this.hasCredentials()) {
+            app.trigger('login');
+        } else {
+            app.trigger('needAuth');
+        }
     }
-
 });
 
 app.bind("login", function (options) {
     console.log('login event');
+    // fetch current user
+    app.User.fetch({ success: function() {
+        if (app.User.id != null) {
+            Backbone.history.trigger("navigatedTo", Backbone.history.getFragment());
+        }
+    },
+    error: function(child, reply, obj) {
+        console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
+        if (reply.status == 401) {
+            console.log('need auth');
+            app.trigger('needAuth', reply);
+        }
+    }});
 });
 
 app.bind('needAuth', function(opts) {
@@ -150,8 +158,8 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
                 headers: {'Authorization': 'Basic '+btoa(login+':'+password)},
                 success: function(resp, status) {
                     console.log('success %o', resp);
-                    sessionStorage.user=login;
-                    sessionStorage.password=password;
+                    sessionStorage.userLogin=login;
+                    sessionStorage.userPassword=password;
                     sessionStorage.lastActivity=(new Date()).valueOf();
                     Backbone.history.navigate('', { trigger: false });
                     location.reload(true);
@@ -178,11 +186,18 @@ app.module("Modules.Login", function (users, app) {
 
     var controller = {
         'auth': function() {
-            app.Regions.topWorkArea.show(loginView);
+            if (sessionStorage.userLogin && sessionStorage.userPassword) {
+                console.log('auth action redirects to / because there are some credentials');
+                Backbone.history.navigate('', {trigger: false});
+                return;
+            } else {
+                console.log('credentials incomplete or missing');
+                app.Regions.topWorkArea.show(loginView);
+            }
         },
         'logout': function() {
-            delete sessionStorage.user;
-            delete sessionStorage.password;
+            delete sessionStorage.userLogin;
+            delete sessionStorage.userPassword;
             Backbone.history.navigate('', { trigger: false });
             location.reload(true);
         }
@@ -196,4 +211,8 @@ app.module("Modules.Login", function (users, app) {
         console.log('inited module.login and rtr is started');
         var rtr = new router();
     });
+    app.bind("initialize:after", function () {
+        app.vent.trigger("addResource", "auth", "Login", []);
+    });
+
 });

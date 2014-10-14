@@ -1,9 +1,9 @@
 // AuthModel is intended to be a base model for entities that requires http basic auth for ajax requests
 Backbone.AuthModel = Backbone.Model.extend({
     authHeader: function () {
-        if (sessionStorage.user && sessionStorage.password) {
+        if (sessionStorage.userLogin && sessionStorage.userPassword) {
             return {
-                'Authorization': 'Basic '+btoa(sessionStorage.user+':'+sessionStorage.password)
+                'Authorization': 'Basic '+btoa(sessionStorage.userLogin+':'+sessionStorage.userPassword)
             };
         } else {
             return {};
@@ -13,17 +13,21 @@ Backbone.AuthModel = Backbone.Model.extend({
     sync: function(method, model, options) {
         console.log('sync: method %o model %o, options %o', method, model, options);
         options || (options = {});
+        // keep original error handler and make wrapper to handle 401 responses
+        var errorHandler = options.error || function(){};
+        options.error = function(reply) {
+            if (reply.status == 401) {
+                Backbone.history.navigate('logout', {trigger: true});
+            } else {
+                errorHandler.apply(this, arguments);
+            }
+        };
         options.headers = _.extend(options.headers ? options.headers : {}, this.authHeader());
         return Backbone.sync.apply(this, [method, model, options]);
     }
 });
 
 Backbone.AuthCollection = Backbone.Collection.extend({
-    sync: function(method, model, options) {
-        console.log('sync collection: method %o model %o, options %o', method, model, options);
-        options = options ? options : {};
-        options.headers = _.extend(options.headers ? options.headers : {}, Backbone.AuthModel.prototype.authHeader());
-        options || (options = {});
-        return Backbone.sync.apply(this, [method, model, options]);
-    }
+    sync: Backbone.AuthModel.prototype.sync,
+    authHeader: Backbone.AuthModel.prototype.authHeader
 });
