@@ -541,3 +541,30 @@ table
 .access-key-permissions-edit-table .devices select.devices {
     max-width: 150px;
 }
+
+.credentials-form {
+    margin: auto;
+    width: 500px;
+}
+.credentials-form div>span {
+    width: 150px;
+    display: inline-block;
+}
+
+.credentials-form div.error {
+    border: solid 2px red;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.credentials-form div.success {
+    border: solid 2px rgb(38, 143, 47);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.logged-in {
+    float: right;
+}
