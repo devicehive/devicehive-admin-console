@@ -72,14 +72,16 @@ _.extend(app, {
     },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {
-        if (!this.isLoggedIn())
+        if (!this.isLoggedIn()) {
             return false;
-
-        if (roles == null)
+        }
+        if (roles == null) {
             return true;
+        }
 
-        if (_.isArray(roles))
+        if (_.isArray(roles)) {
             return _.indexOf(roles, app.User.get("role")) != -1;
+        }
 
         return roles == app.User.get("role");
     }

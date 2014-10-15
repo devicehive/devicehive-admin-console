@@ -11,7 +11,7 @@
 
     var deviceClassEditable = function() {
         return app.hasRole(app.Enums.UserRole.Administrator);
-    }
+    };
 
     var showDevices = function () {
         var retIt = $.Deferred();
@@ -106,21 +106,44 @@
         });
     };
 
-    var controller = {
-        devices_show: function () {
-            app.vent.trigger("startLoading");
-
-            showDevices().done(function () {
+    function devices_show() {
+        showDevices().done(function () {
                 app.vent.trigger("stopLoading");
                 app.Regions.bottomWorkArea.close();
             });
+    }
+    function detail_show(id, mode) {
+        detailShow(id, mode).done(function () {
+            app.vent.trigger("stopLoading");
+        });
+    }
+    var controller = {
+        devices_show: function () {
+            app.vent.trigger("startLoading");
+            // wait until current user object will be fetched from the server
+            if (app.User.isNew()) {
+                app.User.on('change', function (e){
+                    if (app.User.isNew() == false) {
+                        devices_show();
+                    }
+                });
+            } else {
+                devices_show();
+            }
+
         },
         detail_show: function (id, mode) {
             app.vent.trigger("startLoading");
-
-            detailShow(id, mode).done(function () {
-                app.vent.trigger("stopLoading");
-            });
+            // wait until current user object will be fetched from the server
+            if (app.User.isNew()) {
+                app.User.on('change', function (e){
+                    if (app.User.isNew() == false) {
+                        detail_show(id, mode);
+                    }
+                });
+            } else {
+                detail_show(id, mode);
+            }
         }
     };
 

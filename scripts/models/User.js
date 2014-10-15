@@ -13,7 +13,7 @@
             return this.networksColl;
         }
     },
-    // override read method to get current user for empty model and add auth header
+    // override read method to get current user for empty model
     fetch: function(options) {
         var opts = this.isNew() && _.extend({}, options, { url: this.urlCurrent() }) || options;
         Backbone.AuthModel.prototype.fetch.apply(this, [opts]);
