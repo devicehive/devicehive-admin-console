@@ -1,8 +1,6 @@
 app.module("Modules.Login", function (users, app) {
     console.log("Modules.Login users %o, app %o", users, app);
     var loginView = new app.Views.Login();
-    var changePasswordView = new app.Views.ChangePassword();
-
     var controller = {
         'auth': function() {
             if (sessionStorage.userLogin && sessionStorage.userPassword) {
@@ -19,15 +17,11 @@ app.module("Modules.Login", function (users, app) {
             delete sessionStorage.userPassword;
             Backbone.history.navigate('', { trigger: false });
             location.reload(true);
-        },
-        'changepassword': function() {
-            app.Regions.topWorkArea.show(changePasswordView);
         }
     };
     var routes = {
         auth: 'auth',
-        logout: 'logout',
-        changepassword: 'changepassword'
+        logout: 'logout'
     };
     var router = Backbone.Marionette.AppRouter.extend({ controller: controller, appRoutes: routes });
     app.addInitializer(function (options) {
