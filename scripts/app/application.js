@@ -158,6 +158,9 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
         var context = this;
         function showError(message) {
             context.$el.find('form .error').html(message);
+            if (message) {
+                context.$el.find('form input[type=password]').val('').focus();
+            }
             context.$el.find('form .error').toggleClass('ui-helper-hidden', !message);
         };
         this.$el.find('form').on('submit', function(e) {
