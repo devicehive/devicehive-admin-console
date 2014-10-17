@@ -4,7 +4,6 @@ app.Views.OAuth2IssueGrant = Backbone.Marionette.ItemView.extend({
         'submit form': 'requestGrant' 
     },
     initialize: function (options) {
-        console.log('OAuth2IssueGrant init options %o this %o', options, this);
         this.oauth = options.oauth;
         this.networksCollection = options.networksCollection;
         this.scopeCollection = options.scopeCollection;
@@ -25,8 +24,7 @@ app.Views.OAuth2IssueGrant = Backbone.Marionette.ItemView.extend({
         });
     },
     template: "oauth-issue-grant",
-    serializeData: function (p) {
-        console.log('serialize p %o', p);
+    serializeData: function () {
         var data = {
             oauth: this.oauth.toJSON(),
             networksCollection: this.networksCollection.toJSON(),
@@ -35,14 +33,11 @@ app.Views.OAuth2IssueGrant = Backbone.Marionette.ItemView.extend({
         return data;
     },
     requestGrant: function(e) {
-        console.log('issue grant callback, event %o', e);
         e.preventDefault();
         var $el = this.$el;
         var networkIds = _.map($el.find('form input[name=network-id]:checked'), function(item){
-            console.log('item %o', item);
             return Number($(item).val());
         });
-        console.log('network ids %o', networkIds);
         app.OAuth2.requestGrant(networkIds);
     }
 });
