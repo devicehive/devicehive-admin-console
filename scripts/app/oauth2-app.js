@@ -155,6 +155,7 @@ app.Models.OAuth2Model = Backbone.Model.extend({
         return s[0].toUpperCase() + s.substring(1);
     },
     getGrants: function() {
+        var self = this;
         var options = _.extend(this.defaultRequest, {
             url: this.getUrl('/user/current/oauth/grant'),
             data: {
@@ -172,8 +173,8 @@ app.Models.OAuth2Model = Backbone.Model.extend({
                 Backbone.history.navigate('grant', { trigger: true });
             } else {
                 console.log('Wow, we already have grants! What to do?');
+                self.redirectBack(resp[0]);
             }
-
         };
         options.error = function(resp) {
             console.warn('grants error resp %o', resp);
@@ -207,17 +208,17 @@ app.Models.OAuth2Model = Backbone.Model.extend({
         this.authRequest(options);
     },
     redirectBack: function(resp) {
-        var targetUrl = this.get('redirect_url');
+        var targetUrl = this.get('redirect_uri');
         var query = '';
         if (resp.authCode) {
             query += 'code='+encodeURIComponent(resp.authCode)+'&';
         }
         //trim trailing &
         if (query.length > 0) {
-            query = query.substr(0, query.length);
+            query = query.substr(0, query.length-1);
         }
         if (query) {
-            location.replace(targetUrl+'?'+query)
+            location.replace(targetUrl+'?'+query);
             return;
         }
         console.warn('not redirecting, query is empty');
