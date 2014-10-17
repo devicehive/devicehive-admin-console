@@ -2,8 +2,13 @@ app.module("Modules.OAuth2Grant", function (users, app) {
     var controller = {
         grant: function() {
             var networksCollection = new app.Models.NetworksCollection();
+            var scopeCollection = app.OAuth2.getScopeCollection();
             networksCollection.fetch();
-            var view = new app.Views.OAuth2IssueGrant({oauth: app.OAuth2, networksCollection: networksCollection});
+            var view = new app.Views.OAuth2IssueGrant({
+                oauth: app.OAuth2,
+                networksCollection: networksCollection,
+                scopeCollection: scopeCollection
+            });
             app.Regions.topWorkArea.show(view);
         }
     };

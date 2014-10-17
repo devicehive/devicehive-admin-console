@@ -1,42 +1,48 @@
 //model is an app.Models.DeviceClass
-app.Views.OAuth2IssueGrant = Backbone.Marionette.CompositeView.extend({
+app.Views.OAuth2IssueGrant = Backbone.Marionette.ItemView.extend({
+    events: {
+        'submit form': 'requestGrant' 
+    },
     initialize: function (options) {
-        console.log('init options %o', options);
+        console.log('OAuth2IssueGrant init options %o this %o', options, this);
         this.oauth = options.oauth;
         this.networksCollection = options.networksCollection;
+        this.scopeCollection = options.scopeCollection;
+        var self = this;
+        this.networksCollection.on('reset', function() {
+            self.render();
+        });
     },
-    onRender: function (p) {
-        console.log('onRender p %o', p);
+    onRender: function() {
+        var $el = this.$el;
+        var $form = $el.find('form');
+        $el.find('#cb-limit-networks').on('change', function(e) {
+            $this = $(this);
+            $el.find('#oauth-network-list').toggleClass('ui-helper-hidden', !$this.prop('checked'));
+            if ( !$this.prop('checked') ) {
+                $el.find('#oauth-network-list input[type=checkbox]').prop('checked', false);
+            }
+        });
     },
     template: "oauth-issue-grant",
     serializeData: function (p) {
         console.log('serialize p %o', p);
         var data = {
             oauth: this.oauth.toJSON(),
-            networksCollection: this.networksCollection.toJSON()
+            networksCollection: this.networksCollection.toJSON(),
+            scopeCollection: this.scopeCollection.toJSON()
             };
         return data;
+    },
+    requestGrant: function(e) {
+        console.log('issue grant callback, event %o', e);
+        e.preventDefault();
+        var $el = this.$el;
+        var networkIds = _.map($el.find('form input[name=network-id]:checked'), function(item){
+            console.log('item %o', item);
+            return Number($(item).val());
+        });
+        console.log('network ids %o', networkIds);
+        app.OAuth2.requestGrant(networkIds);
     }
 });
-// 
-// //collection is an app.Models.DeviceClassesCollection
-// app.Views.DeviceClasses = Backbone.Marionette.CompositeView.extend({
-    // events: {
-        // "click .add": "addNewClass"
-    // },
-    // itemView: app.Views.DeviceClassesListItem,
-    // template: "device-class-template",
-    // emptyView: Backbone.Marionette.ItemView.extend(
-        // {
-            // render: function () {
-                // this.$el.html("<td colspan='6'>there are no device classes has been registered yet. Create first one!</td>");
-                // return this;
-            // },
-            // tagName: "tr"
-        // }),
-    // itemViewContainer: "tbody",
-    // addNewClass: function () {
-        // this.collection.add(new app.Models.DeviceClass());
-    // }
-// });
-// 

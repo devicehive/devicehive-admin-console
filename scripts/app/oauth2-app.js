@@ -82,6 +82,31 @@ app.Models.OAuth2Model = Backbone.Model.extend({
         var p = this.attributes;
         return p.client_id && p.redirect_uri && p.response_type && p.scope;
     },
+    parseScope: function (scope) {
+        return $.map(scope.split(' '), function (s) {
+            switch (s) {
+                case "GetNetwork": return "View Networks";
+                case "GetDevice": return "View Devices";
+                case "GetDeviceState": return "Receive Device State";
+                case "GetDeviceNotification": return "Receive Device Notifications";
+                case "GetDeviceCommand": return "Receive Device Commands";
+                case "RegisterDevice": return "Register Devices";
+                case "CreateDeviceNotification": return "Create Device Notifications";
+                case "CreateDeviceCommand": return "Create Device Commands";
+                case "UpdateDeviceCommand": return "Update Device Commands";
+                default: return null;
+            }
+        });
+    },
+    getScopeCollection: function() {
+        var scopeCollection = this.get('scopeCollection');
+        if (scopeCollection) {
+            return scopeCollection;
+        }
+        scopeCollection = new app.Models.OAuth2ScopeCollection(_.map(this.parseScope(this.get('scope')), function(scope){return {name: scope};}));
+        this.set('scopeCollection', scopeCollection);
+        return scopeCollection;
+    },
     authRequest: function(options) {
         var opts = _.extend(this.defaultRequest, options, {headers: Backbone.AuthModel.prototype.authHeader()});
         console.log('making auth request with opts %o', opts);
@@ -126,15 +151,15 @@ app.Models.OAuth2Model = Backbone.Model.extend({
         };
         $.ajax(options);
     },
+    capitalize: function(s) {
+        return s[0].toUpperCase() + s.substring(1);
+    },
     getGrants: function() {
-        // type should be capitalized
-        var type = this.get('response_type');
-        type = type[0].toUpperCase() + type.substring(1);
         var options = _.extend(this.defaultRequest, {
             url: this.getUrl('/user/current/oauth/grant'),
             data: {
                 clientOAuthId: this.get('client_id'),
-                type: type,
+                type: this.capitalize(this.get('response_type')),
                 scope: this.get('scope'),
                 redirectUri: this.get('redirect_uri'),
                 accessType: this.get('access_type')
@@ -155,7 +180,56 @@ app.Models.OAuth2Model = Backbone.Model.extend({
             app.trigger('needAuth');
         };
         this.authRequest(options);
+    },
+    requestGrant: function(networkIds) {
+        if (networkIds.length == 0) {
+            networkIds = null;
+        }
+        var options = {
+            url: this.getUrl('/user/current/oauth/grant'),
+            type: 'POST',
+            data: {
+                client: {oauthId: this.get('client_id')},
+                type: this.capitalize(this.get('response_type')),
+                accessType: this.get('access_type'),
+                redirectUri: this.get('redirect_uri'),
+                scope: this.get('scope'),
+                networkIds: networkIds
+            }
+        };
+        options.success = function(resp) {
+            console.log('granted! resp %o', resp);
+            this.redirectBack(resp);
+        };
+        options.error = function(resp) {
+            console.warn('failed to grant access. resp is %o', resp);
+        };
+        this.authRequest(options);
+    },
+    redirectBack: function(resp) {
+        var targetUrl = this.get('redirect_url');
+        var query = '';
+        if (resp.authCode) {
+            query += 'code='+encodeURIComponent(resp.authCode)+'&';
+        }
+        //trim trailing &
+        if (query.length > 0) {
+            query = query.substr(0, query.length);
+        }
+        if (query) {
+            location.replace(targetUrl+'?'+query)
+            return;
+        }
+        console.warn('not redirecting, query is empty');
     }
+});
+
+app.Models.OAuth2ScopeModel = Backbone.Model.extend({
+    defaults: {name: ''}
+});
+
+app.Models.OAuth2ScopeCollection = Backbone.Collection.extend({
+    model: app.Models.OAuth2ScopeModel,
 });
 
 app.bind("initialize:before", function (options) {
