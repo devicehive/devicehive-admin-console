@@ -30,7 +30,6 @@
     var controller = {
         networks_show: function () {
             if ( !app.hasCredentials() ) {
-                console.log('networks_show: no credentials');
                 return;
             }
             app.vent.trigger("startLoading");

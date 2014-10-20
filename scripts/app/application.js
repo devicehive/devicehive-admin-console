@@ -66,7 +66,6 @@ _.extend(app, {
         if (!sessionStorage.userLogin || !sessionStorage.userPassword) {
             return false;
         } else {
-            console.log('lets think that we have credentials');
             return true;
         }
     },
@@ -125,30 +124,25 @@ app.bind("initialize:after", function (options) {
 });
 
 app.bind('launch', function() {
-    console.log('app launch?');
     app.Regions.statusArea.show(new app.Views.authHeader(app.User));
 });
 
 app.bind("login", function (options) {
-    console.log('login event');
     // fetch current user
     app.User.fetch({ success: function() {
         if (app.User.id != null) {
             app.trigger('launch');
-            console.log('trigger navigatedTo');
             Backbone.history.trigger("navigatedTo", Backbone.history.getFragment());
         }
     },
     error: function(child, reply, obj) {
         console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
         if (reply.status == 401) {
-            console.log('need auth');
             app.trigger('needAuth', reply);
         }
     }});
 });
 
 app.bind('needAuth', function(opts) {
-    console.log('needAuth method bind');
     Backbone.history.navigate('auth', { trigger: true });
 });
