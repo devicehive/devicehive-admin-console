@@ -177,7 +177,7 @@ table
 .main-menu .menu-item
 {
     display: inline-block;
-    width: 19%;
+    width: 15%;
     margin: 0px 0 0 1%;
     list-style: none;
     list-style-type: none;
@@ -567,4 +567,8 @@ table
 
 .logged-in {
     float: right;
+}
+
+.text-center {
+    text-align: center;
 }

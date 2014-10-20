@@ -1,7 +1,6 @@
 app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
     template: 'change-password',
     onRender: function() {
-        console.log('render change password');
         var context = this;
         function error(message) {
             context.$el.find('form .error').html(message);
@@ -18,7 +17,6 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
 
         this.$el.find('form').on('submit', function(e) {
             e.preventDefault();
-            console.log('form submit event %o', e);
             var login = sessionStorage.userLogin;
             var $form = $(e.target);
             error(''); // clear error message
@@ -34,7 +32,6 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
                 return;
             }
             if ( newpassword != confirmpassword ) {
-                console.log('newpassword %o, confpassword %o', newpassword, confirmpassword);
                 error('New password and confirm password do not match');
                 return;
             }
@@ -43,18 +40,15 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
             var options = {
                 headers: headers,
                 success: function(resp, status) {
-                    console.log('success %o', resp);
                     // try to set new password
                     $.ajax(app.User.urlCurrent(), {
                         headers: headers,
                         type: 'PUT',
                         data: { password: newpassword },
                         success: function(resp) {
-                            console.log('successfully changed password');
                             success(newpassword);
                         },
                         error: function(resp) {
-                            console.log('error changing password %o %o', resp, arguments);
                             var responseObject = JSON.parse(resp.responseText);
                             if (responseObject.message) {
                                 error(responseObject.message);
@@ -65,7 +59,6 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
                     });
                 },
                 error: function(resp) {
-                    console.log('fail %o', resp);
                     if (resp.status == 401) {
                         error('Current password incorrect');
                     } else {

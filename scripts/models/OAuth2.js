@@ -49,7 +49,6 @@ app.Models.OAuth2 = Backbone.Model.extend({
     },
     authRequest: function(options) {
         var opts = _.extend(this.defaultRequest, options, {headers: Backbone.AuthModel.prototype.authHeader()});
-        console.log('making auth request with opts %o', opts);
         $.ajax(opts);
     },
     defaultRequest: {
