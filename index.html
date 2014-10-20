@@ -97,6 +97,9 @@
 <script type="text/javascript" src="scripts/modules/login.js"></script>
 <script type="text/javascript" src="scripts/modules/changepassword.js"></script>
 
+<!-- config -->
+<script type="text/javascript" src="scripts/config.js"></script>
+
 </head>
 <body>
 
@@ -109,8 +112,8 @@
                 statusArea: "#status-area"
             });
 
-
-        app.start({rootUrl: "",pushState: false,restEndpoint:"http://ecloud.dataart.com/ecapi9"});
+        // see config in scripts/config.js
+        app.start(app.config);
     });
 
 

@@ -53,6 +53,9 @@
 <script type="text/javascript" src="../scripts/modules/notifications.js"></script>
 <script type="text/javascript" src="../scripts/modules/oauthGrant.js"></script>
 
+<!-- config -->
+<script type="text/javascript" src="../scripts/config.js"></script>
+
 </head>
 <body>
 
@@ -65,7 +68,7 @@
                 statusArea: "#status-area"
             });
 
-        app.start({rootUrl: "",pushState: false,restEndpoint:"http://ecloud.dataart.com/ecapi9"});
+        app.start(app.config);
     });
 
 </script>

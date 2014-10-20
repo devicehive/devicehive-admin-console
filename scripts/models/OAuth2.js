@@ -143,13 +143,18 @@ app.Models.OAuth2 = Backbone.Model.extend({
     },
     redirectBack: function(resp) {
         var targetUrl = this.get('redirect_uri');
-        var query = '';
-        if (resp.authCode) {
-            query += 'code='+encodeURIComponent(resp.authCode)+'&';
-        }
-        //trim trailing &
-        if (query.length > 0) {
-            query = query.substr(0, query.length-1);
+        var query;
+        switch(this.get('response_type')) {
+            case 'code':
+            if (resp.authCode) {
+                query = 'code='+encodeURIComponent(resp.authCode);
+            }
+            break;
+            case 'token':
+            if (resp.accessKey && resp.accessKey.key) {
+                query = 'token_type=Bearer&access_token='+encodeURIComponent(resp.accessKey.key);
+            }
+            break;
         }
         if (query) {
             location.replace(targetUrl+'?'+query);
