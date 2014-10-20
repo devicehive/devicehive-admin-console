@@ -111,7 +111,7 @@
     });
 
     app.bind("initialize:after", function (options) {
-        app.vent.trigger("addResource", "device-class", "Device Classes",
+        app.vent.trigger("addResource", "device-class", "Classes",
             [ app.Enums.UserRole.Administrator ]);
     });
 
