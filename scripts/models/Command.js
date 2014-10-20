@@ -77,6 +77,7 @@ app.Models.CommandsCollection = Backbone.AuthCollection.extend({
             url: pollUrl,
             dataType: "json",
             data: { timestamp: timestamp },
+            headers: Backbone.AuthModel.prototype.authHeader(),
             success: function (data) {
                 _.each(data, function (incomingCommand) {
                     that.add(new app.Models.Command(incomingCommand, { device: that.device }));

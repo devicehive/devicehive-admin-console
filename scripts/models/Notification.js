@@ -54,6 +54,7 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
         that.jqXhr = $.ajax({
             url: pollUrl,
             dataType: "json",
+            headers: Backbone.AuthModel.prototype.authHeader(),
             data: {timestamp:timestamp},
             success: function (data) {
                 _.each(data, function (incomingNotification) {
