@@ -2,6 +2,8 @@ app.module("Modules.Login", function (users, app) {
     var loginView = new app.Views.Login();
     var controller = {
         'auth': function() {
+            app.Regions.bottomWorkArea.close();
+            app.vent.trigger("stopLoading");
             if (sessionStorage.userLogin && sessionStorage.userPassword) {
                 Backbone.history.navigate('', {trigger: true});
                 return;
