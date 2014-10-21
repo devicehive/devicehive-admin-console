@@ -68,7 +68,6 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
         }
         else {
             this.$el.find(".refresh").show();
-            this.$el.find(".copy").hide();
         }
     },
     closeAction: function () {
@@ -102,7 +101,7 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
                 },
                 success: function () {
                     that.model.collection.remove(that.model);
-                    app.vent.trigger("notification", app.Enums.NotificationType.Notify, "Cammand " + name + " has been succesfully send to device " + that.model.device.get("id"));
+                    app.vent.trigger("notification", app.Enums.NotificationType.Notify, "Command " + name + " has been succesfully send to device " + that.model.device.get("id"));
                 }
             });
         }

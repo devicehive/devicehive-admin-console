@@ -77,6 +77,8 @@ table
 .main-table .buttons-column .view-button,.main-table .buttons-column .edit-button,.main-table .buttons-column .delete-button
 {
     margin: 0px 0.4em;
+    display: inline;
+    line-height: 170%;
 }
 
 .main-table.multi-table tbody  tr:nth-child(2n+1)
@@ -366,7 +368,7 @@ table
 
 .notifications-table .name-column{ width: 20%;}
 .notifications-table .time-column{ width: 20%;}
-.notifications-table .parameters-column{ width: 60%; word-break: break-all;}
+.notifications-table .parameters-column{ width: 50%; word-break: break-all;}
 
 .commands-table .name-column{ width: 10%;}
 .commands-table .time-column{ width: 14%;}
@@ -375,7 +377,7 @@ table
 .commands-table .result-column{ width: 10%;}
 .commands-table .buttons-column{ width: 12%;}
 
-.add-command
+.add-command, .add-notification
 {
     margin: 10px 0 4px 0;
 }

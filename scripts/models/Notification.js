@@ -1,4 +1,7 @@
 ﻿app.Models.Notification = Backbone.AuthModel.extend({
+    defaults: {
+        notification: ''
+    },
     initialize: function (attributes, options) {
         if (!_.isUndefined(attributes) && _.has(attributes, "device")) {
             this.device = attributes.device;
@@ -15,7 +18,14 @@
     },
     urlRoot: function () {
         return app.restEndpoint + '/device/' + this.device.get("id") + "/notification";
-    }
+    },
+    copyIt: function () {
+        var fields = {
+            notification: this.get("notification"),
+            parameters: this.get("parameters")
+        };
+        return new app.Models.Notification(fields, { device: this.device });
+    },
 });
 
 app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
