@@ -64,7 +64,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         };
 
         if (this.classEditable) {
-            var classId = this.$el.find(".new-value.dclass :selected").val();
+            var classId = this.$el.find(".new-value .dclass :selected").val();
             changes.deviceClass =
                 this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
         }
