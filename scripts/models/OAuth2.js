@@ -107,7 +107,12 @@ app.Models.OAuth2 = Backbone.Model.extend({
                 Backbone.history.navigate('grant', { trigger: true });
             } else {
                 // requested scope and client already have grant. Response with code
-                self.redirectBack(resp[0]);
+                if (resp[0].authCode) {
+                    self.redirectBack(resp[0]);
+                } else {
+                    self.grant = resp[0];
+                    Backbone.history.navigate('grant', { trigger: true });
+                }
             }
         };
         options.error = function(resp) {
@@ -122,7 +127,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
         }
         var options = {
             url: this.getUrl('/user/current/oauth/grant'),
-            type: 'POST',
+            type: "POST",
             contentType: 'application/json',
             data: JSON.stringify({
                 client: {oauthId: this.get('client_id')},
@@ -133,6 +138,11 @@ app.Models.OAuth2 = Backbone.Model.extend({
                 networkIds: networkIds
             })
         };
+        //update existing grant instead of creating new one
+        if (self.grant) {
+            options.url += '/'+self.grant.id;
+            options.type = "PUT";
+        }
         options.success = function(resp) {
             self.redirectBack(resp);
         };

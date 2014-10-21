@@ -117,6 +117,7 @@ table
     text-decoration: none;
     box-shadow: 1px 1px 2px darkGray;
     display: inline-block;
+    cursor: pointer;
 }
 
 .view-button:hover, .edit-button:hover, .delete-button:hover
