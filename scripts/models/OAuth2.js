@@ -10,6 +10,9 @@ app.Models.OAuth2 = Backbone.Model.extend({
     getUrlParam: function(name) {
         return decodeURIComponent(((RegExp(name + '=' + '(.+?)(&|$)', 'i').exec(location.search) || [, ""])[1]).replace(/\+/g,' '));
     },
+    defaults: {
+        client: {}
+    },
     initialize: function() {
         this.set('client_id', this.getUrlParam("client_id"));
         this.set('redirect_uri', this.getUrlParam("redirect_uri"));
@@ -70,6 +73,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
         var self = this;
         options.success = function(resp) {
             if (resp[0]) {
+                self.set('client', resp[0]);
                 if (self.get('response_type') == 'token' && resp[0].redirectUri != self.get('redirect_uri')) {
                     app.vent.trigger('notification', app.Enums.NotificationType.Error, {}, 'Redirect URI mismatch');
                     return;
@@ -110,13 +114,30 @@ app.Models.OAuth2 = Backbone.Model.extend({
                 if (resp[0].authCode) {
                     self.redirectBack(resp[0]);
                 } else {
-                    self.grant = resp[0];
-                    Backbone.history.navigate('grant', { trigger: true });
+                    self.updateGrant(resp[0]);
                 }
             }
         };
         options.error = function(resp) {
             app.trigger('needAuth');
+        };
+        this.authRequest(options);
+    },
+    updateGrant: function(grant) {
+        if (!grant) {
+            alert('No grant to update');
+            return;
+        }
+        var self = this;
+        var options = {
+            url: this.getUrl('/user/current/oauth/grant/'+grant.id),
+            type: "PUT"
+        };
+        options.success = function(resp) {
+            self.redirectBack(resp);
+        };
+        options.error = function(resp) {
+            app.vent.trigger('notification', app.Enums.NotificationType.Error, resp, 'Failed to update grant access');
         };
         this.authRequest(options);
     },

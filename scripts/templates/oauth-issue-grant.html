@@ -1,5 +1,5 @@
 <script type="text/template" id="oauth-issue-grant">
-    <p><strong><%= oauth.client_id %></strong> is requesting permissions for:</p>
+    <p><strong><%= oauth.client.name %></strong> is requesting permissions for:</p>
     <ul id='oauth-scope-list'>
         <% _.each(scopeCollection, function(item) {
             %><li><%= item.name %></li>

@@ -9,6 +9,9 @@ app.module("Modules.OAuth2Grant", function (users, app) {
                 networksCollection: networksCollection,
                 scopeCollection: scopeCollection
             });
+            app.OAuth2.on('change', function() {
+                view.render();
+            });
             app.Regions.topWorkArea.show(view);
         }
     };
