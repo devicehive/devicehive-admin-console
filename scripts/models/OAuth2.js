@@ -70,7 +70,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
         var self = this;
         options.success = function(resp) {
             if (resp[0]) {
-                if (resp[0].redirectUri != self.get('redirect_uri')) {
+                if (self.get('response_type') == 'token' && resp[0].redirectUri != self.get('redirect_uri')) {
                     app.vent.trigger('notification', app.Enums.NotificationType.Error, {}, 'Redirect URI mismatch');
                     return;
                 } else {
