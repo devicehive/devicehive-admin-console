@@ -575,3 +575,11 @@ table
 .text-center {
     text-align: center;
 }
+
+.credentials-form input[type=submit], .oauth-issue-grant-form input[type=submit] {
+    margin-top: 10px;
+}
+
+label, input[type=submit] {
+    cursor: pointer;
+}
