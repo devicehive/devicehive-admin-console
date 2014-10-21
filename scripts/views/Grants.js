@@ -20,6 +20,9 @@ app.Views.GrantListItem = Backbone.Marionette.ItemView.extend({
         var data = {};
         data.grant = this.model.toJSON({ escape: true });
         data.networks = this.networks;
+        if (_.has(data.grant, "timestamp") && !_.isEmpty(data.grant.timestamp)) {
+            data.grant["timestamp"] = app.f.parseUTCstring(data.grant.timestamp).format("mm/dd/yyyy HH:MM:ss");
+        }
         return data;
     }
 });
