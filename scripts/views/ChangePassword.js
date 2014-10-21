@@ -50,6 +50,9 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
                         },
                         error: function(resp) {
                             var responseObject = JSON.parse(resp.responseText);
+                            if (resp.status == 403) {
+                                $form.find('[name=password], [name=confirmpassword]').val('');
+                            }
                             if (responseObject.message) {
                                 error(responseObject.message);
                             } else {
@@ -60,6 +63,7 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
                 },
                 error: function(resp) {
                     if (resp.status == 401) {
+                        $form.find('[name=currentpassword]').val('');
                         error('Current password incorrect');
                     } else {
                         error('Server error');
