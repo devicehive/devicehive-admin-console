@@ -27,6 +27,7 @@ app.module("Modules.Grant", function (users, app) {
 
     var controller = {
         grant: function() {
+            app.Regions.bottomWorkArea.close();
             var view = {};
             app.vent.trigger("startLoading");
             if (app.User.isNew()) {

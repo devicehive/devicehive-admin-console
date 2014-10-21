@@ -3,6 +3,7 @@ app.module("Modules.ChangePassword", function (users, app) {
     var controller = {
         'changepassword': function() {
             app.Regions.topWorkArea.show(changePasswordView);
+            app.Regions.bottomWorkArea.close();
         }
     };
     var routes = {
