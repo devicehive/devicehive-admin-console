@@ -1,6 +1,12 @@
 app.Models.OAuthClient = Backbone.AuthModel.extend({
     urlRoot: function () {
          return app.restEndpoint + "/oauth/client";
+     },
+     defaults: {
+         domain: '',
+         subnet: null,
+         redirectUri: '',
+         oauthId: ''
      }
 });
 
