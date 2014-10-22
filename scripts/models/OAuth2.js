@@ -110,12 +110,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
                 // no grant exist. proceed to grant screen
                 Backbone.history.navigate('grant', { trigger: true });
             } else {
-                // requested scope and client already have grant. Response with code
-                if (resp[0].authCode) {
-                    self.redirectBack(resp[0]);
-                } else {
-                    self.updateGrant(resp[0]);
-                }
+                self.updateGrant(resp[0]);
             }
         };
         options.error = function(resp) {
