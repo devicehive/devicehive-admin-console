@@ -38,6 +38,9 @@ app.Views.OAuth2ClientListItem = Backbone.Marionette.ItemView.extend({
     },
     closeClient: function() {
         this.showValuesAreas();
+        if (this.model.isNew()) {
+            this.model.destroy();
+        }
     },
     getValue: function (item) {
         return this.$el.find("[name=new-"+item+"]").val();
