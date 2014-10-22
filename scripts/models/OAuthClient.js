@@ -6,7 +6,8 @@ app.Models.OAuthClient = Backbone.AuthModel.extend({
          domain: '',
          subnet: null,
          redirectUri: '',
-         oauthId: ''
+         oauthId: '',
+         oauthSecret: ''
      }
 });
 
