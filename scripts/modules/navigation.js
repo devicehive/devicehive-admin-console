@@ -2,20 +2,19 @@
     //private members
 
     var navigationCollection = null;
+    var adminNavigationCollection = null;
     var menuView = null;
-    var statusView = null;
+    var adminMenuView = null;
 
     //events handlers
     var registerResource = function (resourcePath, resourceName, roles) {
         var newItem = new app.Models.MenuItem({ path: resourcePath, name: resourceName, roles: roles });
-
-        //when new item added call navigatedTo to refresh main menu view
-        navigationCollection.bind("add", function () {
-            if (Backbone.history.started)
-                navigatedTo(Backbone.history.getFragment());
-        });
-
-        navigationCollection.add(newItem);
+        // add menu items to admin collection if admin role required to access the item
+        if (roles && roles.indexOf && roles.indexOf(app.Enums.UserRole.Administrator) >= 0) {
+            adminNavigationCollection.add(newItem);
+        } else {
+            navigationCollection.add(newItem);
+        }
     };
 
     var navigatedTo = function (resourcePath) {
@@ -30,19 +29,20 @@
     app.bind("initialize:before", function (options) {
         Backbone.history = new Backbone.History;
         Backbone.history.on("navigatedTo", navigatedTo);
-
         app.vent.on("addResource", registerResource);
     });
 
     app.addInitializer(function (options) {
         navigationCollection = new app.Models.MenuItemsCollection();
+        adminNavigationCollection = new app.Models.MenuItemsCollection();
 
-        menuView = new app.Views.Menu({ collection: navigationCollection });
-        menuView.on("itemview:move", function (view) {
-            var path = view.$el.find(".navigation-link").attr("data-path");
-            Backbone.history.navigate(path, { trigger: true });
-        });
+        menuView = new app.Views.MenuLayout({ collection: navigationCollection, adminCollection: adminNavigationCollection });
 
         app.Regions.menuArea.show(menuView);
+            //when new item added call navigatedTo to refresh main menu view
+        navigationCollection.bind("add", function () {
+            if (Backbone.history.started)
+                navigatedTo(Backbone.history.getFragment());
+        });
     });
 });

@@ -1,8 +1,12 @@
 //MenuItem model should be pushed
 app.Views.MenuItem = Backbone.Marionette.ItemView.extend({
     tagName: "li",
-    triggers: {
-        "click": "move"
+    events: {
+        "click a": "move"
+    },
+    move: function() {
+        var path = this.$el.find(".navigation-link").attr("data-path");
+        Backbone.history.navigate(path, { trigger: true });
     },
     initialize: function () {
         this.bindTo(this.model, "change:selected", this.render);
@@ -10,7 +14,6 @@ app.Views.MenuItem = Backbone.Marionette.ItemView.extend({
     },
     beforeRender: function () {
         this.$el.addClass("menu-item");
-        
         if(this.model.get("selected"))
             this.$el.addClass("selected");
         else 

@@ -144,7 +144,7 @@ table
 /* specific views styles */
 
 /*menu styles*/
-.main-menu
+.main-menu, .admin-menu
 {
     padding: 0px;
     margin: 0px;
@@ -177,7 +177,7 @@ table
     text-align: center;
 }
 
-.main-menu .menu-item
+.main-menu .menu-item, .admin-menu .menu-item
 {
     display: inline-block;
     width: 15%;
@@ -187,7 +187,7 @@ table
     text-align: center;
 }
 
-.main-menu .menu-item.hidden
+.menu-item.hidden
 {
     display: none;
 }
@@ -198,7 +198,8 @@ table
     margin: 0;
 }
 
-.main-menu .menu-item .navigation-link
+.main-menu .menu-item .navigation-link,
+.admin-menu .menu-item .navigation-link
 {
     padding: 12px 0;
     display: block;
@@ -227,7 +228,8 @@ table
 
 
 
-.main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link
+.main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link,
+.admin-menu .menu-item .navigation-link:hover, .admin-menu .menu-item.selected .navigation-link
 {
     background-image: linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
     background-image: -o-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
@@ -245,6 +247,19 @@ table
 
     padding-bottom: 10px;
     border-bottom:2px solid rgb(143,143,143);
+}
+
+.admin-menu {
+    border-radius: 5px;
+    margin-top: 10px;
+    box-shadow: black 0px 0px 5px;
+}
+.admin-menu .menu-item .navigation-link
+{
+    padding: 2px;
+}
+.admin-menu .menu-item .navigation-link:hover {
+    padding-bottom: 0px;
 }
 
 
