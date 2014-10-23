@@ -51,7 +51,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
         return scopeCollection;
     },
     authRequest: function(options) {
-        var opts = _.extend(this.defaultRequest, options, {headers: Backbone.AuthModel.prototype.authHeader()});
+        var opts = _.extend({}, this.defaultRequest, options, {headers: Backbone.AuthModel.prototype.authHeader()});
         $.ajax(opts);
     },
     defaultRequest: {
@@ -69,7 +69,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
         }
     },
     getClients: function() {
-        var options = _.extend(this.defaultRequest, {url: this.getUrl('/oauth/client?oauthId='+this.get('client_id'))});
+        var options = _.extend({}, this.defaultRequest, {url: this.getUrl('/oauth/client?oauthId='+this.get('client_id'))});
         var self = this;
         options.success = function(resp) {
             if (resp[0]) {
@@ -95,7 +95,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
     },
     getGrants: function() {
         var self = this;
-        var options = _.extend(this.defaultRequest, {
+        var options = _.extend({}, this.defaultRequest, {
             url: this.getUrl('/user/current/oauth/grant'),
             data: {
                 clientOAuthId: this.get('client_id'),
@@ -126,7 +126,8 @@ app.Models.OAuth2 = Backbone.Model.extend({
         var self = this;
         var options = {
             url: this.getUrl('/user/current/oauth/grant/'+grant.id),
-            type: "PUT"
+            type: "PUT",
+            contentType: 'application/json'
         };
         options.success = function(resp) {
             self.redirectBack(resp);

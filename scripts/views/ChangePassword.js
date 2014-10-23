@@ -44,7 +44,8 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
                     $.ajax(app.User.urlCurrent(), {
                         headers: headers,
                         type: 'PUT',
-                        data: { password: newpassword },
+                        contentType: 'application/json',
+                        data: JSON.stringify({ password: newpassword }),
                         success: function(resp) {
                             success(newpassword);
                         },

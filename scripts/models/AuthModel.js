@@ -9,10 +9,12 @@ Backbone.AuthModel = Backbone.Model.extend({
             return {};
         }
     },
-    //override sync method wich is called on any ajax requests
+    //override sync method which is called on any ajax requests
     sync: function(method, model, options) {
+        console.log('sync method %o model %o options %o', method, model, options);
         var timestamp = (new Date().valueOf());
         if (sessionStorage && sessionStorage.lastActivity) {
+            // logout user if he/she was inactive for 30 minutes or more
             if (sessionStorage.lastActivity < timestamp - (30*60*1000)) {
                 Backbone.history.navigate('logout', {trigger: true});
                 return;
