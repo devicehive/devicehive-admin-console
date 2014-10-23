@@ -124,7 +124,7 @@ app.bind("initialize:after", function (options) {
 });
 
 app.bind('launch', function() {
-    app.Regions.statusArea.show(new app.Views.authHeader(app.User));
+    app.Regions.statusArea.show(new app.Views.authHeader({user: app.User}));
 });
 
 app.bind("login", function (options) {

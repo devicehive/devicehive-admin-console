@@ -27,7 +27,6 @@ app.Views.Menu = Backbone.Marionette.ItemView.extend({
         var self = this;
         this.adminCollection = options.adminCollection;
         this.userCollection = options.userCollection;
-        console.log('init this %o', this);
         this.userCollection.on('change', function() {
             self.render();
         });

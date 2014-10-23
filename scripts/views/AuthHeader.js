@@ -1,10 +1,11 @@
 app.Views.authHeader = Backbone.Marionette.ItemView.extend({
     template: 'auth-header',
-    initialize: function(user) {
-        this.userLogin = user.get('login');
+    initialize: function(options) {
+        this.user = options.user;
     },
     serializeData: function() {
-        return {userLogin: this.userLogin};
+        var data = {userLogin: this.user.get('login')};
+        return data;
     },
     events: {
         "click a": "clickHandler"

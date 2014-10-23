@@ -14,7 +14,7 @@ body
     margin: 0 auto;
 }
 
-#top-work-area, #bottom-work-area
+#bottom-work-area
 {
     margin-top: 40px;
 }
@@ -581,6 +581,11 @@ table
 .logged-in {
     float: right;
     margin: 6px 0;
+}
+.clearfix:after {
+    content: " ";
+    clear: both;
+    display: block;
 }
 
 .text-center {
