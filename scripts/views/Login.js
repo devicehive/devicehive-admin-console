@@ -20,7 +20,6 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
                     sessionStorage.userLogin=login;
                     sessionStorage.userPassword=password;
                     sessionStorage.lastActivity=(new Date()).valueOf();
-                    Backbone.history.navigate('', { trigger: false });
                     location.reload(true);
                 },
                 error: function(resp, status) {

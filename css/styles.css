@@ -18,6 +18,9 @@ body
 {
     margin-top: 40px;
 }
+#status-area {
+    min-height: 40px;
+}
 
 /* headings */
 h4
