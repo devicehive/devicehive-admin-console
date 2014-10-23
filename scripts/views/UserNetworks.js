@@ -9,6 +9,9 @@ app.Views.UserNetworkListItem = Backbone.Marionette.ItemView.extend({
 
 //model is an app.Model.User
 app.Views.UserNetworks = Backbone.Marionette.CompositeView.extend({
+    triggers: {
+        "click .back": "backClicked"
+    },
     initialize: function () {
         this.collection = this.model.get("networksCollection");
         this.bindTo(this, "itemview:reject", this.rejectChild);

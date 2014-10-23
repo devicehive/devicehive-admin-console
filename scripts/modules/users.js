@@ -110,6 +110,9 @@
                 success: function () {
                     userNetworksView = new app.Views.UserNetworks({ model: currentUser });
                     app.Regions.topWorkArea.show(userNetworksView);
+                    userNetworksView.on("backClicked", function () {
+                        Backbone.history.navigate("user", { trigger: true });
+                    });
 
                     app.getCollection("NetworksCollection").done(function (res) {
                         networksCollection = res;
