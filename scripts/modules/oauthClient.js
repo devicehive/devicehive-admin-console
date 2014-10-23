@@ -22,6 +22,6 @@ app.module("Modules.OAuth2Client", function (users, app) {
         var rtr = new router();
     });
     app.bind("login", function (options) {
-        app.vent.trigger("addResource", "oauthclient", "Clients", [ app.Enums.UserRole.Administrator ]);
+        app.vent.trigger("addResource", "oauthclient", "OAuth Clients", [ app.Enums.UserRole.Administrator ]);
     });
 });

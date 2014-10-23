@@ -24,6 +24,15 @@
             else
                 menuItem.set("selected", false);
         });
+        adminNavigationCollection.each(function(menuItem) {
+            if (resourcePath.indexOf(menuItem.get("path")) == 0) {
+                menuItem.set('selected', true);
+                menuView.adminVisible = true;
+                menuView.render();
+            } else {
+                menuItem.set('selected', false);
+            }
+        });
     };
 
     app.bind("initialize:before", function (options) {
@@ -35,11 +44,9 @@
     app.addInitializer(function (options) {
         navigationCollection = new app.Models.MenuItemsCollection();
         adminNavigationCollection = new app.Models.MenuItemsCollection();
-
-        menuView = new app.Views.MenuLayout({ collection: navigationCollection, adminCollection: adminNavigationCollection });
-
+        menuView = new app.Views.Menu({ userCollection: navigationCollection, adminCollection: adminNavigationCollection });
         app.Regions.menuArea.show(menuView);
-            //when new item added call navigatedTo to refresh main menu view
+        //when new item added call navigatedTo to refresh main menu view
         navigationCollection.bind("add", function () {
             if (Backbone.history.started)
                 navigatedTo(Backbone.history.getFragment());

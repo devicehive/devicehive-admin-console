@@ -180,22 +180,16 @@ table
 .main-menu .menu-item, .admin-menu .menu-item
 {
     display: inline-block;
-    width: 15%;
+    width: 18%;
     margin: 0px 0 0 1%;
     list-style: none;
     list-style-type: none;
     text-align: center;
 }
 
-.menu-item.hidden
+.hidden
 {
     display: none;
-}
-
-.main-menu .menu-item:first-child
-{
-    width: 18%;
-    margin: 0;
 }
 
 .main-menu .menu-item .navigation-link,
@@ -258,7 +252,8 @@ table
 {
     padding: 2px;
 }
-.admin-menu .menu-item .navigation-link:hover {
+.admin-menu .menu-item .navigation-link:hover,
+.admin-menu .menu-item.selected .navigation-link {
     padding-bottom: 0px;
 }
 
@@ -585,6 +580,7 @@ table
 
 .logged-in {
     float: right;
+    margin: 6px 0;
 }
 
 .text-center {
