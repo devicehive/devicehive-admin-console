@@ -127,7 +127,8 @@ app.Models.OAuth2 = Backbone.Model.extend({
         var options = {
             url: this.getUrl('/user/current/oauth/grant/'+grant.id),
             type: "PUT",
-            contentType: 'application/json'
+            contentType: 'application/json',
+            data: '{}'
         };
         options.success = function(resp) {
             self.redirectBack(resp);
