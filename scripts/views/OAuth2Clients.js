@@ -28,8 +28,11 @@ app.Views.OAuth2ClientListItem = Backbone.Marionette.ItemView.extend({
             redirectUri: redirectUri,
             oauthId: oauthId
         };
-
+        var that = this;
         this.model.save(options, {
+            success: function() {
+                that.render();
+            },
             error: function (model, response) {
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
             },

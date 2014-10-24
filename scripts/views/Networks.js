@@ -41,7 +41,7 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
         var that = this;
         this.model.save({ name: name, description: desc, key: key }, {
             success: function () {
-
+                that.render();
             }, error: function (model, response) {
                 that.render();
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);

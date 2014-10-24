@@ -71,8 +71,11 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
             isPermanent: isPermanent,
             offlineTimeout: offlineTimeout
         };
-
+        var that = this;
         this.model.save(options, {
+            success: function() {
+                that.render();
+            },
             error: function (model, response) {
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
             },
