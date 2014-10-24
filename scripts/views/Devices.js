@@ -50,7 +50,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var that = this;
         this.model.save(changes, {
             success: function () {
-
+                that.render();
             }, error: function (model, response) {
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
             },

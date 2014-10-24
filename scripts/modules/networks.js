@@ -18,6 +18,13 @@
                 if (networksCollection != null) {
                     networksView = new app.Views.Networks({ collection: networksCollection });
                     app.Regions.topWorkArea.show(networksView);
+                    if (app.User.isNew()) {
+                        app.User.on('change', function (e){
+                            if (app.User.isNew() == false) {
+                                networksView.render();
+                            }
+                        });
+                    }
                 }
 
                 retIt.resolve();
