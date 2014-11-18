@@ -1,0 +1,19 @@
+<script type="text/template" id="oauth-issue-grant">
+    <p><strong><%= oauth.client.name %></strong> is requesting permissions for:</p>
+    <ul id='oauth-scope-list'>
+        <% _.each(scopeCollection, function(item) {
+            %><li><%= item.name %></li>
+            <%  }); %>
+    </ul>
+    <form class="oauth-issue-grant-form">
+        <label><input type="checkbox" id='cb-limit-networks'> Limit access to specific networks</label>
+        <ul id="oauth-network-list" class="ui-helper-hidden">
+            <% _.each(networksCollection, function(item) { %>
+                <li><label><input type="checkbox" name='network-id' value="<%= item.id %>"> <%= item.name %></label></li>
+            <% }); %>
+        </ul>
+        <div>
+            <input type="submit" value="Grant permissions" />
+        </div>
+    </form>
+</script>

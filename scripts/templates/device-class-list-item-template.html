@@ -1,0 +1,31 @@
+﻿<script type="text/template" id="device-class-list-item-template">
+            <td class="name"><span class="value-field"><%= name %></span><span class="new-value"><input type="text" value="<%=name %>" class="new-name"/></span></td>
+            <td class="version"><span class="value-field"><%= version %></span><span class="new-value"><input type="text" value="<%=version %>" class="new-version"/></span></td>
+            <td class="is-permanent">
+
+            <% if(isPermanent == true){ %>
+                <input type="checkbox" class="isPermanent" checked="checked" disabled="disabled"/>
+            <%}else{ %>
+                <input type="checkbox" class="isPermanent" disabled="disabled"/>    
+            <%} %>
+ 
+            </td>
+            <td>
+                <span class="value-field"><%= offlineTimeout %></span><span class="new-value"><input type="text" value="<%=offlineTimeout %>" class="new-timeout"/></span>
+            </td>
+            <td>
+                <span class="value-field"><%= data %></span><span class="new-value"><textarea class="new-data"><%= data %></textarea></span>
+            </td>
+            <td class="buttons-column">
+            <span class="value-field">
+                <a href="javascript:void(0)" class="edit view-button">edit</a>
+                <a href="javascript:void(0)" class="show-equipments view-button">show equipments</a>
+                <a href="javascript:void(0)" class="copy edit-button">copy</a>
+                <a href="javascript:void(0)" class="delete delete-button">delete</a>
+                </span>
+             <span class="new-value">
+                <a href="javascript:void(0)" class="save edit-button">save</a>
+                <a href="javascript:void(0)" class="close view-button">close</a>
+             </span>
+            </td>
+</script>

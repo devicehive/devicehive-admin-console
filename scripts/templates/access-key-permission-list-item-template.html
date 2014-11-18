@@ -1,0 +1,49 @@
+<script type="text/template" id="access-key-permission-list-item-template">
+    <td>
+        <ul>
+            <% if (_.isEmpty(domains)) { %>
+            <em>Any</em>
+            <% } else { _.each(domains, function(domain) { %>
+            <li><%= domain %></li>
+            <% });} %>
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <% if (_.isEmpty(subnets)) { %>
+            <em>Any</em>
+            <% } else { _.each(subnets, function(subnet) { %>
+            <li><%= subnet %></li>
+            <% });} %>
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <% if (_.isEmpty(actions)) { %>
+            <em>Any</em>
+            <% } else { _.each(actions, function(action) { %>
+            <li><%= action %></li>
+            <% });} %>
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <% if (_.isEmpty(networkIds)) { %>
+            <em>Any</em>
+            <% } else { _.each(networkIds, function(networkId) {
+                if (networks[networkId] != null) { %>
+                <li><%= networks[networkId]["name"] || "no name" %></li>
+            <% }});} %>
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <% if (_.isEmpty(deviceGuids)) { %>
+            <em>Any</em>
+            <% } else { _.each(deviceGuids, function(deviceGuid) {
+                if (devices[deviceGuid] != null) { %>
+                <li><%= devices[deviceGuid]["name"] || "no name" %></li>
+            <% }});} %>
+        </ul>
+    </td>
+</script>

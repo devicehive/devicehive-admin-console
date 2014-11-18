@@ -1,0 +1,16 @@
+﻿<script type="text/template" id="notification-list-item-template">
+    <td class="name-column">
+        <span class="data-zone"><%= notification %></span>
+        <span class="editable-zone"><input class="new-notification-name" value="<%=notification%>" placeholder="Notification name"/></span>
+    </td>
+    <td class="time-column"><%= timestamp %></td>
+    <td class="parameters-column">
+        <span class="data-zone"><%= parameters %></span>
+        <span class="editable-zone"><textarea class="new-notification-params" placeholder="JSON value"><%=parameters %></textarea></span>
+    </td>
+    <td class="buttons-column">
+        <a href="javascript:void(0)" class="copy view-button">copy</a>
+        <a href="javascript:void(0)" class="push edit-button">push</a>
+        <a href="javascript:void(0)" class="close view-button">close</a>
+    </td>
+</script>

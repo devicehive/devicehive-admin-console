@@ -14,9 +14,12 @@ body
     margin: 0 auto;
 }
 
-#top-work-area, #bottom-work-area
+#bottom-work-area
 {
     margin-top: 40px;
+}
+#status-area {
+    min-height: 40px;
 }
 
 /* headings */
@@ -77,6 +80,18 @@ table
 .main-table .buttons-column .view-button,.main-table .buttons-column .edit-button,.main-table .buttons-column .delete-button
 {
     margin: 0px 0.4em;
+    display: inline;
+    line-height: 170%;
+}
+
+.main-table.multi-table tbody  tr:nth-child(2n+1)
+{
+    background-color: white;
+}
+
+.main-table.multi-table tbody:nth-child(2n+1) tr
+{
+    background-color: #E7ECF1;
 }
 
 .values-table td 
@@ -100,26 +115,26 @@ table
     margin: 0px 0.1em;
     color: white;
     border-radius: 3px;
-    padding: 2px 6px 4px;
+    padding: 1px 5px 3px;
+    border: 1px solid;
     text-decoration: none;
     box-shadow: 1px 1px 2px darkGray;
     display: inline-block;
+    cursor: pointer;
 }
 
 .view-button:hover, .edit-button:hover, .delete-button:hover
 {
-    padding: 1px 5px 3px;
     color: black;
     background-color: white;
-    border: 1px solid black;
 }
 
-.view-button{background-color: green;}
-.edit-button{background-color: orange;}
-.delete-button{background-color: red;}
-.view-button:hover{color: green;border-color: green;}
-.edit-button:hover{color: orange;border-color: orange;}
-.delete-button:hover{color: red;border-color: red;}
+.view-button{background-color: green;border-color: green;}
+.edit-button{background-color: orange;border-color: orange;}
+.delete-button{background-color: red;border-color: red;}
+.view-button:hover{color: green;}
+.edit-button:hover{color: orange;}
+.delete-button:hover{color: red;}
 
 
 /* panel */
@@ -132,7 +147,7 @@ table
 /* specific views styles */
 
 /*menu styles*/
-.main-menu
+.main-menu, .admin-menu
 {
     padding: 0px;
     margin: 0px;
@@ -160,25 +175,28 @@ table
     box-shadow: black 0px -1px 4px;
 }
 
+#menu-area
+{
+    text-align: center;
+}
 
-
-.main-menu .menu-item
+.main-menu .menu-item, .admin-menu .menu-item
 {
     display: inline-block;
-    width: 24%;
-    margin: 0px 1% 0 0;
+    width: 18%;
+    margin: 0px 0 0 1%;
     list-style: none;
     list-style-type: none;
     text-align: center;
 }
 
-.main-menu .menu-item:first-child
+.hidden
 {
-    width: 23%;
-    margin: 0px 1% 0 1%;
+    display: none;
 }
 
-.main-menu .menu-item .navigation-link
+.main-menu .menu-item .navigation-link,
+.admin-menu .menu-item .navigation-link
 {
     padding: 12px 0;
     display: block;
@@ -207,7 +225,8 @@ table
 
 
 
-.main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link
+.main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link,
+.admin-menu .menu-item .navigation-link:hover, .admin-menu .menu-item.selected .navigation-link
 {
     background-image: linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
     background-image: -o-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
@@ -225,6 +244,20 @@ table
 
     padding-bottom: 10px;
     border-bottom:2px solid rgb(143,143,143);
+}
+
+.admin-menu {
+    border-radius: 5px;
+    margin-top: 10px;
+    box-shadow: black 0px 0px 5px;
+}
+.admin-menu .menu-item .navigation-link
+{
+    padding: 2px;
+}
+.admin-menu .menu-item .navigation-link:hover,
+.admin-menu .menu-item.selected .navigation-link {
+    padding-bottom: 0px;
 }
 
 
@@ -349,7 +382,7 @@ table
 
 .notifications-table .name-column{ width: 20%;}
 .notifications-table .time-column{ width: 20%;}
-.notifications-table .parameters-column{ width: 60%; word-break: break-all;}
+.notifications-table .parameters-column{ width: 50%; word-break: break-all;}
 
 .commands-table .name-column{ width: 10%;}
 .commands-table .time-column{ width: 14%;}
@@ -358,7 +391,7 @@ table
 .commands-table .result-column{ width: 10%;}
 .commands-table .buttons-column{ width: 12%;}
 
-.add-command
+.add-command, .add-notification
 {
     margin: 10px 0 4px 0;
 }
@@ -432,3 +465,140 @@ table
     height: 70px;
 }
 
+/* access keys tables */
+.access-key-permissions-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.access-key-permissions-table th.domains {
+    width: 20%;
+}
+
+.access-key-permissions-table th.subnets {
+    width: 20%;
+}
+
+.access-key-permissions-table th.actions {
+    width: 20%;
+}
+
+.access-key-permissions-table th.networks {
+    width: 20%;
+}
+
+.access-key-permissions-table th.devices {
+    width: 20%;
+}
+
+.access-key-permissions-table thead tr
+{
+    background-color: #272768 !important;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 0.2em;
+}
+
+.access-key-permissions-table tbody tr:first-child
+{
+    border: none;
+}
+
+.access-key-permissions-edit-table tbody tr
+{
+    border-top: 1px solid #272768;
+}
+
+.access-key-permissions-edit-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.access-key-permissions-edit-table th.domains {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.subnets {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.actions {
+    width: 19%;
+}
+
+.access-key-permissions-edit-table th.networks {
+    width: 18%;
+}
+
+.access-key-permissions-edit-table th.devices {
+    width: 18%;
+}
+
+.access-key-permissions-edit-table th.buttons-columns {
+    width: 7%;
+}
+
+.access-key-permissions-edit-container {
+    margin-bottom: 10px;
+}
+
+.access-key-permissions-edit-table .networks ul,
+.access-key-permissions-edit-table .devices ul {
+    list-style: none;
+    padding: 0;
+}
+
+.access-key-permissions-edit-table .networks select.networks,
+.access-key-permissions-edit-table .devices select.devices {
+    max-width: 150px;
+}
+
+.access-key-permissions-edit-table .devices select.devices {
+    max-width: 150px;
+}
+
+.credentials-form {
+    margin: auto;
+    width: 500px;
+}
+.credentials-form div>span {
+    width: 150px;
+    display: inline-block;
+}
+
+.credentials-form div.error {
+    border: solid 2px red;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.credentials-form div.success {
+    border: solid 2px rgb(38, 143, 47);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.logged-in {
+    float: right;
+    margin: 6px 0;
+}
+.clearfix:after {
+    content: " ";
+    clear: both;
+    display: block;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.credentials-form input[type=submit], .oauth-issue-grant-form input[type=submit] {
+    margin-top: 10px;
+}
+
+label, input[type=submit] {
+    cursor: pointer;
+}

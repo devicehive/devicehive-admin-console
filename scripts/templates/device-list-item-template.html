@@ -1,0 +1,47 @@
+﻿<script type="text/template" id="device-list-item-template">
+    <td class="name"><span class="current-value"><%= name %></span><span class="new-value"><input type="text" class="new-device-name" value="<%= name %>"/></span></td>
+    <td class="status"><span class="current-value"><%= status %></span><span class="new-value"><input type="text" class="new-device-status" value="<%= status %>"/></span></td>
+
+    <td class="network">
+    
+    <span class="current-value"><%= network.name %></span>
+    <span class="new-value">
+        <select class="new-device-network">
+            <% _.each(networks,function(net){ 
+                if(net.id == network.id){ %>
+                    <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>    
+                <%}else{ %>
+                    <option value="<%= net.id %>"> <%= net.name %> </option>
+            <%}}); %>
+        </select>
+    </span>
+    
+    </td>
+
+    <td class="device-class">
+    
+    <span class="current-value"><%= deviceClass.name %> (v <%= deviceClass.version %>)</span>
+    <span class="new-value">
+        <% if (classEditable) { %>
+        <select class="new-device-class">
+            <% _.each(classes,function(cls){ 
+                if(cls.id == deviceClass.id){ %>
+                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>) </option>    
+                <% }else{ %>
+                    <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
+            <%}}); %>
+        </select>
+        <% } else { %>
+        <%= deviceClass.name %> (v <%= deviceClass.version %>)
+        <% } %>
+    </span>
+    
+    </td>
+
+    <td class="data"><span class="current-value"><%= data %></span><span class="new-value"><textarea class="new-device-data"><%= data %></textarea></span></td>
+
+    <td class="buttons-column">
+        <span class="current-value"><a href="javascript:void(0)" class="detail view-button">detail</a><a href="javascript:void(0)" class="edit view-button">edit</a><a href="javascript:void(0)" class="delete delete-button">delete</a></span>
+        <span class="new-value"><a href="javascript:void(0)" class="cancel view-button">cancel</a><a href="javascript:void(0)" class="save edit-button">save</a></span>
+    </td>
+</script>

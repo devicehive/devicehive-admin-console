@@ -1,0 +1,12 @@
+﻿<script type="text/template" id="device-list-item-template">
+    <td><%= grant.client.name %></td>
+    <td><%= grant.type %></td>
+    <td><%= grant.accessType %></td>
+    <td><% _.each(grant.networkIds, function(item){
+                var net = networks.where({id: item});
+                %>
+        <%=  net.length > 0 ? net[0].get('name') : 'INCORECT NET ID: '+item %><br/>
+    <%  }); %></td>
+    <td><%= grant.timestamp %></td>
+    <td><button class='revoke delete-button'>revoke</button></td>
+</script>

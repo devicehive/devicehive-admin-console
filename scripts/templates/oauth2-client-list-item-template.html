@@ -1,0 +1,35 @@
+﻿<script type="text/template" id="device-list-item-template">
+    <td>
+        <span class="value-field"><%= name %></span>
+        <span class="new-value"><input type="text" value="<%= name %>" name="new-name" placeholder="Client name"/></span>
+    </td>
+    <td>
+        <span class="value-field"><%= domain %></span>
+        <span class="new-value"><input type="text" value="<%= domain %>" name="new-domain" placeholder="Domain"/></span>
+    </td>
+    <td>
+        <span class="value-field"><%= subnet %></span>
+        <span class="new-value"><input type="text" value="<%= subnet %>" name="new-subnet" placeholder="Subnet (optional)" /></span>
+    </td>
+    <td>
+        <span class="value-field"><%= redirectUri %></span>
+        <span class="new-value"><input type="text" value="<%= redirectUri %>" name="new-redirect-uri" placeholder="Redirect URI" /></span>
+    </td>
+    <td>
+        <span class="value-field"><%= oauthId %></span>
+        <span class="new-value"><input type="text" value="<%= oauthId %>" name="new-oauth-id" placeholder="OAuth2 ID"/></span>
+    </td>
+    <td>
+        <%= oauthSecret %>
+    </td>
+    <td>
+        <span class="value-field">
+            <button class='edit edit-button'>edit</button>
+            <button class='delete delete-button'>delete</button>
+        </span>
+        <span class="new-value">
+            <button class='save edit-button'>save</button>
+            <button class='close view-button'>close</button>
+        </span>
+    </td>
+</script>
