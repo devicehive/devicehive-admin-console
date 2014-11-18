@@ -33,6 +33,6 @@ is included. This also means you don't have to contribute the end product or
 modified sources back to Open Source, but if you feel like sharing, you are
 highly encouraged to do so!
 
-Copyright (C) 2012 DataArt Apps
+Copyright (C) 2014 DataArt Apps
 
 All Rights Reserved
