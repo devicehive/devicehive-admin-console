@@ -22,7 +22,6 @@ $(document).ready(function () {
                     if (token) {
                         sessionStorage.deviceHiveToken=token;
                         sessionStorage.lastActivity=(new Date()).valueOf();
-                        //location.reload(true);
                         document.location.href = deviceHiveAdminConsole;
                     }
                 } else {

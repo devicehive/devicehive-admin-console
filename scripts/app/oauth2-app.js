@@ -29,11 +29,7 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if (!sessionStorage.userLogin || !sessionStorage.userPassword || !sessionStorage.deviceHiveToken) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(!sessionStorage.userLogin || !sessionStorage.userPassword || !sessionStorage.deviceHiveToken);
     },
     getCollection: function (type, options) {
         var retIt = $.Deferred();
