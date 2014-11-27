@@ -63,11 +63,7 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if (!sessionStorage.userLogin || !sessionStorage.userPassword) {
-            return false;
-        } else {
-            return true;
-        }
+        return !((!sessionStorage.userLogin || !sessionStorage.userPassword) && !sessionStorage.deviceHiveToken);
     },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {

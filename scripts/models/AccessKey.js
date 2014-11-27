@@ -68,15 +68,39 @@ app.Models.AccessKeyPermission = Backbone.AuthModel.extend({
 });
 
 app.Models.AccessKeyPermission.actions =  {
+    "GetAccessKey": "get information about access key",
+    "CreateAccessKey": "create new access key",
+    "UpdateAccessKey": "update existing access key",
+    "DeleteAccessKey": "delete existing access key",
+    "GetDeviceClass": "get information about device class",
+    "CreateDeviceClass": "create device class",
+    "UpdateDeviceClass": "update device class",
+    "DeleteDeviceClass": "delete device class",
     "GetNetwork": "get information about network",
-        "GetDevice": "get information about device and device class",
-        "GetDeviceState": "get information about current device equipment state",
-        "GetDeviceNotification": "get or subscribe to device notifications",
-        "GetDeviceCommand": "get or subscribe to commands sent to device",
-        "RegisterDevice": "register a device",
-        "CreateDeviceNotification": "post notifications on behalf of device",
-        "CreateDeviceCommand": "post commands to device",
-        "UpdateDeviceCommand": "update status of commands on behalf of device"
+    "AssignNetwork": "assign network to the user",
+    "CreateNetwork": "create network",
+    "UpdateNetwork": "update network",
+    "DeleteNetwork": "delete network",
+    "CreateOAuthClient": "create oauth client",
+    "UpdateOAuthClient": "update oauth client",
+    "DeleteOAuthClient": "delete oauth client",
+    "GetOAuthGrant": "get information about oauth grant",
+    "CreateOAuthGrant": "create oauth grant",
+    "UpdateOAuthGrant": "update oauth grant",
+    "DeleteOAuthGrant": "delete oauth grant",
+    "GetDevice": "get information about device and device class",
+    "DeleteDevice": "delete information about device and device class",
+    "GetDeviceState": "get information about current device equipment state",
+    "GetDeviceNotification": "get or subscribe to device notifications",
+    "GetDeviceCommand": "get or subscribe to commands sent to device",
+    "RegisterDevice": "register a device",
+    "CreateDeviceNotification": "post notifications on behalf of device",
+    "CreateDeviceCommand": "post commands to device",
+    "UpdateDeviceCommand": "update status of commands on behalf of device",
+    "GetUser": "get information about user",
+    "CreateUser": "create user",
+    "UpdateUser": "update user",
+    "DeleteUser": "delete user"
 };
 
 

@@ -1,4 +1,5 @@
 ﻿<script type="text/template" id="user-auth">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <div>
     <form class="credentials-form">
         <div class='fields'>
@@ -8,5 +9,27 @@
         </div>
         <div class="error ui-helper-hidden"></div>
     </form>
+</div>
+<div class="text-center">
+    <div class="identity-providers">
+        <form action="https://accounts.google.com/o/oauth2/auth" method="get">
+            <input name="response_type" value="token" type="hidden">
+            <input name="client_id" id="googleClientId" type="hidden">
+            <input name="redirect_uri" type="hidden">
+            <input name="scope" value="email" type="hidden">
+            <input name="state" id="googleStateId" type="hidden">
+            <button type="submit" class="btn btn-google-plus"><i class="fa fa-google-plus"> Sign in with Google</i></button>
+        </form>
+    </div>
+    <div class="identity-providers">
+        <form action="https://www.facebook.com/dialog/oauth" method="get">
+            <input name="response_type" value="token" type="hidden">
+            <input name="client_id" id="facebookClientId" type="hidden">
+            <input name="redirect_uri" type="hidden">
+            <input name="scope" value="email" type="hidden">
+            <input name="state" id="facebookStateId" type="hidden">
+            <button type="submit" class="btn btn-facebook"><i class="fa fa-facebook"> Sign in with Facebook</i></button>
+        </form>
+    </div>
 </div>
 </script>

@@ -29,7 +29,7 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if (!sessionStorage.userLogin || !sessionStorage.userPassword) {
+        if (!sessionStorage.userLogin || !sessionStorage.userPassword || !sessionStorage.deviceHiveToken) {
             return false;
         } else {
             return true;
@@ -117,6 +117,9 @@ app.bind('needAuth', function(opts) {
     }
     if (sessionStorage.userPassword) {
         delete sessionStorage.userPassword;
+    }
+    if (sessionStorage.deviceHiveToken) {
+        delete sessionStorage.deviceHiveToken;
     }
     Backbone.history.navigate('auth', { trigger: true });
 });

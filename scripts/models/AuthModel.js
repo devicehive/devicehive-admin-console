@@ -5,6 +5,11 @@ Backbone.AuthModel = Backbone.Model.extend({
             return {
                 'Authorization': 'Basic '+btoa(sessionStorage.userLogin+':'+sessionStorage.userPassword)
             };
+        }
+        if (sessionStorage.deviceHiveToken) {
+           return {
+               'Authorization': 'Bearer '+sessionStorage.deviceHiveToken
+           };
         } else {
             return {};
         }
