@@ -10,10 +10,12 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
 
         this.$el.find('#googleClientId')[0].value = app.config.googleClientId;
         this.$el.find('#facebookClientId')[0].value = app.config.facebookClientId;
+        this.$el.find('#githubClientId')[0].value = app.config.githubClientId;
 
         var identityProviderState = "identity_provider_id=";
         this.$el.find('#googleStateId')[0].value = identityProviderState + app.config.googleIdentityProviderId;
         this.$el.find('#facebookStateId')[0].value = identityProviderState + app.config.facebookIdentityProviderId;
+        this.$el.find('#githubStateId')[0].value = identityProviderState + app.config.githubIdentityProviderId;
 
         this.$el.find('.credentials-form').on('submit', function(e) {
             e.preventDefault();

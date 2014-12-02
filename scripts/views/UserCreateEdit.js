@@ -11,17 +11,34 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     },
     template: "user-create-edit-template",
     initialize: function () {
-        if (_.isUndefined(this.model))
+        if (_.isUndefined(this.model)) {
             this.model = new app.Models.User();
+        } else {
+            if(this.model.attributes.googleLogin == null) {
+                this.model.attributes.googleLogin = "";
+            }
+            if(this.model.attributes.facebookLogin == null) {
+                this.model.attributes.facebookLogin = "";
+            }
+            if(this.model.attributes.githubLogin == null) {
+                this.model.attributes.githubLogin = "";
+            }
+        }
     },
     save: function () {
         var login = this.$el.find("#login").val();
         var role = parseInt(this.$el.find("#role :selected").val());
         var status = parseInt(this.$el.find("#status :selected").val());
+        var googleLogin = this.$el.find("#googleLogin").val();
+        var facebookLogin = this.$el.find("#facebookLogin").val();
+        var githubLogin = this.$el.find("#githubLogin").val();
         var options = {
             login: login,
             role: role,
-            status: status
+            status: status,
+            googleLogin: googleLogin,
+            facebookLogin: facebookLogin,
+            githubLogin: githubLogin
         };
 
         var pass = this.$el.find("#password").val();

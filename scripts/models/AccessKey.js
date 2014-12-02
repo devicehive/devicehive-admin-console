@@ -68,28 +68,8 @@ app.Models.AccessKeyPermission = Backbone.AuthModel.extend({
 });
 
 app.Models.AccessKeyPermission.actions =  {
-    "GetAccessKey": "get information about access key",
-    "CreateAccessKey": "create new access key",
-    "UpdateAccessKey": "update existing access key",
-    "DeleteAccessKey": "delete existing access key",
-    "GetDeviceClass": "get information about device class",
-    "CreateDeviceClass": "create device class",
-    "UpdateDeviceClass": "update device class",
-    "DeleteDeviceClass": "delete device class",
     "GetNetwork": "get information about network",
-    "AssignNetwork": "assign network to the user",
-    "CreateNetwork": "create network",
-    "UpdateNetwork": "update network",
-    "DeleteNetwork": "delete network",
-    "CreateOAuthClient": "create oauth client",
-    "UpdateOAuthClient": "update oauth client",
-    "DeleteOAuthClient": "delete oauth client",
-    "GetOAuthGrant": "get information about oauth grant",
-    "CreateOAuthGrant": "create oauth grant",
-    "UpdateOAuthGrant": "update oauth grant",
-    "DeleteOAuthGrant": "delete oauth grant",
     "GetDevice": "get information about device and device class",
-    "DeleteDevice": "delete information about device and device class",
     "GetDeviceState": "get information about current device equipment state",
     "GetDeviceNotification": "get or subscribe to device notifications",
     "GetDeviceCommand": "get or subscribe to commands sent to device",
@@ -97,11 +77,18 @@ app.Models.AccessKeyPermission.actions =  {
     "CreateDeviceNotification": "post notifications on behalf of device",
     "CreateDeviceCommand": "post commands to device",
     "UpdateDeviceCommand": "update status of commands on behalf of device",
-    "GetUser": "get information about user",
-    "CreateUser": "create user",
-    "UpdateUser": "update user",
-    "DeleteUser": "delete user"
+    "GetCurrentUser": "get information about current user",
+    "UpdateCurrentUser": "update information about current user",
+    "ManageAccessKey": "only for current user",
+    "ManageOAuthGrant": "allows to manage oAuth grants",
+    "ManageUser": "allows to assign/unassign networks",
+    "ManageDeviceClass": "allows to manage device classes",
+    "ManageNetwork": "allows to manage available networks",
+    "ManageOAuthClient": "allows to manage oAuth clients"
+
 };
+
+app.Models.AccessKeyPermission.adminActions = ["ManageUser", "ManageDeviceClass", "ManageNetwork", "ManageOAuthClient"];
 
 
 app.Models.AccessKeyPermissionsCollection = Backbone.AuthCollection.extend({

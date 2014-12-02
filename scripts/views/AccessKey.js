@@ -38,6 +38,7 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
         data.domainsText = this.domainsText;
         data.subnetsText = this.subnetsText;
         data.availableActions = app.Models.AccessKeyPermission.actions;
+        data.adminActions = app.Models.AccessKeyPermission.adminActions;
         return data;
     },
     addNetwork: function() {

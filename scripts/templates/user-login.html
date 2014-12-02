@@ -31,5 +31,13 @@
             <button type="submit" class="btn btn-facebook"><i class="fa fa-facebook"> Sign in with Facebook</i></button>
         </form>
     </div>
+    <div class="identity-providers">
+        <form action="https://github.com/login/oauth/authorize" method="get">
+            <input name="client_id" id="githubClientId" type="hidden">
+            <input name="scope" value="user:email" type="hidden">
+            <input name="state" id="githubStateId" type="hidden">
+            <button type="submit" class="btn btn-github"><i class="fa fa-github"> Sign in with Github</i></button>
+        </form>
+    </div>
 </div>
 </script>
