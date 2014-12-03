@@ -150,35 +150,9 @@ app.bind('needAuth', function(opts) {
 });
 
 app.bind("oauth", function(options) {
-    var deviceHiveAdminConsole = "http://" + location.host + app.rootUrl;
-
-    var params = {}, queryString = location.search.substring(1),
-        regex = /([^&=]+)=([^&]*)/g, m;
+    var queryString = location.search.substring(1);
     if (!queryString) {
         queryString = location.hash.substring(1);
     }
-    while (m = regex.exec(queryString)) {
-        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-    }
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', app.config.restEndpoint + '/oauth2/accesskey', false);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('Authorization', 'Identity');
-
-    xhr.onreadystatechange = function (e) {
-        if (xhr.readyState == 4) {
-            if(xhr.status == 200){
-            var token = JSON.parse(xhr.response).key;
-                if (token) {
-                    sessionStorage.deviceHiveToken=token;
-                    sessionStorage.lastActivity=(new Date()).valueOf();
-                    document.location.href = deviceHiveAdminConsole;
-                }
-            } else {
-                app.authenticationError = "Identity authentication failed";
-                app.trigger('needAuth');
-            }
-        }
-    };
-    xhr.send(queryString);
+    new app.Models.AccessToken(queryString);
 });
