@@ -23,8 +23,7 @@ app.Models.AccessToken = Backbone.Model.extend({
             error: function() {
                 app.authenticationError = "Identity authentication failed";
                 app.trigger('needAuth');
-            },
-            async: false
+            }
         });
     }
 });
