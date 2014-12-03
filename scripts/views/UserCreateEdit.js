@@ -72,6 +72,18 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         base.HeadingText = this.model.isNew() ? "Creating new user" : "Editing user " + base.login;
 
         return base;
+    },
+
+    onRender: function() {
+        if (!app.oauthConfig.get('google').isAvailable) {
+            this.$el.find(".google-identity-login").css("display", "none");
+        }
+        if (!app.oauthConfig.get('facebook').isAvailable) {
+            this.$el.find(".facebook-identity-login").css("display", "none");
+        }
+        if (!app.oauthConfig.get('github').isAvailable) {
+            this.$el.find(".github-identity-login").css("display", "none");
+        }
     }
 });
 

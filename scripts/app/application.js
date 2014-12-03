@@ -65,6 +65,9 @@ _.extend(app, {
         // if no credentials currently set
         return !((!sessionStorage.userLogin || !sessionStorage.userPassword) && !sessionStorage.deviceHiveToken);
     },
+    isOAuthResponse: function() {
+        return ('state' === location.hash.substring(1, 6) || 'code' === location.search.substring(1,5));
+    },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {
         if (!this.isLoggedIn()) {
@@ -94,6 +97,7 @@ app.bind("initialize:before", function (options) {
                 val = val.substr(0, val.length - 1);
 
             app.restEndpoint = val;
+            app.oauthConfig = new app.Models.OAuthConfig();
         }
     }
 });
@@ -111,7 +115,9 @@ app.bind("initialize:after", function (options) {
 
     if (Backbone.history) {
         Backbone.history.start(params);
-        if (this.hasCredentials()) {
+        if (this.isOAuthResponse()) {
+            app.trigger('oauth');
+        } else if (this.hasCredentials()) {
             app.trigger('login');
         } else {
             app.trigger('needAuth');
@@ -141,4 +147,38 @@ app.bind("login", function (options) {
 
 app.bind('needAuth', function(opts) {
     Backbone.history.navigate('auth', { trigger: true });
+});
+
+app.bind("oauth", function(options) {
+    var deviceHiveAdminConsole = "http://" + location.host + app.rootUrl;
+
+    var params = {}, queryString = location.search.substring(1),
+        regex = /([^&=]+)=([^&]*)/g, m;
+    if (!queryString) {
+        queryString = location.hash.substring(1);
+    }
+    while (m = regex.exec(queryString)) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', app.config.restEndpoint + '/oauth2/accesskey', false);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Authorization', 'Identity');
+
+    xhr.onreadystatechange = function (e) {
+        if (xhr.readyState == 4) {
+            if(xhr.status == 200){
+            var token = JSON.parse(xhr.response).key;
+                if (token) {
+                    sessionStorage.deviceHiveToken=token;
+                    sessionStorage.lastActivity=(new Date()).valueOf();
+                    document.location.href = deviceHiveAdminConsole;
+                }
+            } else {
+                app.authenticationError = "Identity authentication failed";
+                app.trigger('needAuth');
+            }
+        }
+    };
+    xhr.send(queryString);
 });

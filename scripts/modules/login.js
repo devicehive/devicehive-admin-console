@@ -33,7 +33,7 @@ app.module("Modules.Login", function (users, app) {
 
     var sendLogoutRequest = function () {
         var xhr = new XMLHttpRequest();
-        xhr.open('DELETE', app.config.restEndpoint + '/oauth2/token/remove', true);
+        xhr.open('DELETE', app.config.restEndpoint + '/oauth2/accesskey', true);
         xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
 
         xhr.onreadystatechange = function (e) {

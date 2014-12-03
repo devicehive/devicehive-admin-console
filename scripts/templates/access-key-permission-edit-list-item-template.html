@@ -11,8 +11,8 @@
         <% _.each(availableActions, function(description, action) { if (_.indexOf(adminActions, action) == -1) { %>
         <input class="action" id="<%= cid + '_' + action %>" type="checkbox" value="<%= action %>" title="<%= description %>" <% if (_.indexOf(actions, action) != -1) { %>checked="checked"<% } %> />
         <label for="<%= cid + '_' + action %>" title="<%= description %>"><%= action %></label><br/>
-        <% } else if (app.User.get("role") != 1) {%>
-        <input class="action" id="<%= cid + '_' + adminAction %>" type="checkbox" value="<%= action %>" title="<%= description %>" <% if (_.indexOf(actions, action) != -1) { %>checked="checked"<% } %> />
+        <% } else if (app.User.get("role") != 1 && app.currentUserRole != 1) {%>
+        <input class="action" id="<%= cid + '_' + action %>" type="checkbox" value="<%= action %>" title="<%= description %>" <% if (_.indexOf(actions, action) != -1) { %>checked="checked"<% } %> />
         <label for="<%= cid + '_' + action %>" title="<%= description %>"><%= action %> (Admin)</label><br/>
         <%}}); %>
     </td>

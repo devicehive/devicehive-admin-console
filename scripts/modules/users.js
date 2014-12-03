@@ -35,6 +35,7 @@
                     });
                     usersView.on("itemview:accessKeysClicked", function (viewObject) {
                         var path = "user/" + viewObject.model.get("id") + "/accesskeys";
+                        app.currentUserRole = viewObject.model.get("role");
                         Backbone.history.navigate(path, { trigger: true });
                     });
                     usersView.on("itemview:editClicked", function (viewObject) {
@@ -170,5 +171,17 @@
     app.bind("login", function (options) {
         app.vent.trigger("addResource", "user", "Users", [ app.Enums.UserRole.Administrator ]);
     });
+
+    app.hideForbiddenIdentityProviders = function() {
+        if (!app.oauthConfig.get('google').isAvailable) {
+            this.$el.find(".google-identity-login").css("display", "none");
+        }
+        if (!app.oauthConfig.get('facebook').isAvailable) {
+            this.$el.find(".facebook-identity-login").css("display", "none");
+        }
+        if (!app.oauthConfig.get('github').isAvailable) {
+            this.$el.find(".github-identity-login").css("display", "none");
+        }
+    };
 
 });

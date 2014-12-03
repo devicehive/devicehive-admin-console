@@ -262,12 +262,11 @@ table
 
 
 /*users-template*/
-.users-table td.login{ width: 12%;}
-.users-table td.role{ width: 12%;}
-.users-table td.status{ width: 6%;}
-.users-table td.last-login{ width: 15%;}
-.users-table td.identity-login{ width: 12%;}
-.users-table td.buttons-column{ width: 19%; padding: 0}
+.users-table td.login{ width: 20%;}
+.users-table td.role{ width: 20%;}
+.users-table td.status{ width: 20%;}
+.users-table td.last-login{ width: 20%;}
+.users-table td.buttons-column{ width: 20%;}
 
 /*user-create-edit-template*/
 .users-edit

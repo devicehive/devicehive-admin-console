@@ -2,20 +2,39 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
     template: 'user-login',
     onRender: function() {
         var context = this;
-        var deviceHiveLoginUrl = "http://" + window.location.host + app.config.rootUrl;
+        var googleConfig = app.oauthConfig.get('google');
+        var facebookConfig = app.oauthConfig.get('facebook');
+        var githubConfig = app.oauthConfig.get('github');
 
-        [].forEach.call(this.$el.find('[name=redirect_uri]'), function(elem) {
-            elem.value = deviceHiveLoginUrl;
-        });
-
-        this.$el.find('#googleClientId')[0].value = app.config.googleClientId;
-        this.$el.find('#facebookClientId')[0].value = app.config.facebookClientId;
-        this.$el.find('#githubClientId')[0].value = app.config.githubClientId;
+        if (app.authenticationError) {
+            showError(app.authenticationError);
+        }
 
         var identityProviderState = "identity_provider_id=";
-        this.$el.find('#googleStateId')[0].value = identityProviderState + app.config.googleIdentityProviderId;
-        this.$el.find('#facebookStateId')[0].value = identityProviderState + app.config.facebookIdentityProviderId;
-        this.$el.find('#githubStateId')[0].value = identityProviderState + app.config.githubIdentityProviderId;
+        if (googleConfig.isAvailable) {
+            this.$el.find('#googleClientId')[0].value = googleConfig.clientId;
+            this.$el.find('#googleStateId')[0].value = identityProviderState + googleConfig.providerId;
+        } else {
+            this.$el.find('.google-identity-login').css("display", "none");
+        }
+
+        if (facebookConfig.isAvailable) {
+            this.$el.find('#facebookClientId')[0].value = facebookConfig.clientId;
+            this.$el.find('#facebookStateId')[0].value = identityProviderState + facebookConfig.providerId;
+        } else {
+            this.$el.find('.facebook-identity-login').css("display", "none");
+        }
+
+        if (githubConfig.isAvailable) {
+            this.$el.find('#githubClientId')[0].value = githubConfig.clientId;
+            this.$el.find('#githubStateId')[0].value = identityProviderState + githubConfig.providerId;
+        } else {
+            this.$el.find('.github-identity-login').css("display", "none");
+        }
+
+        [].forEach.call(this.$el.find('[name=redirect_uri]'), function(elem) {
+            elem.value = app.config.redirectUri + app.config.rootUrl;
+        });
 
         this.$el.find('.credentials-form').on('submit', function(e) {
             e.preventDefault();

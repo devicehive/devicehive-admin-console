@@ -11,7 +11,7 @@
     </form>
 </div>
 <div class="text-center">
-    <div class="identity-providers">
+    <div class="identity-providers google-identity-login" id="googleIdentityLoginId">
         <form action="https://accounts.google.com/o/oauth2/auth" method="get">
             <input name="response_type" value="token" type="hidden">
             <input name="client_id" id="googleClientId" type="hidden">
@@ -21,7 +21,7 @@
             <button type="submit" class="btn btn-google-plus"><i class="fa fa-google-plus"> Sign in with Google</i></button>
         </form>
     </div>
-    <div class="identity-providers">
+    <div class="identity-providers facebook-identity-login" id="facebookIdentityLoginId">
         <form action="https://www.facebook.com/dialog/oauth" method="get">
             <input name="response_type" value="token" type="hidden">
             <input name="client_id" id="facebookClientId" type="hidden">
@@ -31,10 +31,11 @@
             <button type="submit" class="btn btn-facebook"><i class="fa fa-facebook"> Sign in with Facebook</i></button>
         </form>
     </div>
-    <div class="identity-providers">
+    <div class="identity-providers github-identity-login" id="githubIdentityLoginId">
         <form action="https://github.com/login/oauth/authorize" method="get">
             <input name="client_id" id="githubClientId" type="hidden">
             <input name="scope" value="user:email" type="hidden">
+            <input name="redirect_uri" type="hidden">
             <input name="state" id="githubStateId" type="hidden">
             <button type="submit" class="btn btn-github"><i class="fa fa-github"> Sign in with Github</i></button>
         </form>
