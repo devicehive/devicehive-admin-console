@@ -77,14 +77,14 @@ app.Models.AccessKeyPermission.actions =  {
     "CreateDeviceNotification": "post notifications on behalf of device",
     "CreateDeviceCommand": "post commands to device",
     "UpdateDeviceCommand": "update status of commands on behalf of device",
-    "GetCurrentUser": "get information about current user",
-    "UpdateCurrentUser": "update information about current user",
-    "ManageAccessKey": "only for current user",
-    "ManageOAuthGrant": "allows to manage oAuth grants",
-    "ManageUser": "allows to assign/unassign networks",
-    "ManageDeviceClass": "allows to manage device classes",
-    "ManageNetwork": "allows to manage available networks",
-    "ManageOAuthClient": "allows to manage oAuth clients"
+    "GetCurrentUser": "get information about the current user",
+    "UpdateCurrentUser": "update information about the current user",
+    "ManageAccessKey": "issue, modify and delete access keys for the current user",
+    "ManageOAuthGrant": "issue, modify and delete OAuth grants for the current user",
+    "ManageUser": "create and modify DeviceHive users (admin)",
+    "ManageDeviceClass": "create, modify and delete device classes (admin)",
+    "ManageNetwork": "create, modify and delete networks (admin)",
+    "ManageOAuthClient": "create, modify and delete OAuth clients (admin)"
 
 };
 

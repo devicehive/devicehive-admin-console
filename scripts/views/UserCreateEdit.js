@@ -30,8 +30,17 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var role = parseInt(this.$el.find("#role :selected").val());
         var status = parseInt(this.$el.find("#status :selected").val());
         var googleLogin = this.$el.find("#googleLogin").val();
+        if (_.isEmpty(googleLogin)) {
+            googleLogin = null;
+        }
         var facebookLogin = this.$el.find("#facebookLogin").val();
+        if (_.isEmpty(facebookLogin)) {
+            facebookLogin = null;
+        }
         var githubLogin = this.$el.find("#githubLogin").val();
+        if (_.isEmpty(githubLogin)) {
+            githubLogin = null;
+        }
         var options = {
             login: login,
             role: role,
@@ -75,9 +84,9 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     },
 
     onRender: function() {
-        this.$el.find(".google-identity-login").toggleClass('ui-helper-hidden', !app.oauthConfig.get('google').isAvailable);
-        this.$el.find(".facebook-identity-login").toggleClass('ui-helper-hidden', !app.oauthConfig.get('facebook').isAvailable);
-        this.$el.find(".github-identity-login").toggleClass('ui-helper-hidden', !app.oauthConfig.get('github').isAvailable);
+        this.$el.find(".google-identity-login").removeClass('ui-helper-hidden', !app.oauthConfig.get('google').isAvailable);
+        this.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden', !app.oauthConfig.get('facebook').isAvailable);
+        this.$el.find(".github-identity-login").removeClass('ui-helper-hidden', !app.oauthConfig.get('github').isAvailable);
     }
 });
 

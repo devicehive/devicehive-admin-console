@@ -29,7 +29,12 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        return !(!sessionStorage.userLogin || !sessionStorage.userPassword || !sessionStorage.deviceHiveToken);
+        if ((!sessionStorage.userLogin || !sessionStorage.userPassword) && !sessionStorage.deviceHiveToken) {
+            return false;
+        } else {
+            console.log('lets think that we have correct credentials');
+            return true;
+        }
     },
     getCollection: function (type, options) {
         var retIt = $.Deferred();
@@ -58,7 +63,7 @@ _.extend(app, {
         }
 
         return retIt;
-    },
+    }
 });
 
 app.bind("initialize:before", function (options) {

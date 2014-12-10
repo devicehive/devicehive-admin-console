@@ -56,9 +56,9 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             context.$el.find('#facebookStateId')[0].value = identityProviderState + facebookConfig.providerId;
             context.$el.find('#githubStateId')[0].value = identityProviderState + githubConfig.providerId;
 
-            context.$el.find(".google-identity-login").toggleClass('ui-helper-hidden', !app.oauthConfig.get('google').isAvailable);
-            context.$el.find(".facebook-identity-login").toggleClass('ui-helper-hidden', !app.oauthConfig.get('facebook').isAvailable);
-            context.$el.find(".github-identity-login").toggleClass('ui-helper-hidden', !app.oauthConfig.get('github').isAvailable);
+            context.$el.find(".google-identity-login").removeClass('ui-helper-hidden', !app.oauthConfig.get('google').isAvailable);
+            context.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden', !app.oauthConfig.get('facebook').isAvailable);
+            context.$el.find(".github-identity-login").removeClass('ui-helper-hidden', !app.oauthConfig.get('github').isAvailable);
 
             [].forEach.call(context.$el.find('[name=redirect_uri]'), function(elem) {
                 elem.value = app.config.redirectUri + app.config.rootUrl;
