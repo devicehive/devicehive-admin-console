@@ -8,8 +8,9 @@ app.Views.AccessKeyPermissionListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function() {
         var data = this.model.toJSON({ escape: true });
+        console.log(data);
         var initArray = function(obj, keys) {
-            _.each(keys, function(item) { if (!_.has(obj, item) || obj[item] == null) { obj[item] = []; } });
+            _.each(keys, function(item) { if (!_.has(obj, item)) { obj[item] = []; } });
         };
         initArray(data, ["domains", "subnets", "actions", "networkIds", "deviceGuids"]);
         data.adminActions = app.Models.AccessKeyPermission.adminActions;

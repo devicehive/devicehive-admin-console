@@ -19,8 +19,10 @@
     </td>
     <td>
         <ul>
-            <% if (_.isEmpty(actions)) { %>
+            <% if (actions == null) { %>
             <em>Any</em>
+            <% } else if (_.isEmpty(actions)) { %>
+            <em>No Actions Permitted</em>
             <% } else { _.each(actions, function(action) {
             if (_.indexOf(adminActions, action) != -1) { %>
             <li><%= action %> (Admin)</li>

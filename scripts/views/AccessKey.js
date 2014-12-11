@@ -99,6 +99,9 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
     },
     changeActions: function() {
         var actions = this.$el.find(".action:checked").map(function(cb) { return $(this).val(); }).toArray();
+        if (_.isEmpty(actions)) {
+            actions = null;
+        }
         this.model.set("actions", actions, { silent: true });
     },
     change: function(attr) {
@@ -172,8 +175,12 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
                 expirationDate = app.f.toISOString(expirationDateEl.datetimepicker("getDate"));
             }
 
+            var label = this.$el.find(".label").val();
+            if (_.isEmpty(label)) {
+                label = null;
+            }
             var changes = {
-                label: this.$el.find(".label").val(),
+                label: label,
                 expirationDate: expirationDate
             };
 
