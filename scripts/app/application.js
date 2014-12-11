@@ -63,11 +63,15 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if (!sessionStorage.userLogin || !sessionStorage.userPassword) {
+        if ((!sessionStorage.userLogin || !sessionStorage.userPassword) && !sessionStorage.deviceHiveToken) {
             return false;
         } else {
+            console.log('lets think that we have correct credentials');
             return true;
         }
+    },
+    isOAuthResponse: function() {
+        return ('state' === location.hash.substring(1, 6) || 'code' === location.search.substring(1,5));
     },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {
@@ -98,6 +102,7 @@ app.bind("initialize:before", function (options) {
                 val = val.substr(0, val.length - 1);
 
             app.restEndpoint = val;
+            app.oauthConfig = new app.Models.OAuthConfig();
         }
     }
 });
@@ -115,7 +120,9 @@ app.bind("initialize:after", function (options) {
 
     if (Backbone.history) {
         Backbone.history.start(params);
-        if (this.hasCredentials()) {
+        if (this.isOAuthResponse()) {
+            app.trigger('oauth');
+        } else if (this.hasCredentials()) {
             app.trigger('login');
         } else {
             app.trigger('needAuth');
@@ -145,4 +152,12 @@ app.bind("login", function (options) {
 
 app.bind('needAuth', function(opts) {
     Backbone.history.navigate('auth', { trigger: true });
+});
+
+app.bind("oauth", function(options) {
+    var queryString = location.search.substring(1);
+    if (!queryString) {
+        queryString = location.hash.substring(1);
+    }
+    new app.Models.AccessToken(queryString);
 });

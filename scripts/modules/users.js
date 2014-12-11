@@ -35,6 +35,7 @@
                     });
                     usersView.on("itemview:accessKeysClicked", function (viewObject) {
                         var path = "user/" + viewObject.model.get("id") + "/accesskeys";
+                        app.currentUserRole = viewObject.model.get("role");
                         Backbone.history.navigate(path, { trigger: true });
                     });
                     usersView.on("itemview:editClicked", function (viewObject) {

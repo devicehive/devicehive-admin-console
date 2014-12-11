@@ -602,3 +602,8 @@ table
 label, input[type=submit] {
     cursor: pointer;
 }
+
+.identity-providers {
+    padding-top: 20px;
+    display: inline-block;
+}
