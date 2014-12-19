@@ -102,7 +102,11 @@ app.bind("initialize:before", function (options) {
                 val = val.substr(0, val.length - 1);
 
             app.restEndpoint = val;
-            app.oauthConfig = new app.Models.OAuthConfig();
+
+            var oauthConfig = new app.Models.OAuthConfig();
+            app.googleConfig = oauthConfig.get('google');
+            app.facebookConfig = oauthConfig.get('facebook');
+            app.githubConfig = oauthConfig.get('github');
         }
     }
 });
