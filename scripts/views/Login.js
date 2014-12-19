@@ -51,19 +51,19 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             if (googleConfig) {
                 context.$el.find('#googleClientId')[0].value = googleConfig.clientId;
                 context.$el.find('#googleStateId')[0].value = identityProviderState + googleConfig.providerId;
-                context.$el.find(".google-identity-login").removeClass('ui-helper-hidden', !googleConfig.isAvailable);
+                context.$el.find(".google-identity-login").toggleClass('ui-helper-hidden', !googleConfig.isAvailable);
             }
 
             if (facebookConfig) {
                 context.$el.find('#facebookClientId')[0].value = facebookConfig.clientId;
                 context.$el.find('#facebookStateId')[0].value = identityProviderState + facebookConfig.providerId;
-                context.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden', !facebookConfig.isAvailable);
+                context.$el.find(".facebook-identity-login").toggleClass('ui-helper-hidden', !facebookConfig.isAvailable);
             }
 
             if (githubConfig) {
                 context.$el.find('#githubClientId')[0].value = githubConfig.clientId;
                 context.$el.find('#githubStateId')[0].value = identityProviderState + githubConfig.providerId;
-                context.$el.find(".github-identity-login").removeClass('ui-helper-hidden', !githubConfig.isAvailable);
+                context.$el.find(".github-identity-login").toggleClass('ui-helper-hidden', !githubConfig.isAvailable);
             }
 
             [].forEach.call(context.$el.find('[name=redirect_uri]'), function(elem) {
