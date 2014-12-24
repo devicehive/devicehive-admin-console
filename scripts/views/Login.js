@@ -62,8 +62,18 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
                 context.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
             }
 
+            var redirectUri;
+            if (app.config.redirectUri) {
+                redirectUri = app.f.prepareAbsolutePath(app.config.redirectUri);
+            } else {
+                if (app.config.rootUrl) {
+                    redirectUri = app.f.prepareAbsolutePath(app.config.rootUrl);
+                } else {
+                    redirectUri = location.origin;
+                }
+            }
             [].forEach.call(context.$el.find('[name=redirect_uri]'), function(elem) {
-                elem.value = app.config.redirectUri + app.config.rootUrl;
+                elem.value = redirectUri;
             });
         }
     }

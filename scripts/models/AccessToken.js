@@ -15,7 +15,7 @@ app.Models.AccessToken = Backbone.Model.extend({
             type: 'POST',
 
             success: function (response) {
-                var appUrl =  location.origin + app.rootUrl;
+                var appUrl =  app.f.prepareAbsolutePath(app.rootUrl);
                 sessionStorage.deviceHiveToken=response.get('key');
                 sessionStorage.lastActivity=(new Date()).valueOf();
                 location.href = appUrl;

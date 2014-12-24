@@ -36,6 +36,15 @@ Backbone.Marionette.Application.prototype.f = {
     },
     toISOString: function (date) {
         return date.format(dateFormat.masks.isoUtcDateTime);
+    },
+    prepareAbsolutePath: function(path) {
+        if (path.substr(0,2) === "//") {
+            return location.protocol + path;
+        } else if (path.substr(0,1) === "/") {
+            return location.origin + path;
+        } else {
+            return path;
+        }
     }
 };
 
