@@ -43,22 +43,23 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
 
         function initializeOAuth2Forms() {
             var identityProviderState = "identity_provider_id=";
+            var loginUrl = "&url=" + location.origin + location.pathname;
 
             if (app.googleConfig && app.googleConfig.isAvailable) {
                 context.$el.find('#googleClientId')[0].value = app.googleConfig.clientId;
-                context.$el.find('#googleStateId')[0].value = identityProviderState + app.googleConfig.providerId;
+                context.$el.find('#googleStateId')[0].value = identityProviderState + app.googleConfig.providerId + loginUrl;
                 context.$el.find(".google-identity-login").removeClass('ui-helper-hidden');
             }
 
             if (app.facebookConfig && app.facebookConfig.isAvailable) {
                 context.$el.find('#facebookClientId')[0].value = app.facebookConfig.clientId;
-                context.$el.find('#facebookStateId')[0].value = identityProviderState + app.facebookConfig.providerId;
+                context.$el.find('#facebookStateId')[0].value = identityProviderState + app.facebookConfig.providerId + loginUrl;
                 context.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden');
             }
 
             if (app.githubConfig && app.githubConfig.isAvailable) {
                 context.$el.find('#githubClientId')[0].value = app.githubConfig.clientId;
-                context.$el.find('#githubStateId')[0].value = identityProviderState + app.githubConfig.providerId;
+                context.$el.find('#githubStateId')[0].value = identityProviderState + app.githubConfig.providerId + loginUrl;
                 context.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
             }
 
