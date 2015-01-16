@@ -63,7 +63,7 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if ((!sessionStorage.userLogin || !sessionStorage.userPassword) && !sessionStorage.deviceHiveToken) {
+        if (!sessionStorage.deviceHiveToken) {
             return false;
         } else {
             console.log('lets think that we have correct credentials');
@@ -71,7 +71,8 @@ _.extend(app, {
         }
     },
     isOAuthResponse: function() {
-        return ('state' === location.hash.substring(1, 6) || 'code' === location.search.substring(1,5));
+        return ('state' === location.hash.substring(1, 6) || 'code' === location.search.substring(1,5)
+            || 'state' === location.search.substring(1,6));
     },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {
@@ -103,10 +104,10 @@ app.bind("initialize:before", function (options) {
 
             app.restEndpoint = val;
 
-            var oauthConfig = new app.Models.OAuthConfig();
-            app.googleConfig = oauthConfig.get('google');
-            app.facebookConfig = oauthConfig.get('facebook');
-            app.githubConfig = oauthConfig.get('github');
+            var oauthConfig = new app.Models.OAuthConfig().get('providers');
+            app.googleConfig = oauthConfig.filter(function(element) {return 'google' === element.name})[0];
+            app.facebookConfig = oauthConfig.filter(function(element) {return 'facebook' === element.name})[0];
+            app.githubConfig = oauthConfig.filter(function(element) {return 'github' === element.name})[0];
         }
     }
 });
@@ -163,5 +164,9 @@ app.bind("oauth", function(options) {
     if (!queryString) {
         queryString = location.hash.substring(1);
     }
-    new app.Models.AccessToken(queryString);
+    var params = app.f.parseQueryString(queryString);
+    params.redirect_url = app.f.getRedirectUri();
+    params.providerName = app.f.parseQueryString(decodeURIComponent(params.state)).provider;
+    params.state = null;
+    new app.Models.AccessToken(params);
 });

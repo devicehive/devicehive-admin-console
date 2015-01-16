@@ -84,13 +84,13 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     },
 
     onRender: function() {
-        if (app.googleConfig && app.googleConfig.isAvailable) {
+        if (app.googleConfig) {
             this.$el.find(".google-identity-login").removeClass('ui-helper-hidden');
         }
-        if (app.facebookConfig && app.facebookConfig.isAvailable) {
+        if (app.facebookConfig) {
             this.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden');
         }
-        if (app.githubConfig && app.githubConfig.isAvailable) {
+        if (app.githubConfig) {
             this.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
         }
     }

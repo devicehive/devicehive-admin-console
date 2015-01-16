@@ -179,9 +179,14 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
             if (_.isEmpty(label)) {
                 label = null;
             }
+            var type = $('#accessKeyType').find(':selected').val();
+            if (_.isEmpty(type)) {
+                type = null;
+            }
             var changes = {
                 label: label,
-                expirationDate: expirationDate
+                expirationDate: expirationDate,
+                type: type
             };
 
             var that = this;
@@ -218,6 +223,9 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
             data["expirationDate"] = app.f.parseUTCstring(data["expirationDate"]).format("mm/dd/yyyy HH:MM");
         else
             data["expirationDate"] = "";
+        if (!_.has(data, "type"))
+            data.type = app.Enums.AccessKeyType.Default;
+        data.types = app.Enums.AccessKeyType;
         return data;
     }
 

@@ -8,7 +8,6 @@ app.Views.AccessKeyPermissionListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function() {
         var data = this.model.toJSON({ escape: true });
-        console.log(data);
         var initArray = function(obj, keys) {
             _.each(keys, function(item) { if (!_.has(obj, item)) { obj[item] = []; } });
         };
@@ -86,6 +85,8 @@ app.Views.AccessKeyListItem = Backbone.Marionette.CompositeView.extend({
             data["expirationDate"] = app.f.parseUTCstring(data["expirationDate"]).format("mm/dd/yyyy HH:MM:ss");
         else
             data["expirationDate"] = "";
+        data.type = app.Enums.AccessKeyType.getName(data.type);
+        //data.types = app.Enums.AccessKeyType;
 
         return data;
     }

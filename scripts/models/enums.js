@@ -21,4 +21,6 @@ app.Enums.UserStatus = new app.Enumeration({ Active: 0, LockedOut: 1, Disabled: 
 
 app.Enums.UserRole = new app.Enumeration({ Administrator: 0, Client: 1 });
 
+app.Enums.AccessKeyType = new app.Enumeration({ Default: 0, Session: 1, Oauth: 2 });
+
 

@@ -1,16 +1,15 @@
 app.Models.AccessToken = Backbone.Model.extend({
     url: function() {
-        return app.restEndpoint + '/oauth2/accesskey';
+        return app.restEndpoint + '/auth/accesskey';
     },
     initialize: function (params) {
         this.fetch({
 
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.setRequestHeader('Authorization', 'Identity');
+                xhr.setRequestHeader('Content-Type', 'application/json');
             },
 
-            data: params,
+            data: JSON.stringify(params),
 
             type: 'POST',
 

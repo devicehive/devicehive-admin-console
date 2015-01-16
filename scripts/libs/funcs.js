@@ -45,6 +45,26 @@ Backbone.Marionette.Application.prototype.f = {
         } else {
             return path;
         }
+    },
+    getRedirectUri: function() {
+        if (app.config.redirectUri) {
+            return app.f.prepareAbsolutePath(app.config.redirectUri);
+        } else {
+            if (app.config.rootUrl) {
+                return app.f.prepareAbsolutePath(app.config.rootUrl);
+            } else {
+                return location.origin;
+            }
+        }
+    },
+    parseQueryString: function (queryString) {
+        res = {};
+        queryString.replace("?","").split('&').map(
+            function (q) {
+                var v = q.split('=');
+                res[v[0]] = v[1];
+            });
+        return res;
     }
 };
 

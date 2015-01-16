@@ -29,7 +29,7 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if ((!sessionStorage.userLogin || !sessionStorage.userPassword) && !sessionStorage.deviceHiveToken) {
+        if (!sessionStorage.deviceHiveToken) {
             return false;
         } else {
             console.log('lets think that we have correct credentials');
@@ -113,12 +113,6 @@ app.bind("login", function (options) {
 });
 
 app.bind('needAuth', function(opts) {
-    if (sessionStorage.userLogin) {
-        delete sessionStorage.userLogin;
-    }
-    if (sessionStorage.userPassword) {
-        delete sessionStorage.userPassword;
-    }
     if (sessionStorage.deviceHiveToken) {
         delete sessionStorage.deviceHiveToken;
     }

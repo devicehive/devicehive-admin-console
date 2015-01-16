@@ -10,6 +10,20 @@
              <td class="title-column"><label>expiration date:</label></td>
              <td><input class="expiration-date" value="<%= expirationDate || "" %>" type="text"/></td>
          </tr>
+         <tr>
+             <td class="title-column">
+                 <label>type:</label>
+             </td>
+             <td>
+                 <select id="accessKeyType">
+                     <% _.each(types,function(value,key){ if(value == type){ %>
+                     <option value=<%=value%> selected="selected"><%=key %></option>
+                     <%} else { %>
+                     <option value=<%=value%>><%=key %></option>
+                     <% }}); %>
+                 </select>
+             </td>
+         </tr>
      </table>
      <div class="access-key-permissions-edit-container panel">
          <table class="main-table access-key-permissions-edit-table">

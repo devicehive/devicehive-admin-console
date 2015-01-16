@@ -17,7 +17,7 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
 
         this.$el.find('form').on('submit', function(e) {
             e.preventDefault();
-            var login = sessionStorage.userLogin;
+            var accessKey = sessionStorage.deviceHiveToken;
             var $form = $(e.target);
             error(''); // clear error message
             var currentpassword = $form.find('[name=currentpassword]').val();
@@ -36,7 +36,7 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
                 return;
             }
             // perform check of current password
-            var headers = {'Authorization': 'Basic '+btoa(login+':'+currentpassword)}; 
+            var headers = {'Authorization': 'Bearer '+ accessKey};
             var options = {
                 headers: headers,
                 success: function(resp, status) {
