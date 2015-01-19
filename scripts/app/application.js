@@ -165,8 +165,8 @@ app.bind("oauth", function(options) {
         queryString = location.hash.substring(1);
     }
     var params = app.f.parseQueryString(queryString);
-    params.redirect_url = app.f.getRedirectUri();
+    params.redirect_uri = app.f.getRedirectUri();
     params.providerName = app.f.parseQueryString(decodeURIComponent(params.state)).provider;
-    params.state = null;
+    delete params.state;
     new app.Models.AccessToken(params);
 });

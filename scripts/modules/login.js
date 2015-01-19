@@ -13,9 +13,6 @@ app.module("Modules.Login", function (users, app) {
         },
         'logout': function() {
             sendLogoutRequest();
-            delete sessionStorage.deviceHiveToken;
-            Backbone.history.navigate('', { trigger: false });
-            location.reload(true);
         }
     };
     var routes = {
@@ -28,18 +25,18 @@ app.module("Modules.Login", function (users, app) {
     });
 
     var sendLogoutRequest = function () {
-        var xhr = new XMLHttpRequest();
-        xhr.open('DELETE', app.config.restEndpoint + '/auth/accesskey', true);
-        xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
-
-        xhr.onreadystatechange = function (e) {
-            if (xhr.readyState == 4) {
-                if(xhr.status != 200){
-                    console.log(xhr.response);
-                }
+        $.ajax({
+            url: app.config.restEndpoint + '/auth/accesskey',
+            type: 'DELETE',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
+            },
+            success: function () {
+                delete sessionStorage.deviceHiveToken;
+                Backbone.history.navigate('', { trigger: false });
+                location.reload(true);
             }
-        };
-        xhr.send(null);
+        });
     };
 
 });
