@@ -3,8 +3,8 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
     onRender: function() {
         var context = this;
 
-        if (app.authenticationError) {
-            showError(app.authenticationError);
+        if (sessionStorage.authenticationError) {
+            showError(sessionStorage.authenticationError);
         }
         initializeOAuth2Forms();
 
@@ -17,7 +17,7 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             params.providerName = 'password';
 
             new app.Models.AccessToken(params);
-            showError(app.authenticationError);
+            showError(sessionStorage.authenticationError);
         });
 
         function showError(message) {

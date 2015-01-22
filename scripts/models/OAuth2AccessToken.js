@@ -1,4 +1,4 @@
-app.Models.AccessToken = Backbone.Model.extend({
+app.Models.OAuth2AccessToken = Backbone.Model.extend({
     url: function() {
         return app.restEndpoint + '/auth/accesskey';
     },
@@ -16,16 +16,14 @@ app.Models.AccessToken = Backbone.Model.extend({
             async: false,
 
             success: function (response) {
-                var appUrl =  app.f.prepareAbsolutePath(app.rootUrl);
                 sessionStorage.deviceHiveToken=response.get('key');
                 sessionStorage.lastActivity=(new Date()).valueOf();
                 delete sessionStorage.authenticationError;
-                location.href = appUrl;
+                app.trigger('login');
             },
             error: function(req, resp) {
                 var responseObject = JSON.parse(resp.responseText);
                 sessionStorage.authenticationError = responseObject.message;
-                app.trigger('needAuth');
             }
         });
     }

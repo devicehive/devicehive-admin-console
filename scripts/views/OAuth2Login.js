@@ -17,7 +17,10 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             params.login = $(e.target).find('[name=login]').val();
             params.password = $(e.target).find('[name=password]').val();
             params.providerName = 'password';
-            new app.Models.AccessToken(params);
+            new app.Models.OAuth2AccessToken(params);
+            if (sessionStorage.authenticationError) {
+                showError(sessionStorage.authenticationError);
+            }
         });
     }
 });
