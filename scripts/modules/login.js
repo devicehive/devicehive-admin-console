@@ -30,12 +30,11 @@ app.module("Modules.Login", function (users, app) {
             type: 'DELETE',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
-            },
-            done: function () {
-                delete sessionStorage.deviceHiveToken;
-                Backbone.history.navigate('', { trigger: false });
-                location.reload(true);
             }
+        }).always(function () {
+            delete sessionStorage.deviceHiveToken;
+            Backbone.history.navigate('', { trigger: false });
+            location.reload(true);
         });
     };
 
