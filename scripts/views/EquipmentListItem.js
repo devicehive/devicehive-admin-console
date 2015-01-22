@@ -21,7 +21,7 @@ app.Views.EquipmentListItem = Backbone.Marionette.ItemView.extend({
     },
     deleteEquipment: function () {
         if (this.model.deviceClass.get("isPermanent") == false)
-            if (confirm("are you realy want to delete this equipment? This changes cannot be undone."))
+            if (confirm("Do you realy want to delete this equipment? This change cannot be undone."))
                 this.model.destroy({ error: function (model, response) {
                     app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
                 }
