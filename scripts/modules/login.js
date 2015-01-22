@@ -31,7 +31,7 @@ app.module("Modules.Login", function (users, app) {
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
             },
-            success: function () {
+            done: function () {
                 delete sessionStorage.deviceHiveToken;
                 Backbone.history.navigate('', { trigger: false });
                 location.reload(true);
