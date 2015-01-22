@@ -4,7 +4,11 @@ app.Views.authHeader = Backbone.Marionette.ItemView.extend({
         this.user = options.user;
     },
     serializeData: function() {
-        return {userLogin: this.user.get('login')};
+        var display = "block";
+        if (sessionStorage.loginMethod !== 'password') {
+            display = "none";
+        }
+        return {userLogin: this.user.get('login'), displayChangePassLink: display};
     },
     events: {
         "click a": "clickHandler"

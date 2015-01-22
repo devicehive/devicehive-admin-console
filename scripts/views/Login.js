@@ -17,6 +17,7 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             params.providerName = 'password';
 
             new app.Models.AccessToken(params);
+            showError(app.authenticationError);
         });
 
         function showError(message) {

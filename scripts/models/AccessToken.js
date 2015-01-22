@@ -3,6 +3,7 @@ app.Models.AccessToken = Backbone.Model.extend({
         return app.restEndpoint + '/auth/accesskey';
     },
     initialize: function (params) {
+        sessionStorage.loginMethod = params.providerName;
         this.fetch({
 
             beforeSend: function (xhr) {
@@ -12,15 +13,18 @@ app.Models.AccessToken = Backbone.Model.extend({
             data: JSON.stringify(params),
 
             type: 'POST',
+            async: false,
 
             success: function (response) {
                 var appUrl =  app.f.prepareAbsolutePath(app.rootUrl);
                 sessionStorage.deviceHiveToken=response.get('key');
                 sessionStorage.lastActivity=(new Date()).valueOf();
+                delete app.authenticationError;
                 location.href = appUrl;
             },
-            error: function() {
-                app.authenticationError = "Identity authentication failed";
+            error: function(req, resp) {
+                var responseObject = JSON.parse(resp.responseText);
+                app.authenticationError = responseObject.message;
                 app.trigger('needAuth');
             }
         });
