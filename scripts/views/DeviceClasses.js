@@ -83,7 +83,7 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
         });
     },
     deleteClass: function () {
-        if (confirm("Do you realy want to delete this device class? This change can not be undone."))
+        if (confirm("Do you really want to delete this device class? This change can not be undone."))
             this.model.destroy({
                 error: function (model, response) {
                     app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
