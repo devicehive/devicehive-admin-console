@@ -4,7 +4,7 @@ app.module("Modules.Login", function (users, app) {
         'auth': function() {
             app.Regions.bottomWorkArea.close();
             app.vent.trigger("stopLoading");
-            if (sessionStorage.userLogin && sessionStorage.userPassword) {
+            if (sessionStorage.deviceHiveToken) {
                 Backbone.history.navigate('', {trigger: true});
                 return;
             } else {
@@ -12,10 +12,7 @@ app.module("Modules.Login", function (users, app) {
             }
         },
         'logout': function() {
-            delete sessionStorage.userLogin;
-            delete sessionStorage.userPassword;
-            Backbone.history.navigate('', { trigger: false });
-            location.reload(true);
+            sendLogoutRequest();
         }
     };
     var routes = {
@@ -26,5 +23,19 @@ app.module("Modules.Login", function (users, app) {
     app.addInitializer(function (options) {
         var rtr = new router();
     });
+
+    var sendLogoutRequest = function () {
+        $.ajax({
+            url: app.config.restEndpoint + '/auth/accesskey',
+            type: 'DELETE',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
+            }
+        }).always(function () {
+            delete sessionStorage.deviceHiveToken;
+            Backbone.history.navigate('', { trigger: false });
+            location.reload(true);
+        });
+    };
 
 });

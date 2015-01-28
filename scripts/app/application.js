@@ -63,11 +63,16 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if (!sessionStorage.userLogin || !sessionStorage.userPassword) {
+        if (!sessionStorage.deviceHiveToken) {
             return false;
         } else {
+            console.log('lets think that we have correct credentials');
             return true;
         }
+    },
+    isOAuthResponse: function() {
+        return ('state' === location.hash.substring(1, 6) || 'code' === location.search.substring(1,5)
+            || 'state' === location.search.substring(1,6));
     },
     // checks whether app.User has access to specified role
     hasRole: function(roles) {
@@ -98,6 +103,11 @@ app.bind("initialize:before", function (options) {
                 val = val.substr(0, val.length - 1);
 
             app.restEndpoint = val;
+
+            var oauthConfig = new app.Models.OAuthConfig().get('providers');
+            app.googleConfig = oauthConfig.filter(function(element) {return 'google' === element.name})[0];
+            app.facebookConfig = oauthConfig.filter(function(element) {return 'facebook' === element.name})[0];
+            app.githubConfig = oauthConfig.filter(function(element) {return 'github' === element.name})[0];
         }
     }
 });
@@ -115,7 +125,9 @@ app.bind("initialize:after", function (options) {
 
     if (Backbone.history) {
         Backbone.history.start(params);
-        if (this.hasCredentials()) {
+        if (this.isOAuthResponse()) {
+            app.trigger('oauth');
+        } else if (this.hasCredentials()) {
             app.trigger('login');
         } else {
             app.trigger('needAuth');
@@ -145,4 +157,16 @@ app.bind("login", function (options) {
 
 app.bind('needAuth', function(opts) {
     Backbone.history.navigate('auth', { trigger: true });
+});
+
+app.bind("oauth", function(options) {
+    var queryString = location.search.substring(1);
+    if (!queryString) {
+        queryString = location.hash.substring(1);
+    }
+    var params = app.f.parseQueryString(queryString);
+    params.redirect_uri = app.f.getRedirectUri();
+    params.providerName = app.f.parseQueryString(decodeURIComponent(params.state)).provider;
+    delete params.state;
+    new app.Models.AccessToken(params);
 });

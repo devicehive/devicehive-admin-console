@@ -1,10 +1,10 @@
 // AuthModel is intended to be a base model for entities that requires http basic auth for ajax requests
 Backbone.AuthModel = Backbone.Model.extend({
     authHeader: function () {
-        if (sessionStorage.userLogin && sessionStorage.userPassword) {
-            return {
-                'Authorization': 'Basic '+btoa(sessionStorage.userLogin+':'+sessionStorage.userPassword)
-            };
+        if (sessionStorage.deviceHiveToken) {
+           return {
+               'Authorization': 'Bearer '+sessionStorage.deviceHiveToken
+           };
         } else {
             return {};
         }

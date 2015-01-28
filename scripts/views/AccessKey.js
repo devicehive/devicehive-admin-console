@@ -38,6 +38,7 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
         data.domainsText = this.domainsText;
         data.subnetsText = this.subnetsText;
         data.availableActions = app.Models.AccessKeyPermission.actions;
+        data.adminActions = app.Models.AccessKeyPermission.adminActions;
         return data;
     },
     addNetwork: function() {
@@ -98,6 +99,9 @@ app.Views.AccessKeyPermissionEditListItem = Backbone.Marionette.ItemView.extend(
     },
     changeActions: function() {
         var actions = this.$el.find(".action:checked").map(function(cb) { return $(this).val(); }).toArray();
+        if (_.isEmpty(actions)) {
+            actions = null;
+        }
         this.model.set("actions", actions, { silent: true });
     },
     change: function(attr) {
@@ -171,9 +175,18 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
                 expirationDate = app.f.toISOString(expirationDateEl.datetimepicker("getDate"));
             }
 
+            var label = this.$el.find(".label").val();
+            if (_.isEmpty(label)) {
+                label = null;
+            }
+            var type = $('#accessKeyType').find(':selected').val();
+            if (_.isEmpty(type)) {
+                type = null;
+            }
             var changes = {
-                label: this.$el.find(".label").val(),
-                expirationDate: expirationDate
+                label: label,
+                expirationDate: expirationDate,
+                type: type
             };
 
             var that = this;
@@ -210,6 +223,9 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
             data["expirationDate"] = app.f.parseUTCstring(data["expirationDate"]).format("mm/dd/yyyy HH:MM");
         else
             data["expirationDate"] = "";
+        if (!_.has(data, "type"))
+            data.type = app.Enums.AccessKeyType.Default;
+        data.types = app.Enums.AccessKeyType;
         return data;
     }
 

@@ -68,6 +68,30 @@
      <input id="password-confirmation" type="password"/>
      </td>
      </tr>
+     <tr class="google-identity-login ui-helper-hidden">
+         <td class="title-column">
+             <label>google login:</label>
+         </td>
+         <td>
+             <input type="text" id="googleLogin" value="<%= googleLogin %>"/>
+         </td>
+     </tr>
+     <tr class="facebook-identity-login ui-helper-hidden">
+         <td class="title-column">
+             <label>facebook login:</label>
+         </td>
+         <td>
+             <input type="text" id="facebookLogin" value="<%= facebookLogin %>"/>
+         </td>
+     </tr>
+     <tr class="github-identity-login ui-helper-hidden">
+         <td class="title-column">
+             <label>github login:</label>
+         </td>
+         <td>
+             <input type="text" id="githubLogin" value="<%= githubLogin %>"/>
+         </td>
+     </tr>
      </table>
      <a href="javascript:void(0)" class="save edit-button"><%= saveButtonText %></a>
      <a href="javascript:void(0)" class="close view-button">Close</a>

@@ -69,15 +69,26 @@ app.Models.AccessKeyPermission = Backbone.AuthModel.extend({
 
 app.Models.AccessKeyPermission.actions =  {
     "GetNetwork": "get information about network",
-        "GetDevice": "get information about device and device class",
-        "GetDeviceState": "get information about current device equipment state",
-        "GetDeviceNotification": "get or subscribe to device notifications",
-        "GetDeviceCommand": "get or subscribe to commands sent to device",
-        "RegisterDevice": "register a device",
-        "CreateDeviceNotification": "post notifications on behalf of device",
-        "CreateDeviceCommand": "post commands to device",
-        "UpdateDeviceCommand": "update status of commands on behalf of device"
+    "GetDevice": "get information about device and device class",
+    "GetDeviceState": "get information about current device equipment state",
+    "GetDeviceNotification": "get or subscribe to device notifications",
+    "GetDeviceCommand": "get or subscribe to commands sent to device",
+    "RegisterDevice": "register a device",
+    "CreateDeviceNotification": "post notifications on behalf of device",
+    "CreateDeviceCommand": "post commands to device",
+    "UpdateDeviceCommand": "update status of commands on behalf of device",
+    "GetCurrentUser": "get information about the current user",
+    "UpdateCurrentUser": "update information about the current user",
+    "ManageAccessKey": "issue, modify and delete access keys for the current user",
+    "ManageOAuthGrant": "issue, modify and delete OAuth grants for the current user",
+    "ManageUser": "create and modify DeviceHive users (admin)",
+    "ManageDeviceClass": "create, modify and delete device classes (admin)",
+    "ManageNetwork": "create, modify and delete networks (admin)",
+    "ManageOAuthClient": "create, modify and delete OAuth clients (admin)"
+
 };
+
+app.Models.AccessKeyPermission.adminActions = ["ManageUser", "ManageDeviceClass", "ManageNetwork", "ManageOAuthClient"];
 
 
 app.Models.AccessKeyPermissionsCollection = Backbone.AuthCollection.extend({
