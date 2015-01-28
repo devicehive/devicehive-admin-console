@@ -22,8 +22,14 @@ app.Models.OAuth2AccessToken = Backbone.Model.extend({
                 app.trigger('login');
             },
             error: function(req, resp) {
-                var responseObject = JSON.parse(resp.responseText);
-                sessionStorage.authenticationError = responseObject.message;
+                var message;
+                try {
+                    message = JSON.parse(resp.responseText).message;
+                }
+                catch(e) {
+                    message = 'Unable to connect to the DeviceHive server!';
+                }
+                sessionStorage.authenticationError = message;
             }
         });
     }
