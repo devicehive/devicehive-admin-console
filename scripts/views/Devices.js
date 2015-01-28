@@ -22,7 +22,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         this.showValuesAreas();
     },
     deleteDevice: function () {
-        if (confirm("are you realy wont to delete this device? All collected information will be lost."))
+        if (confirm("Do you really want to delete this device? All collected information will be lost."))
             this.model.destroy({ error: function (model, response) {
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
             }

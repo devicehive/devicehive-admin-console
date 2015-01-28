@@ -2,7 +2,8 @@
     urlRoot: function () { return app.restEndpoint + "/user"; },
     urlCurrent: function () { return app.restEndpoint + "/user/current"; },
     error: function(e) {console.log('User error %o', e)},
-    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [] },
+    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [],
+        googleLogin: "", facebookLogin: "", githubLogin: ""},
     getters: {
         networksCollection: function () {
             if (this.networksColl == null)

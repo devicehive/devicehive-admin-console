@@ -1,5 +1,5 @@
 app.config = {
     restEndpoint: '/api',
-    rootUrl: "/admin",
+    rootUrl: "/admin/",
     pushState: false
-}
+};

@@ -11,17 +11,43 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     },
     template: "user-create-edit-template",
     initialize: function () {
-        if (_.isUndefined(this.model))
+        if (_.isUndefined(this.model)) {
             this.model = new app.Models.User();
+        } else {
+            if(this.model.attributes.googleLogin == null) {
+                this.model.attributes.googleLogin = "";
+            }
+            if(this.model.attributes.facebookLogin == null) {
+                this.model.attributes.facebookLogin = "";
+            }
+            if(this.model.attributes.githubLogin == null) {
+                this.model.attributes.githubLogin = "";
+            }
+        }
     },
     save: function () {
         var login = this.$el.find("#login").val();
         var role = parseInt(this.$el.find("#role :selected").val());
         var status = parseInt(this.$el.find("#status :selected").val());
+        var googleLogin = this.$el.find("#googleLogin").val();
+        if (_.isEmpty(googleLogin)) {
+            googleLogin = null;
+        }
+        var facebookLogin = this.$el.find("#facebookLogin").val();
+        if (_.isEmpty(facebookLogin)) {
+            facebookLogin = null;
+        }
+        var githubLogin = this.$el.find("#githubLogin").val();
+        if (_.isEmpty(githubLogin)) {
+            githubLogin = null;
+        }
         var options = {
             login: login,
             role: role,
-            status: status
+            status: status,
+            googleLogin: googleLogin,
+            facebookLogin: facebookLogin,
+            githubLogin: githubLogin
         };
 
         var pass = this.$el.find("#password").val();
@@ -55,6 +81,18 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         base.HeadingText = this.model.isNew() ? "Creating new user" : "Editing user " + base.login;
 
         return base;
+    },
+
+    onRender: function() {
+        if (app.googleConfig) {
+            this.$el.find(".google-identity-login").removeClass('ui-helper-hidden');
+        }
+        if (app.facebookConfig) {
+            this.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden');
+        }
+        if (app.githubConfig) {
+            this.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
+        }
     }
 });
 

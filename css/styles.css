@@ -386,9 +386,9 @@ table
 
 .commands-table .name-column{ width: 10%;}
 .commands-table .time-column{ width: 14%;}
-.commands-table .parameters-column{ width: 44%; word-break: break-all;}
+.commands-table .parameters-column{ width: 27%; word-break: break-all;}
 .commands-table .status-column{ width: 10%;}
-.commands-table .result-column{ width: 10%;}
+.commands-table .result-column{ width: 27%; word-break: break-all;}
 .commands-table .buttons-column{ width: 12%;}
 
 .add-command, .add-notification
@@ -601,4 +601,9 @@ table
 
 label, input[type=submit] {
     cursor: pointer;
+}
+
+.identity-providers {
+    padding-top: 20px;
+    display: inline-block;
 }
