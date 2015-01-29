@@ -144,7 +144,12 @@ app.bind("login", function (options) {
     app.User.fetch({ success: function() {
         if (app.User.id != null) {
             app.trigger('launch');
-            Backbone.history.trigger("navigatedTo", Backbone.history.getFragment());
+            var target = Backbone.history.fragment;
+            if (sessionStorage && sessionStorage.requestFragment) {
+                target = sessionStorage.requestFragment;
+                delete sessionStorage.requestFragment;
+            }
+            Backbone.history.navigate(target, {trigger: true});
         }
     },
     error: function(child, reply, obj) {
