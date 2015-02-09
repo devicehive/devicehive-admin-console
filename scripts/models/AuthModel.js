@@ -16,7 +16,7 @@ Backbone.AuthModel = Backbone.Model.extend({
         if (sessionStorage && sessionStorage.lastActivity) {
             // logout user if he/she was inactive for 30 minutes or more
             if (sessionStorage.lastActivity < timestamp - (30*60*1000)) {
-                Backbone.history.navigate('logout', {trigger: true});
+                unauthorizedHandler();
                 return;
             }
         }
@@ -26,7 +26,7 @@ Backbone.AuthModel = Backbone.Model.extend({
         var errorHandler = options.error || function(){};
         options.error = function(reply) {
             if (reply.status == 401) {
-                Backbone.history.navigate('logout', {trigger: true});
+                unauthorizedHandler();
             } else {
                 errorHandler.apply(this, arguments);
             }
@@ -35,6 +35,15 @@ Backbone.AuthModel = Backbone.Model.extend({
         return Backbone.sync.apply(this, [method, model, options]);
     }
 });
+
+// helper function to perform correct logout procedure
+var unauthorizedHandler = function() {
+    // save current backbone history fragment before logging out and redirecting to login screen
+    if (sessionStorage && !sessionStorage.requestFragment) {
+        sessionStorage.requestFragment = Backbone.history.fragment;
+    }
+    Backbone.history.navigate('logout', {trigger: true});
+};
 
 Backbone.AuthCollection = Backbone.Collection.extend({
     sync: Backbone.AuthModel.prototype.sync,
