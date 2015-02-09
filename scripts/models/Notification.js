@@ -71,7 +71,14 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
                     that.add(new app.Models.Notification(incomingNotification, { device: that.device }));
                 });
             },
-            complete: function () {
+
+            complete: function (xhr) {
+                // prevent polling if error occur
+                if (xhr.status >= 400) {
+                    app.vent.trigger("notification", app.Enums.NotificationType.Error, xhr);
+                    // return BEFORE running pollUpdates again
+                    return;
+                }
                 if (that.deleted == false)
                     that.pollUpdates();
             },
