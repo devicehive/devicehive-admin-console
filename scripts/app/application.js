@@ -8,6 +8,19 @@ _.extend(app, {
     Views: {},
     Regions: {},
     User: null,
+    defaultConfig: {
+        deviceNotificationsNum: 100 // notifications per page
+    },
+    getConfig: function(option) {
+        var retval = null;
+        if (this.defaultConfig[option]) {
+            retval = this.defaultConfig[option];
+        }
+        if (this.config[option]) {
+            retval = this.config[option];
+        }
+        return retval;
+    },
     // override addRegion function to attach new regions
     addRegions: function (regions) {
         var regionValue, regionObj, region;

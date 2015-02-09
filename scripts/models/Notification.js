@@ -42,7 +42,7 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
         }
     },
     url: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/notification?take=100&sortOrder=DESC";
+        return app.restEndpoint + '/device/' + this.device.get("id") + "/notification?take=" + app.getConfig('deviceNotificationsNum') + "&sortOrder=DESC";
     },
     parse: function (resp, xhr) {
         // reverse items order back to ascending
@@ -70,6 +70,11 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
                 _.each(data, function (incomingNotification) {
                     that.add(new app.Models.Notification(incomingNotification, { device: that.device }));
                 });
+                // trim excess records
+                while (that.length > app.getConfig('deviceNotificationsNum')) {
+                    that.remove(that.models[0]);
+                    console.log('removed old record from collection to fit the limit')
+                }
             },
             complete: function () {
                 if (that.deleted == false)
