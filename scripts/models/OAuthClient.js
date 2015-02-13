@@ -1,6 +1,6 @@
 app.Models.OAuthClient = Backbone.AuthModel.extend({
     urlRoot: function () {
-         return app.restEndpoint + "/oauth/client";
+         return app.config.restEndpoint + "/oauth/client";
      },
      defaults: {
          domain: '',
@@ -13,7 +13,7 @@ app.Models.OAuthClient = Backbone.AuthModel.extend({
 
 app.Models.OAuthClientsCollection = Backbone.AuthCollection.extend({
     url: function () {
-         return app.restEndpoint + "/oauth/client";
+         return app.config.restEndpoint + "/oauth/client";
     },
     model: app.Models.OAuthClient,
 });

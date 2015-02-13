@@ -18,7 +18,7 @@
         }
     },
     urlRoot: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/command";
+        return app.config.restEndpoint + '/device/' + this.device.get("id") + "/command";
     },
     copyIt: function () {
         var fields = {
@@ -53,7 +53,7 @@ app.Models.CommandsCollection = Backbone.AuthCollection.extend({
 
     },
     url: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/command?take=100&sortOrder=DESC";
+        return app.config.restEndpoint + '/device/' + this.device.get("id") + "/command?take=100&sortOrder=DESC";
     },
     parse: function (resp, xhr) {
         // reverse items order back to ascending
@@ -67,7 +67,7 @@ app.Models.CommandsCollection = Backbone.AuthCollection.extend({
     },
     //start polling updates from the server and add them to collection
     pollUpdates: function () {
-        var pollUrl = app.restEndpoint + "/device/" + this.device.get("id") + "/command/poll";
+        var pollUrl = app.config.restEndpoint + "/device/" + this.device.get("id") + "/command/poll";
         var that = this;
         this.deleted = false;
 

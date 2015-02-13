@@ -13,7 +13,7 @@
         }
     },
     urlRoot: function () {
-        return app.restEndpoint + '/device/class/' + this.deviceClass.get("id") + "/equipment";
+        return app.config.restEndpoint + '/device/class/' + this.deviceClass.get("id") + "/equipment";
     },
     setStrData: function (value) {
         try {
@@ -39,7 +39,7 @@ app.Models.EquipmentsCollection = Backbone.AuthCollection.extend({
         }
     },
     url: function () {
-        return app.restEndpoint + '/device/class/' + this.deviceClass.get("id") + "/equipment";
+        return app.config.restEndpoint + '/device/class/' + this.deviceClass.get("id") + "/equipment";
     },
     //override fetch to make got the list of equipment throught the DeviceClass endpoint
     fetch: function (options) {

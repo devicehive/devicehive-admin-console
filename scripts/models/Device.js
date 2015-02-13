@@ -1,6 +1,6 @@
 ﻿app.Models.Device = Backbone.AuthModel.extend({
     urlRoot: function () {
-         return app.restEndpoint + "/device";
+         return app.config.restEndpoint + "/device";
      },
      setStrData: function (value) {
          try {
@@ -15,7 +15,7 @@
 
 app.Models.DevicesCollection = Backbone.AuthCollection.extend({
     url: function () {
-         return app.restEndpoint + "/device";
+         return app.config.restEndpoint + "/device";
     },
     model: app.Models.Device,
     comparator: function (device) {
