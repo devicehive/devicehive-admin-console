@@ -1,6 +1,6 @@
 app.Models.OAuth2AccessToken = Backbone.Model.extend({
     url: function() {
-        return app.restEndpoint + '/auth/accesskey';
+        return app.config.restEndpoint + '/auth/accesskey';
     },
     initialize: function (params) {
         sessionStorage.loginMethod = params.providerName;

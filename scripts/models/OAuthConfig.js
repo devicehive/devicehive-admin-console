@@ -1,11 +1,11 @@
 app.Models.OAuthConfig = Backbone.Model.extend({
     url: function() {
-        return app.restEndpoint + '/info/config/auth';
+        return app.config.restEndpoint + '/info/config/auth';
     },
     initialize: function () {
         this.fetch({
             success: function(resp) {
-                app.oauthConfig = resp;
+                app.config.oauthConfig = resp;
             },
             async: false
         });

@@ -17,7 +17,7 @@
         }
     },
     urlRoot: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/notification";
+        return app.config.restEndpoint + '/device/' + this.device.get("id") + "/notification";
     },
     copyIt: function () {
         var fields = {
@@ -42,7 +42,7 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
         }
     },
     url: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/notification?take=100&sortOrder=DESC";
+        return app.config.restEndpoint + '/device/' + this.device.get("id") + "/notification?take=" + app.config.deviceNotificationsNum + "&sortOrder=DESC";
     },
     parse: function (resp, xhr) {
         // reverse items order back to ascending
@@ -55,7 +55,7 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
         }
     },
     pollUpdates: function () {
-        var pollUrl = app.restEndpoint + "/device/" + this.device.get("id") + "/notification/poll";
+        var pollUrl = app.config.restEndpoint + "/device/" + this.device.get("id") + "/notification/poll";
         var that = this;
         this.deleted = false;
 
@@ -70,6 +70,11 @@ app.Models.NotificationsCollection = Backbone.AuthCollection.extend({
                 _.each(data, function (incomingNotification) {
                     that.add(new app.Models.Notification(incomingNotification, { device: that.device }));
                 });
+                // trim excess records
+                while (that.length > app.config.deviceNotificationsNum) {
+                    that.remove(that.models[0]);
+                    console.log('removed old record from collection to fit the limit')
+                }
             },
 
             complete: function (xhr) {

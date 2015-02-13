@@ -1,6 +1,6 @@
 app.Models.AccessToken = Backbone.Model.extend({
     url: function() {
-        return app.restEndpoint + '/auth/accesskey';
+        return app.config.restEndpoint + '/auth/accesskey';
     },
     initialize: function (params) {
         sessionStorage.loginMethod = params.providerName;
@@ -16,7 +16,7 @@ app.Models.AccessToken = Backbone.Model.extend({
             async: false,
 
             success: function (response) {
-                var appUrl =  app.f.prepareAbsolutePath(app.rootUrl);
+                var appUrl =  app.f.prepareAbsolutePath(app.config.rootUrl);
                 sessionStorage.deviceHiveToken=response.get('key');
                 sessionStorage.lastActivity=(new Date()).valueOf();
                 delete sessionStorage.authenticationError;

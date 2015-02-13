@@ -27,7 +27,7 @@ app.Models.AccessKeysCollection = Backbone.AuthCollection.extend({
         }
     },
     url: function () {
-        return app.restEndpoint + "/user/" + (this.userId != null ? this.userId : "current") + "/accesskey";
+        return app.config.restEndpoint + "/user/" + (this.userId != null ? this.userId : "current") + "/accesskey";
     },
     model: app.Models.AccessKey,
     comparator: function (network) {

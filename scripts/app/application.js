@@ -92,29 +92,35 @@ _.extend(app, {
 });
 
 app.bind("initialize:before", function (options) {
-    app.restEndpoint = "";
+    var defaultConfig = {
+        restEndpoint: "", // should be overriden in config.js
+        rootUrl: "", //
+        pushState: false, // don't use push state, use hash route instead
+        deviceNotificationsNum: 100 // notifications per page
+    };
+
     if (_.isObject(options)) {
-        if (_.has(options, "rootUrl")) {
-            app.rootUrl = options.rootUrl;
-        }
         if (_.has(options, "restEndpoint")) {
             var val = options.restEndpoint;
-            if (val.length != 0 && (val.lastIndexOf("/") + 1) == val.length)
+            if (val.length != 0 && (val.lastIndexOf("/") + 1) == val.length) {
                 val = val.substr(0, val.length - 1);
+            }
 
-            app.restEndpoint = val;
-
-            var oauthConfig = new app.Models.OAuthConfig().get('providers');
-            app.googleConfig = oauthConfig.filter(function(element) {return 'google' === element.name})[0];
-            app.facebookConfig = oauthConfig.filter(function(element) {return 'facebook' === element.name})[0];
-            app.githubConfig = oauthConfig.filter(function(element) {return 'github' === element.name})[0];
+            options.restEndpoint = val;
         }
     }
+    // merge default options and app.config, store as app.config
+    app.config = _.extend(defaultConfig, options);
+
+    var oauthConfig = new app.Models.OAuthConfig().get('providers');
+    app.config.googleConfig = oauthConfig.filter(function(element) {return 'google' === element.name})[0];
+    app.config.facebookConfig = oauthConfig.filter(function(element) {return 'facebook' === element.name})[0];
+    app.config.githubConfig = oauthConfig.filter(function(element) {return 'github' === element.name})[0];
 });
 
 app.bind("initialize:after", function (options) {
     app.User = new app.Models.User();
-    var params = { root: app.rootUrl };
+    var params = { root: app.config.rootUrl };
 
     if (_.isObject(options)) {
         if (_.has(options, "pushState")) {
