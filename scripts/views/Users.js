@@ -4,6 +4,7 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
     triggers: {
         "click .networks": "networksClicked",
         "click .edit": "editClicked",
+        "click .delete": "deleteClicked",
         "click .accessKeys": "accessKeysClicked"
     },
     template: "user-list-item-template",

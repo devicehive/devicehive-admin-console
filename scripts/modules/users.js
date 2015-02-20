@@ -42,6 +42,13 @@
                         var path = "user/" + viewObject.model.get("id");
                         Backbone.history.navigate(path, { trigger: true });
                     });
+                    usersView.on("itemview:deleteClicked", function (viewObject) {
+                        if (confirm("Do you really want to delete this user?")) {
+                            viewObject.model.destroy({wait: true, error: function(model, response) {
+                                app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                            }});
+                        }
+                    });
                     app.Regions.topWorkArea.show(usersView);
                 }
                 retIt.resolve();
