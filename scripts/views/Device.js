@@ -60,7 +60,8 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         var changes = {
             name: this.$el.find(".new-value.name").val(),
             status: this.$el.find(".new-value.status").val(),
-            network: network
+            network: network,
+            isBlocked: this.$el.find('.new-value select[name=isBlocked]').val() == "1" ? true : false
         };
 
         if (this.classEditable) {

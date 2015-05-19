@@ -10,6 +10,16 @@
         <td class="value-column"><span class="device-value"><%= status%></span><input type="text" class="new-value status" value="<%= status%>"/></td>
     </tr>
     <tr>
+        <td class="title-column">operation:</td>
+        <td class="value-column"><span class="device-value"><%= isBlocked ? "Blocked" : "Normal" %></span>
+            <span class="new-value">
+                <select name="isBlocked">
+                    <option value="0">Normal</option>
+                    <option value="1" <%= isBlocked ? "selected=selected" : "" %>>Blocked</option>
+            </span>
+        </td>
+    </tr>
+    <tr>
         <td class="title-column">network:</td>
         <td class="value-column"><span class="device-value"><%= network.name%></span>
 
