@@ -29,6 +29,8 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var login = this.$el.find("#login").val();
         var role = parseInt(this.$el.find("#role :selected").val());
         var status = parseInt(this.$el.find("#status :selected").val());
+        var data = this.$el.find("#data").val();
+        if (!this.model.setStrData(data)) { return; }
         var googleLogin = this.$el.find("#googleLogin").val();
         if (_.isEmpty(googleLogin)) {
             googleLogin = null;
@@ -75,6 +77,10 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
 
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
+        if (_.has(base, "data") && !_.isNull(base.data))
+            base["data"] = JSON.stringify(base.data);
+        else
+            base["data"] = "";
         base.Statuses = app.Enums.UserStatus;
         base.Roles = app.Enums.UserRole;
         base.saveButtonText = this.model.isNew() ? "create" : "save";
@@ -93,6 +99,11 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         if (app.config.githubConfig) {
             this.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
         }
+    },
+    onShow: function() {
+        // scroll to make edit form visible, focus on first input field
+        this.$el[0].scrollIntoView(true);
+        this.$el.find('input[type=text]').first().focus();
     }
 });
 

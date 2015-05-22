@@ -51,7 +51,15 @@
             });
         } 
         });
-
+    },
+    setStrData: function (value) {
+        try {
+            this.set("data", jQuery.parseJSON(value));
+            return true;
+        } catch (e) {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+            return false;
+        }
     }
 });
 
