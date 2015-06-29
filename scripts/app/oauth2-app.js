@@ -67,25 +67,30 @@ _.extend(app, {
 });
 
 app.bind("initialize:before", function (options) {
-    app.restEndpoint = "";
+    var defaultConfig = {
+        restEndpoint: "", // should be overriden in config.js
+        rootUrl: "", //
+        pushState: false, // don't use push state, use hash route instead
+        deviceNotificationsNum: 100 // notifications per page
+    };
     if (_.isObject(options)) {
-        if (_.has(options, "rootUrl")) {
-            app.rootUrl = options.rootUrl;
-        }
         if (_.has(options, "restEndpoint")) {
             var val = options.restEndpoint;
             if (val.length != 0 && (val.lastIndexOf("/") + 1) == val.length)
                 val = val.substr(0, val.length - 1);
 
-            app.restEndpoint = val;
+            options.restEndpoint = val;
         }
     }
+    // merge default options and app.config, store as app.config
+    app.config = _.extend(defaultConfig, options);
+
     app.User = new app.Models.User();
     app.OAuth2 = new app.Models.OAuth2();
 });
 
 app.bind("initialize:after", function (options) {
-    var params = { root: app.rootUrl };
+    var params = { root: app.config.rootUrl };
 
     if (_.isObject(options)) {
         if (_.has(options, "pushState")) {

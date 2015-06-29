@@ -28,7 +28,8 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
         if (confirm("Do you really want to delete this network? All associations with users will be lost"))
             this.model.destroy({ error: function (model, response) {
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
-            }
+            },
+            wait: true
             });
     },
     saveNetwork: function () {

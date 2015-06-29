@@ -53,13 +53,19 @@ app.Views.EquipmentListItem = Backbone.Marionette.ItemView.extend({
             this.render();
     },
     editEquipment: function () {
-        if (this.model.deviceClass.get("isPermanent") == false)
-            this.showEditableAreas();
+        if (this.model.deviceClass.get("isPermanent") != false) {
+            return;
+        }
+        var $siblings = this.$el.siblings();
+        this.showValuesAreasForElement($siblings);
+        this.showEditableAreas();
+    },
+    showValuesAreasForElement: function ($el) {
+        $el.find(".current-value").show();
+        $el.find(".new-value").hide();
     },
     showValuesAreas: function () {
-        this.$el.find(".current-value").show();
-        this.$el.find(".new-value").hide();
-
+        this.showValuesAreasForElement(this.$el);
         if (this.model.deviceClass.get("isPermanent") == true)
             this.$el.find(".button").hide();
     },

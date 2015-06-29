@@ -1,6 +1,6 @@
 ﻿app.Models.DeviceClass = Backbone.AuthModel.extend({
     urlRoot: function () {
-        return app.restEndpoint + "/device/class";
+        return app.config.restEndpoint + "/device/class";
     },
     defaults: { equimpent: [], isPermanent: false, version: 1, offlineTimeout: null },
     getEquipments: function (success, error) {
@@ -50,7 +50,7 @@
 
 app.Models.DeviceClassesCollection = Backbone.AuthCollection.extend({
     url: function () {
-        return app.restEndpoint + "/device/class";
+        return app.config.restEndpoint + "/device/class";
     },
     model: app.Models.DeviceClass,
     comparator: function (dclass) {

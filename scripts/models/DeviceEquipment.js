@@ -14,7 +14,7 @@
         }
     },
     urlRoot: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/equipment";
+        return app.config.restEndpoint + '/device/' + this.device.get("id") + "/equipment";
     }
 });
 
@@ -32,7 +32,7 @@ app.Models.DeviceEquipmentsCollection = Backbone.AuthCollection.extend({
         }
     },
     url: function () {
-        return app.restEndpoint + '/device/' + this.device.get("id") + "/equipment";
+        return app.config.restEndpoint + '/device/' + this.device.get("id") + "/equipment";
     },
     //override fetch to merge equipment description with equipment states
     fetch: function (options) {

@@ -1,6 +1,6 @@
 ﻿app.Models.User = Backbone.AuthModel.extend({
-    urlRoot: function () { return app.restEndpoint + "/user"; },
-    urlCurrent: function () { return app.restEndpoint + "/user/current"; },
+    urlRoot: function () { return app.config.restEndpoint + "/user"; },
+    urlCurrent: function () { return app.config.restEndpoint + "/user/current"; },
     error: function(e) {console.log('User error %o', e)},
     defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [],
         googleLogin: "", facebookLogin: "", githubLogin: ""},
@@ -51,12 +51,20 @@
             });
         } 
         });
-
+    },
+    setStrData: function (value) {
+        try {
+            this.set("data", jQuery.parseJSON(value));
+            return true;
+        } catch (e) {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+            return false;
+        }
     }
 });
 
 app.Models.UsersCollection = Backbone.AuthCollection.extend({
-    url: function () { return app.restEndpoint + "/user"; },
+    url: function () { return app.config.restEndpoint + "/user"; },
     model: app.Models.User,
     comparator: function (user) {
         var name = user.get("login");

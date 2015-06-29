@@ -24,6 +24,10 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
     template: "device-class-list-item-template",
     tagName: "tr",
     editClass: function () {
+        // show value fields for rest of elements (siblings)
+        var $siblings = this.$el.siblings();
+        this.showValuesAreasForElement($siblings);
+        // show edit fields for this element
         this.showEditableAreas();
     },
     serializeData: function () {
@@ -52,10 +56,12 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
 
     },
     showValuesAreas: function () {
-        //fields
-        this.$el.find(".value-field").show();
-        this.$el.find(".new-value").hide();
-        this.$el.find(".isPermanent").attr("disabled", "disabled");
+        this.showValuesAreasForElement(this.$el);
+    },
+    showValuesAreasForElement: function($el) {
+        $el.find(".new-value").hide();
+        $el.find(".value-field").show();
+        $el.find(".isPermanent").attr("disabled", "disabled");
     },
     saveClass: function () {
         var name = this.$el.find(".new-name").val();

@@ -4,6 +4,7 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
     triggers: {
         "click .networks": "networksClicked",
         "click .edit": "editClicked",
+        "click .delete": "deleteClicked",
         "click .accessKeys": "accessKeysClicked"
     },
     template: "user-list-item-template",
@@ -13,7 +14,10 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
             data.status = app.Enums.UserStatus.getName(data.status);
         else
             data.status = "";
-
+        if (_.has(data, "data") && !_.isNull(data.data))
+            data["data"] = JSON.stringify(data.data);
+        else
+            data["data"] = "";
 
         if (_.has(data, "role"))
             data.role = app.Enums.UserRole.getName(data.role);

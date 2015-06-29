@@ -59,7 +59,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
         cache: false,
     },
     getUrl: function(part) {
-        return app.restEndpoint+part;
+        return app.config.restEndpoint+part;
     },
     checkUser: function() {
         if (app.hasCredentials()) {
@@ -82,7 +82,7 @@ app.Models.OAuth2 = Backbone.Model.extend({
                     self.checkUser();
                 }
             } else {
-                app.vent.trigger('notification', app.Enums.NotificationType.Error, resp[0], 'No OAuth2 client with id '+self.get('client_id'));
+                app.vent.trigger('notification', app.Enums.NotificationType.Error, resp, 'No OAuth2 client with id '+self.get('client_id'));
             }
         };
         options.error = function(resp) {
