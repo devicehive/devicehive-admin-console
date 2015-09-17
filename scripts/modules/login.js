@@ -25,17 +25,18 @@ app.module("Modules.Login", function (users, app) {
     });
 
     var sendLogoutRequest = function () {
-        $.ajax({
-            url: app.config.restEndpoint + '/auth/accesskey',
-            type: 'DELETE',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
-            }
-        }).always(function () {
+
+        //$.ajax({
+        //    url: app.config.restEndpoint + '/auth/accesskey',
+        //    type: 'DELETE',
+        //    beforeSend: function (xhr) {
+        //        xhr.setRequestHeader('Authorization', "Bearer " + sessionStorage.deviceHiveToken);
+        //    }
+        //}).always(function () {
             delete sessionStorage.deviceHiveToken;
             Backbone.history.navigate('', { trigger: false });
             location.reload(true);
-        });
+        //});
     };
 
 });

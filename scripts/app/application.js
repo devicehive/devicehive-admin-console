@@ -131,6 +131,22 @@ app.bind("initialize:after", function (options) {
 
     if (Backbone.history) {
         Backbone.history.start(params);
+
+        if (location.search){
+            var query = app.f.parseQueryString(location.search);
+            console.log('Detected starting query', query);
+
+            if (query.deviceHiveToken) {
+                sessionStorage.deviceHiveToken=query.deviceHiveToken;
+                sessionStorage.lastActivity=(new Date()).valueOf();
+                delete sessionStorage.authenticationError;
+                delete query.deviceHiveToken;
+                // remove ath token from query string by recreating url without that parameter
+                history.replaceState(null, null, '?'+app.f.formatQueryString(query)+location.hash);
+            }
+        }
+
+
         if (this.isOAuthResponse()) {
             app.trigger('oauth');
         } else if (this.hasCredentials()) {
@@ -177,7 +193,7 @@ app.bind("oauth", function(options) {
     }
     var params = app.f.parseQueryString(queryString);
     params.redirect_uri = app.f.getRedirectUri();
-    params.providerName = app.f.parseQueryString(decodeURIComponent(params.state)).provider;
+    params.providerName = app.f.parseQueryString(params.state).provider;
     delete params.state;
     new app.Models.AccessToken(params);
 });

@@ -62,9 +62,17 @@ Backbone.Marionette.Application.prototype.f = {
         queryString.replace("?","").split('&').map(
             function (q) {
                 var v = q.split('=');
-                res[v[0]] = v[1];
+                res[decodeURIComponent(v[0])] = decodeURIComponent(v[1]);
             });
         return res;
+    },
+    formatQueryString: function (obj) {
+        var str = [];
+        for(var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
     }
 };
 
