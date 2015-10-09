@@ -41,6 +41,10 @@ table
     width: 100%;
 }
 
+thead tr {
+    line-height: 2em;
+}
+
 .main-table thead  tr
 {
     background-color: #272768;
@@ -152,11 +156,11 @@ table
 {
     padding: 0px;
     margin: 0px;
-    background-color: rgb(240, 240, 240);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    /*background-color: rgb(240, 240, 240);*/
+    /*border-bottom-left-radius: 5px;*/
+    /*border-bottom-right-radius: 5px;*/
 
-    box-shadow: black 0px -1px 4px;
+    /*box-shadow: black 0px -1px 4px;*/
 }
 
 #menu-area
@@ -169,8 +173,8 @@ table
     display: inline-block;
     width: 18%;
     margin: 0px 0 0 1%;
-    list-style: none;
-    list-style-type: none;
+    /*list-style: none;*/
+    /*list-style-type: none;*/
     text-align: center;
 }
 
@@ -203,9 +207,9 @@ table
 }
 
 .admin-menu {
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     margin-top: 10px;
-    box-shadow: black 0px 0px 5px;
+    /*box-shadow: black 0px 0px 5px;*/
 }
 .admin-menu .menu-item .navigation-link
 {
