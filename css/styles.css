@@ -186,13 +186,18 @@ thead tr {
 .main-menu .menu-item .navigation-link,
 .admin-menu .menu-item .navigation-link
 {
-    padding: 12px 0;
+    padding: 8px 0;
     display: block;
-    font-size:1.4em;
+    font-size:1.2em;
     letter-spacing: 0.2em;
     cursor: pointer;
     background-color: rgb(212, 212, 212);
     color: #272768;
+
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
 }
 
 
@@ -202,7 +207,7 @@ thead tr {
 .admin-menu .menu-item .navigation-link:hover, .admin-menu .menu-item.selected .navigation-link
 {
     background-color: rgb(240, 240, 240);
-    padding-bottom: 10px;
+    padding-bottom: 6px;
     border-bottom:2px solid rgb(143,143,143);
 }
 
@@ -213,7 +218,7 @@ thead tr {
 }
 .admin-menu .menu-item .navigation-link
 {
-    padding: 2px;
+    padding: 4px;
 }
 .admin-menu .menu-item .navigation-link:hover,
 .admin-menu .menu-item.selected .navigation-link {
@@ -289,7 +294,7 @@ thead tr {
 .device-panels-switcher
 {
     padding: 0 0 0 4px;
-    margin: 10px 0 2px;
+    margin: 10px 0 5px 0;
     background-color: rgb(240, 240, 240);
     border-radius: 5px;
     width: 300px;
@@ -300,7 +305,7 @@ thead tr {
     list-style-type: none;
     display: inline-block;
     cursor: pointer;
-    padding: 3px 1%;
+    padding: 6px 1%;
     width: 30%;
     margin: 0;
     text-align: center;
@@ -310,7 +315,7 @@ thead tr {
 {
     border-radius: 5px;
     margin-top: 2px;
-    padding: 1px 1%;
+    padding: 3px 1%;
     background-color: rgb(195,220,247);
 }
 
