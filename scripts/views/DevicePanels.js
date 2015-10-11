@@ -1,12 +1,12 @@
 //model is an app.Models.Device
 app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
     events: {
-        "click .equipment-tab": "showEquipment",
+        //"click .equipment-tab": "showEquipment",
         "click .notifications-tab": "showNotifications",
         "click .commands-tab": "showCommands"
     },
     initialize: function (options) {
-        this.deviceEquipmentsView = null;
+        //this.deviceEquipmentsView = null;
         this.notificationsView = null;
         this.commandsView = null;
         this.commandsTimeFilters = new app.Models.TimeFilters();
@@ -16,7 +16,7 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
     },
     setState: function (state) {
         if (state != "notifications" && state != "commands" && state != "equipment")
-            state = "equipment";
+            state = "commands";
 
         var prevState = this.state;
         //state wasn't changed. Do nothing
@@ -38,26 +38,26 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
         var that = this;
 
         switch (this.state) {
-            case "equipment":
-
-                //close other panels and render equipments.
-                if (that.notificationsView != null) {
-                    that.notificationsView.close();
-                    delete that.notificationsView;
-                };
-                if (that.commandsView != null) {
-                    that.commandsView.close();
-                    delete that.commandsView;
-                };
-                if (that.deviceEquipmentsView == null) {
-                    that.deviceEquipmentsView = new app.Views.DeviceEquipments({ model: that.model });
-                }
-
-                var smth = that.deviceEquipmentsView.renderModel();
-                that.deviceEquipmentsView.$el.html(smth);
-                that.$el.append(that.deviceEquipmentsView.$el);
-                that.deviceEquipmentsView.collection.fetch();
-                break;
+            //case "equipment":
+            //
+            //    //close other panels and render equipments.
+            //    if (that.notificationsView != null) {
+            //        that.notificationsView.close();
+            //        delete that.notificationsView;
+            //    };
+            //    if (that.commandsView != null) {
+            //        that.commandsView.close();
+            //        delete that.commandsView;
+            //    };
+            //    if (that.deviceEquipmentsView == null) {
+            //        that.deviceEquipmentsView = new app.Views.DeviceEquipments({ model: that.model });
+            //    }
+            //
+            //    var smth = that.deviceEquipmentsView.renderModel();
+            //    that.deviceEquipmentsView.$el.html(smth);
+            //    that.$el.append(that.deviceEquipmentsView.$el);
+            //    that.deviceEquipmentsView.collection.fetch();
+            //    break;
             case "commands":
 
                 //close other panels and render commands.
@@ -65,10 +65,10 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
                     that.notificationsView.close();
                     delete that.notificationsView;
                 };
-                if (that.deviceEquipmentsView != null) {
-                    that.deviceEquipmentsView.close();
-                    delete that.deviceEquipmentsView;
-                };
+                //if (that.deviceEquipmentsView != null) {
+                //    that.deviceEquipmentsView.close();
+                //    delete that.deviceEquipmentsView;
+                //};
                 if (that.commandsView == null) 
                     that.commandsView = new app.Views.Commands({ model: that.model, timeFilters: that.commandsTimeFilters });
                 
@@ -100,10 +100,10 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
         }
     },
     onClose: function () {
-        if (this.deviceEquipmentsView != null) {
-            this.deviceEquipmentsView.close();
-            delete this.deviceEquipmentsView;
-        };
+        //if (this.deviceEquipmentsView != null) {
+        //    this.deviceEquipmentsView.close();
+        //    delete this.deviceEquipmentsView;
+        //};
         if (this.commandsView != null) {
             this.commandsView.close();
             delete this.commandsView;
@@ -124,9 +124,9 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
         this.$el.find(tabClassName).addClass("selected");
     },
     template: "device-panels-template",
-    showEquipment: function () {
-        this.setState("equipment");
-    },
+    //showEquipment: function () {
+    //    this.setState("equipment");
+    //},
     showNotifications: function () {
         this.setState("notifications");
     },

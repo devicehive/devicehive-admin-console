@@ -1,10 +1,7 @@
 ﻿/*main*/
-body 
+body
 {
-    padding: 0px;
-    margin: 0px;
-
-    font-family: Tahoma, Verdana;
+    font-family: 'Open Sans', Tahoma, Verdana, sans-serif;
     font-size: 14px;
 }
 
@@ -41,6 +38,10 @@ table
     width: 100%;
 }
 
+thead tr {
+    line-height: 2em;
+}
+
 .main-table thead  tr
 {
     background-color: #272768;
@@ -75,7 +76,7 @@ table
 .main-table .buttons-column
 {
     text-align: center;
-} 
+}
 
 .main-table .buttons-column .view-button,.main-table .buttons-column .edit-button,.main-table .buttons-column .delete-button
 {
@@ -94,7 +95,7 @@ table
     background-color: #E7ECF1;
 }
 
-.values-table td 
+.values-table td
 {
     padding: 4px;
 }
@@ -152,28 +153,11 @@ table
 {
     padding: 0px;
     margin: 0px;
-    
-    background-image: linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-    background-image: -o-linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-    background-image: -moz-linear-gradient(top, rgb(247,247,247), rgb(240,240,240), rgb(143,143,143));
-    background-image: -webkit-linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-    background-image: -ms-linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
+    /*background-color: rgb(240, 240, 240);*/
+    /*border-bottom-left-radius: 5px;*/
+    /*border-bottom-right-radius: 5px;*/
 
-    background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(1, rgb(247,247,247)),
-	    color-stop(0.63, rgb(240,240,240)),
-	    color-stop(0, rgb(143,143,143))
-    );
-    
-    
-    
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    
-    box-shadow: black 0px -1px 4px;
+    /*box-shadow: black 0px -1px 4px;*/
 }
 
 #menu-area
@@ -184,10 +168,8 @@ table
 .main-menu .menu-item, .admin-menu .menu-item
 {
     display: inline-block;
-    width: 18%;
+    width: 15%;
     margin: 0px 0 0 1%;
-    list-style: none;
-    list-style-type: none;
     text-align: center;
 }
 
@@ -199,28 +181,18 @@ table
 .main-menu .menu-item .navigation-link,
 .admin-menu .menu-item .navigation-link
 {
-    padding: 12px 0;
+    padding: 8px 0;
     display: block;
-    font-size:1.4em;
+    font-size:1.2em;
     letter-spacing: 0.2em;
     cursor: pointer;
-
-    background-image: linear-gradient(bottom, rgb(227,227,227) 100%, rgb(212,212,212) 63%, rgb(128,128,128) 0%);
-    background-image: -o-linear-gradient(bottom, rgb(227,227,227) 100%, rgb(212,212,212) 63%, rgb(128,128,128) 0%);
-    background-image: -moz-linear-gradient(top, rgb(227,227,227), rgb(212,212,212), rgb(128,128,128));
-    background-image: -webkit-linear-gradient(bottom, rgb(227,227,227) 100%, rgb(212,212,212) 63%, rgb(128,128,128) 0%);
-    background-image: -ms-linear-gradient(bottom, rgb(227,227,227) 100%, rgb(212,212,212) 63%, rgb(128,128,128) 0%);
-
-    background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(1, rgb(227,227,227)),
-	    color-stop(0.63, rgb(212,212,212)),
-	    color-stop(0, rgb(128,128,128))
-    );
-
+    background-color: rgb(212, 212, 212);
     color: #272768;
+
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
 }
 
 
@@ -229,32 +201,19 @@ table
 .main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link,
 .admin-menu .menu-item .navigation-link:hover, .admin-menu .menu-item.selected .navigation-link
 {
-    background-image: linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-
-    background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(0.23, rgb(240,240,240)),
-	    color-stop(1, rgb(195,220,247))
-    );
-
-    padding-bottom: 10px;
+    background-color: rgb(240, 240, 240);
+    padding-bottom: 6px;
     border-bottom:2px solid rgb(143,143,143);
 }
 
 .admin-menu {
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     margin-top: 10px;
-    box-shadow: black 0px 0px 5px;
+    /*box-shadow: black 0px 0px 5px;*/
 }
 .admin-menu .menu-item .navigation-link
 {
-    padding: 2px;
+    padding: 4px;
 }
 .admin-menu .menu-item .navigation-link:hover,
 .admin-menu .menu-item.selected .navigation-link {
@@ -330,22 +289,8 @@ table
 .device-panels-switcher
 {
     padding: 0 0 0 4px;
-    margin: 10px 0 2px;
-    
-    background-image: linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-    background-image: -o-linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-    background-image: -moz-linear-gradient(top, rgb(247,247,247), rgb(240,240,240), rgb(143,143,143));
-    background-image: -webkit-linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-    background-image: -ms-linear-gradient(bottom, rgb(247,247,247) 100%, rgb(240,240,240) 63%, rgb(143,143,143) 0%);
-
-    background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(1, rgb(247,247,247)),
-	    color-stop(0.63, rgb(240,240,240)),
-	    color-stop(0, rgb(143,143,143))
-    );
+    margin: 10px 0 5px 0;
+    background-color: rgb(240, 240, 240);
     border-radius: 5px;
     width: 300px;
 }
@@ -355,8 +300,8 @@ table
     list-style-type: none;
     display: inline-block;
     cursor: pointer;
-    padding: 3px 1%;
-    width: 30%;
+    padding: 6px 1%;
+    width: 46%;
     margin: 0;
     text-align: center;
 }
@@ -365,20 +310,8 @@ table
 {
     border-radius: 5px;
     margin-top: 2px;
-    padding: 1px 1%;
-    background-image: linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(240,240,240) 23%, rgb(195,220,247) 100%);
-
-    background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(0.23, rgb(240,240,240)),
-	    color-stop(1, rgb(195,220,247))
-    );
+    padding: 3px 1%;
+    background-color: rgb(195,220,247);
 }
 
 
@@ -608,4 +541,130 @@ label, input[type=submit] {
 .identity-providers {
     padding-top: 20px;
     display: inline-block;
+}
+
+
+
+/* Main Menu from cssmenumaker.com */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+#cssmenu {
+    background: #f0f0f0;
+    width: auto;
+}
+#cssmenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    display: block;
+    zoom: 1;
+}
+#cssmenu ul:after {
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+#cssmenu ul li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+#cssmenu.align-right ul li {
+    float: right;
+}
+#cssmenu.align-center ul {
+    text-align: center;
+}
+#cssmenu ul li a {
+    color: #8f8f8f;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    padding: 15px 25px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    position: relative;
+    -webkit-transition: color .25s;
+    -moz-transition: color .25s;
+    -ms-transition: color .25s;
+    -o-transition: color .25s;
+    transition: color .25s;
+}
+#cssmenu ul li a:hover {
+    color: #272768;
+}
+#cssmenu ul li a:hover:before {
+    width: 100%;
+}
+#cssmenu ul li a:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -3px;
+    top: 19px;
+    height: 6px;
+    width: 6px;
+    background: #8f8f8f;
+    opacity: .5;
+}
+#cssmenu ul li a:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    background: #272768;
+    -webkit-transition: width .25s;
+    -moz-transition: width .25s;
+    -ms-transition: width .25s;
+    -o-transition: width .25s;
+    transition: width .25s;
+}
+#cssmenu ul li.last > a:after,
+#cssmenu ul li:last-child > a:after {
+    display: none;
+}
+#cssmenu ul li.active a {
+    color: #272768;
+}
+#cssmenu ul li.active a:before {
+    width: 100%;
+}
+#cssmenu.align-right li.last > a:after,
+#cssmenu.align-right li:last-child > a:after {
+    display: block;
+}
+#cssmenu.align-right li:first-child a:after {
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    #cssmenu ul li {
+        float: none;
+        display: block;
+    }
+    #cssmenu ul li a {
+        width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: 1px solid #fb998c;
+    }
+    #cssmenu ul li.last > a,
+    #cssmenu ul li:last-child > a {
+        border: 0;
+    }
+    #cssmenu ul li a:after {
+        display: none;
+    }
+    #cssmenu ul li a:before {
+        display: none;
+    }
 }
