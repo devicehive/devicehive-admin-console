@@ -1,10 +1,7 @@
 ﻿/*main*/
 body
 {
-    padding: 0px;
-    margin: 0px;
-
-    font-family: Tahoma, Verdana;
+    font-family: 'Open Sans', Tahoma, Verdana, sans-serif;
     font-size: 14px;
 }
 
