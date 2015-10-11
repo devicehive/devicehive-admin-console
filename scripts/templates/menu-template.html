@@ -1,21 +1,18 @@
 <script type="text/template" id="menu-template">
-    <ul class="main-menu">
-    <% if (app.hasRole([app.Enums.UserRole.Administrator])) { %>
-        <li class="menu-item"><a data-type="admin" class="navigation-link">Admin</a></li>
-    <% } %>
-    <% for (var i = 0; i< main.length; ++i) {
-        var item = main[i];
-        var selected = item.selected ? "selected": "";
-        %>
-        <li class="menu-item <%= selected %>"><a data-path="<%= item.path %>" class="navigation-link"><%= item.name %></a></li>
-    <% } %>
-    </ul>
-    <ul class="admin-menu <% if (!options.adminVisible) {%>hidden<%}%>">
-    <% for (var i = 0; i< admin.length; ++i) {
-        var item = admin[i];
-        var selected = item.selected ? "selected": "";
-        %>
-        <li class="menu-item <%= selected %>"><a data-path="<%= item.path %>" data-type="<%= item.type %>" class="navigation-link"><%= item.name %></a></li>
-    <% } %>
-    </ul>
+
+    <div id='cssmenu'>
+        <ul>
+            <% for (var i = 0; i< items.length; ++i) {
+            var item = items[i];
+            var selected = item.selected ? 'active': '';
+            var last = i == (items.length-1);
+            %>
+                <li class="<%= last %> <%= selected %>">
+                    <a data-path="<%= item.path %>"><%= item.name %></a>
+                </li>
+            <% } %>
+
+        </ul>
+    </div>
+
 </script>

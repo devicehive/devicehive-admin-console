@@ -49,8 +49,7 @@
     };
 
     var routes = {
-        "networks": "networks_show",
-        "": "networks_show"
+        "networks": "networks_show"
     };
 
     var router = Backbone.Marionette.AppRouter.extend({ controller: controller, appRoutes: routes });

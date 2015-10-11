@@ -145,7 +145,7 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
                 networks = _.map(this.user.get("networks"), function(network) { return network.network; });
                 var userNetworkIds = _.map(networks, function(network) { return network.id } );
                 devices = _.filter(
-                    this.devices.toJSON(), function(device) { return _.indexOf(userNetworkIds, device.network.id) != -1 });
+                    this.devices.toJSON(), function(device) { return device.network && _.indexOf(userNetworkIds, device.network.id) != -1 });
             }
         }
 

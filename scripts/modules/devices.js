@@ -148,6 +148,7 @@
     };
 
     var routes = {
+        "": "devices_show",
         "devices": "devices_show",
         "devices/:id": "detail_show",
         "devices/:id/:action": "detail_show"

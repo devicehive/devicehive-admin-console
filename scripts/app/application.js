@@ -59,7 +59,7 @@ _.extend(app, {
     },
     // checks whether app.User is populated
     isLoggedIn: function() {
-        return app.User && !app.User.isNew();
+        return app.User;// && !app.User.isNew();
     },
     hasCredentials: function() {
         // if no credentials currently set
