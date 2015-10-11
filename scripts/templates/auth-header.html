@@ -1,8 +1,7 @@
 ﻿<script type="text/template" id="auth-header">
 <div class="clearfix">
     <div class="logged-in">
-        <div>Hello, <%= userLogin %>. <a href="" data-path="logout">Logout</a></div>
-        <div style="display: <%= displayChangePassLink %>"><a href="" data-path="changepassword">Change password</a></div>
+        <span><a href="" data-path="changepassword" title="Change Password"><%= userLogin %></a> <a href="" data-path="logout">logout</a></span>
     </div>
     <div class="logged-out"></div>
 </div>

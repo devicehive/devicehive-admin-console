@@ -41,7 +41,7 @@ app.Views.Grants = Backbone.Marionette.CompositeView.extend({
     emptyView: Backbone.Marionette.ItemView.extend(
         {
             render: function () {
-                this.$el.html("<td colspan='5' class='text-center'>No grants has been issued yet</td>");
+                this.$el.html("<td colspan='6' class='text-center'>No grants has been issued yet</td>");
                 return this;
             },
             tagName: "tr"

@@ -15,9 +15,6 @@ body
 {
     margin-top: 40px;
 }
-#status-area {
-    min-height: 40px;
-}
 
 /* headings */
 h4
@@ -70,7 +67,7 @@ thead tr {
 
 .main-table tbody td
 {
-    padding: 4px;
+    padding: 5px 8px;
 }
 
 .main-table .buttons-column
@@ -82,7 +79,7 @@ thead tr {
 {
     margin: 0px 0.4em;
     display: inline;
-    line-height: 170%;
+    line-height: 2em;
 }
 
 .main-table.multi-table tbody  tr:nth-child(2n+1)
@@ -102,7 +99,7 @@ thead tr {
 
 .values-table .title-column
 {
-    border-right: 2px solid gray;
+    border-right: 1px solid gray;
 }
 
 .values-table .value-column
@@ -113,10 +110,10 @@ thead tr {
 /*buttons*/
 .view-button, .edit-button, .delete-button
 {
-    margin: 0px 0.1em;
+    margin: 5px 0.1em;
     color: white;
-    border-radius: 3px;
-    padding: 1px 5px 3px;
+    border-radius: 2px;
+    padding: 3px 7px;
     border: 1px solid;
     text-decoration: none;
     box-shadow: 1px 1px 2px darkGray;
@@ -142,84 +139,17 @@ thead tr {
 /* panel */
 .panel
 {
-    border: 2px solid gray;
-    border-radius: 5px;
+    border: 1px solid gray;
+    border-radius: 2px;
     padding: 8px;
 }
 /* specific views styles */
 
-/*menu styles*/
-.main-menu, .admin-menu
-{
-    padding: 0px;
-    margin: 0px;
-    /*background-color: rgb(240, 240, 240);*/
-    /*border-bottom-left-radius: 5px;*/
-    /*border-bottom-right-radius: 5px;*/
-
-    /*box-shadow: black 0px -1px 4px;*/
-}
-
-#menu-area
-{
-    text-align: center;
-}
-
-.main-menu .menu-item, .admin-menu .menu-item
-{
-    display: inline-block;
-    width: 15%;
-    margin: 0px 0 0 1%;
-    text-align: center;
-}
 
 .hidden
 {
     display: none;
 }
-
-.main-menu .menu-item .navigation-link,
-.admin-menu .menu-item .navigation-link
-{
-    padding: 8px 0;
-    display: block;
-    font-size:1.2em;
-    letter-spacing: 0.2em;
-    cursor: pointer;
-    background-color: rgb(212, 212, 212);
-    color: #272768;
-
-    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
-    -moz-user-select: none; /* mozilla browsers */
-    -khtml-user-select: none; /* webkit (konqueror) browsers */
-    -ms-user-select: none; /* IE10+ */
-}
-
-
-
-
-.main-menu .menu-item .navigation-link:hover, .main-menu .menu-item.selected .navigation-link,
-.admin-menu .menu-item .navigation-link:hover, .admin-menu .menu-item.selected .navigation-link
-{
-    background-color: rgb(240, 240, 240);
-    padding-bottom: 6px;
-    border-bottom:2px solid rgb(143,143,143);
-}
-
-.admin-menu {
-    /*border-radius: 5px;*/
-    margin-top: 10px;
-    /*box-shadow: black 0px 0px 5px;*/
-}
-.admin-menu .menu-item .navigation-link
-{
-    padding: 4px;
-}
-.admin-menu .menu-item .navigation-link:hover,
-.admin-menu .menu-item.selected .navigation-link {
-    padding-bottom: 0px;
-}
-
 
 /*users-template*/
 .users-table td.login{ width: 15%;}
@@ -277,7 +207,7 @@ thead tr {
 /*device-detail-template*/
 .device-detail-view
 {
-    width: 400px;
+    width: 50%;
 }
 
 /*device-panels-template*/
@@ -291,7 +221,7 @@ thead tr {
     padding: 0 0 0 4px;
     margin: 10px 0 5px 0;
     background-color: rgb(240, 240, 240);
-    border-radius: 5px;
+    border-radius: 2px;
     width: 300px;
 }
 .device-panels-switcher .menu-item
@@ -308,7 +238,7 @@ thead tr {
 
 .device-panels-switcher .menu-item.selected
 {
-    border-radius: 5px;
+    border-radius: 2px;
     margin-top: 2px;
     padding: 3px 1%;
     background-color: rgb(195,220,247);
@@ -519,6 +449,7 @@ thead tr {
 .logged-in {
     float: right;
     margin: 6px 0;
+    font-variant: small-caps;
 }
 .clearfix:after {
     content: " ";
@@ -655,7 +586,7 @@ label, input[type=submit] {
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
-        border-bottom: 1px solid #fb998c;
+        border-bottom: 1px solid #8f8f8f;
     }
     #cssmenu ul li.last > a,
     #cssmenu ul li:last-child > a {
