@@ -1,5 +1,5 @@
 ﻿/*main*/
-body
+body, input, select, textarea
 {
     font-family: 'Open Sans', Tahoma, Verdana, sans-serif;
     font-size: 14px;
@@ -429,7 +429,7 @@ thead tr {
 }
 
 .credentials-form {
-    margin: auto;
+    margin: 5em auto auto;
     width: 500px;
 }
 .credentials-form div>span {
@@ -481,6 +481,12 @@ label, input[type=submit] {
 
 .paper-panel {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+
+
+.fields div {
+    margin: 0.5em;
 }
 
 #menu-area
