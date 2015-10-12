@@ -475,6 +475,10 @@ label, input[type=submit] {
 }
 
 
+#menu-area
+{
+    text-align: center;
+}
 
 /* Main Menu from cssmenumaker.com */
 
