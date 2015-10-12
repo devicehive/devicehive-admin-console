@@ -1,8 +1,8 @@
 //model is an app.Models.DeviceClass
 app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
-    triggers: {
-        "click .show-equipments": "showEquipments"
-    },
+    //triggers: {
+    //    "click .show-equipments": "showEquipments"
+    //},
     events: {
         "click .delete": "deleteClass",
         "click .edit": "editClass",
@@ -102,50 +102,23 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
         oldProps.version = oldProps.version + "(copy)";
         delete oldProps.id;
 
-        //fetch equipments and copy everything after it
-        this.model.getEquipments(function (equipColl) {
-            //copy device class
-            var newDc = new app.Models.DeviceClass(oldProps);
-            newDc.save(null, {
-                success: function () {
-                    var len = equipColl.length;
+        //copy device class
+        var newDc = new app.Models.DeviceClass(oldProps);
 
-                    //all stuff below can be simplified. 
-                    //It is possible to don't track the equipments creating before adding device class to collection
+        newDc.save(null, {
+            success: function () {
 
-                    //render device class for edition if there is no equimpents attached
-                    if (len == 0) {
-                        that.model.collection.add(newDc);
-                        that.model.collection.sort();
-                    }
-                    else {
-                        //copy all equipments, then render device class for edition
-                        _.each(equipColl.models, function (curEquip) {
-                            var newattrs = _.clone(curEquip);
-                            delete newattrs.id;
-                            newattrs.deviceClass = newDc;
-                            var newEquipment = new app.Models.Equipment(newattrs);
-                            newEquipment.save(null,
-                                    {
-                                        error: function (notMod, notResp) {
-                                            app.vent.trigger("notification", app.Enums.NotificationType.Error, notResp);
-                                        },
-                                        success: function () {
-                                            len--;
-                                            if (len == 0) {
-                                                that.model.collection.add(newDc);
-                                                that.model.collection.sort();
-                                            }
-                                        }
-                                    });
-                        });
-                    }
-                },
-                error: function (model, response) {
-                    app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
-                }
-            });
+                //render device class for edition if there is no equimpents attached
+
+                that.model.collection.add(newDc);
+                that.model.collection.sort();
+
+            },
+            error: function (model, response) {
+                app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+            }
         });
+
     }
 });
 

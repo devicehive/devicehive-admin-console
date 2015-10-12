@@ -41,11 +41,12 @@ thead tr {
 
 .main-table thead  tr
 {
-    background-color: #272768;
+    background-color: #33669A;
     font-size: 0.9em;
     font-weight: bold;
     color: white;
     letter-spacing: 0.2em;
+    font-variant: small-caps;
 }
 
 .main-table thead  tr.loading-area
@@ -120,6 +121,8 @@ thead tr {
     display: inline-block;
     cursor: pointer;
     white-space: nowrap;
+    text-transform: uppercase;
+    font-size: smaller;
 }
 
 .view-button:hover, .edit-button:hover, .delete-button:hover
@@ -532,7 +535,7 @@ label, input[type=submit] {
     transition: color .25s;
 }
 #cssmenu ul li a:hover {
-    color: #272768;
+    color: #33669A;
 }
 #cssmenu ul li a:hover:before {
     width: 100%;
@@ -556,7 +559,7 @@ label, input[type=submit] {
     bottom: 0;
     height: 3px;
     width: 0;
-    background: #272768;
+    background: #33669A;
     -webkit-transition: width .25s;
     -moz-transition: width .25s;
     -ms-transition: width .25s;
@@ -568,7 +571,7 @@ label, input[type=submit] {
     display: none;
 }
 #cssmenu ul li.active a {
-    color: #272768;
+    color: #33669A;
 }
 #cssmenu ul li.active a:before {
     width: 100%;

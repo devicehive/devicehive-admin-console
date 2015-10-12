@@ -3,22 +3,22 @@
         return app.config.restEndpoint + "/device/class";
     },
     defaults: { equimpent: [], isPermanent: false, version: 1, offlineTimeout: null },
-    getEquipments: function (success, error) {
-        if (this.equipmentColl != null) {
-            if (_.isFunction(success))
-                success(this.equipmentColl);
-        }
-        else {
-            var that = this;
-            this.equipmentColl = new app.Models.EquipmentsCollection({}, { deviceClass: this });
-            this.equipmentColl.fetch({ success: function (coll, response) {
-                if (_.isFunction(success))
-                    success(coll);
-            }
-            });
-        }
-        return this.equipmentColl;
-    },
+    //getEquipments: function (success, error) {
+    //    if (this.equipmentColl != null) {
+    //        if (_.isFunction(success))
+    //            success(this.equipmentColl);
+    //    }
+    //    else {
+    //        var that = this;
+    //        this.equipmentColl = new app.Models.EquipmentsCollection({}, { deviceClass: this });
+    //        this.equipmentColl.fetch({ success: function (coll, response) {
+    //            if (_.isFunction(success))
+    //                success(coll);
+    //        }
+    //        });
+    //    }
+    //    return this.equipmentColl;
+    //},
     setters: {
         offlineTimeout: function (value) {
             if (!value || value == "")
