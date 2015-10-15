@@ -10,7 +10,7 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
             context.$el.find('form .success').toggleClass('ui-helper-hidden', !newpassword);
             if (newpassword) {
                 sessionStorage.userPassword = newpassword;
-                sessionStorage.lastActivity = (new Date()).valueOf();
+                localStorage.lastActivity = (new Date()).valueOf();
                 context.$el.find('form .fields').hide();
                 setTimeout(function() {
                     Backbone.history.navigate('', { trigger: true })
@@ -20,7 +20,7 @@ app.Views.ChangePassword = Backbone.Marionette.ItemView.extend({
 
         this.$el.find('form').on('submit', function(e) {
             e.preventDefault();
-            var accessKey = sessionStorage.deviceHiveToken;
+            var accessKey = localStorage.deviceHiveToken;
             var $form = $(e.target);
             error(''); // clear error message
             var currentpassword = $form.find('[name=currentpassword]').val();

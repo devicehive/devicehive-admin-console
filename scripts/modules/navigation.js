@@ -13,7 +13,7 @@
 
     var rebuildNavigation = function (){
         var allowed = fullCollection.filter(function(item){
-            console.log("Filtering Menu", item.get('roles'), app.User.get("role"), item.get('path'));
+            //console.log("Filtering Menu", item.get('roles'), app.User.get("role"), item.get('path'));
             return !item.get('roles') || app.hasRole(item.get('roles'));
         });
 

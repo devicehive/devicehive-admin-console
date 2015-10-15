@@ -1,9 +1,9 @@
 // AuthModel is intended to be a base model for entities that requires http basic auth for ajax requests
 Backbone.AuthModel = Backbone.Model.extend({
     authHeader: function () {
-        if (sessionStorage.deviceHiveToken) {
+        if (localStorage.deviceHiveToken) {
            return {
-               'Authorization': 'Bearer '+sessionStorage.deviceHiveToken
+               'Authorization': 'Bearer ' + localStorage.deviceHiveToken
            };
         } else {
             return {};
@@ -11,16 +11,16 @@ Backbone.AuthModel = Backbone.Model.extend({
     },
     //override sync method which is called on any ajax requests
     sync: function(method, model, options) {
-        console.log('sync method %o model %o options %o', method, model, options);
+        //console.log('sync method %o model %o options %o', method, model, options);
         var timestamp = (new Date().valueOf());
-        if (sessionStorage && sessionStorage.lastActivity) {
+        if (localStorage && localStorage.lastActivity) {
             // logout user if he/she was inactive for 30 minutes or more
-            if (sessionStorage.lastActivity < timestamp - (30*60*1000)) {
+            if (localStorage.lastActivity < timestamp - (30*60*1000)) {
                 unauthorizedHandler();
                 return;
             }
         }
-        sessionStorage.lastActivity = timestamp;
+        localStorage.lastActivity = timestamp;
         options || (options = {});
         // keep original error handler and make wrapper to handle 401 responses
         var errorHandler = options.error || function(){};

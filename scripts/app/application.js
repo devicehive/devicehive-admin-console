@@ -63,10 +63,10 @@ _.extend(app, {
     },
     hasCredentials: function() {
         // if no credentials currently set
-        if (!sessionStorage.deviceHiveToken) {
+        if (!localStorage.deviceHiveToken) {
             return false;
         } else {
-            console.log('lets think that we have correct credentials');
+            //console.log('lets think that we have correct credentials');
             return true;
         }
     },
@@ -137,8 +137,8 @@ app.bind("initialize:after", function (options) {
             console.log('Detected starting query', query);
 
             if (query.deviceHiveToken) {
-                sessionStorage.deviceHiveToken=query.deviceHiveToken;
-                sessionStorage.lastActivity=(new Date()).valueOf();
+                localStorage.deviceHiveToken=query.deviceHiveToken;
+                localStorage.lastActivity=(new Date()).valueOf();
                 delete sessionStorage.authenticationError;
                 delete query.deviceHiveToken;
                 // remove ath token from query string by recreating url without that parameter

@@ -3,7 +3,7 @@ app.Models.AccessToken = Backbone.Model.extend({
         return app.config.restEndpoint + '/auth/accesskey';
     },
     initialize: function (params) {
-        sessionStorage.loginMethod = params.providerName;
+        localStorage.loginMethod = params.providerName;
         this.fetch({
 
             beforeSend: function (xhr) {
@@ -17,8 +17,8 @@ app.Models.AccessToken = Backbone.Model.extend({
 
             success: function (response) {
                 var appUrl =  app.f.prepareAbsolutePath(app.config.rootUrl);
-                sessionStorage.deviceHiveToken=response.get('key');
-                sessionStorage.lastActivity=(new Date()).valueOf();
+                localStorage.deviceHiveToken=response.get('key');
+                localStorage.lastActivity=(new Date()).valueOf();
                 delete sessionStorage.authenticationError;
                 location.href = appUrl;
             },

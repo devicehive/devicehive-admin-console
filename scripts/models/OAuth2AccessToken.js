@@ -3,7 +3,7 @@ app.Models.OAuth2AccessToken = Backbone.Model.extend({
         return app.config.restEndpoint + '/auth/accesskey';
     },
     initialize: function (params) {
-        sessionStorage.loginMethod = params.providerName;
+        localStorage.loginMethod = params.providerName;
         this.fetch({
 
             beforeSend: function (xhr) {
@@ -16,8 +16,8 @@ app.Models.OAuth2AccessToken = Backbone.Model.extend({
             async: false,
 
             success: function (response) {
-                sessionStorage.deviceHiveToken=response.get('key');
-                sessionStorage.lastActivity=(new Date()).valueOf();
+                localStorage.deviceHiveToken=response.get('key');
+                localStorage.lastActivity=(new Date()).valueOf();
                 delete sessionStorage.authenticationError;
                 app.trigger('login');
             },
