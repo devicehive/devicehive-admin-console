@@ -1,5 +1,5 @@
 app.config = {
-    restEndpoint: 'http://playground.devicehive.com/api/rest',
+    restEndpoint: '/api/rest',
     rootUrl: "/admin/",
     pushState: false
 };
