@@ -22,6 +22,50 @@ libraries. For solutions involving gateways, there is also gateway middleware
 that allows to interface with devices connected to it. Leave communications
 to [DeviceHive] and focus on actual product and innovation.
 
+Docker Usage
+------------------
+Admin Console is a single page application and can be hosted as a set of static files as a part of any other webiste. 
+But it can be easily hosted on its own by using docker image `devicehive/admin-console`:
+```yml
+admin-console:
+  image: devicehive/admin-console
+  links:
+    - "dh"
+  ports:
+    - "80"
+
+dh:
+  image: devicehive/devicehive
+  links:
+    - "postgres"
+    - "kafka"
+    - "zookeeper"
+  ports:
+    - "8080:8080"
+  environment:
+    DH_POSTGRES_USERNAME: "postgres"
+    DH_POSTGRES_PASSWORD: "mysecretpassword"
+    DH_POSTGRES_DB: "postgres"
+
+
+zookeeper:
+  image: jplock/zookeeper:3.4.6
+  ports:
+    - "2181:2181"
+
+kafka:
+  image: ches/kafka:0.8.2.1
+  links:
+    - "zookeeper"
+  expose:
+    - "9092"
+
+postgres:
+  image: postgres:9.4.4
+  ports:
+    - "5432:5432"
+```
+
 
 DeviceHive license
 ------------------
