@@ -1,4 +1,4 @@
-FROM phusion/passenger-nodejs:0.9.18
+FROM phusion/passenger-customizable:0.9.18
 
 # configured according to https://github.com/phusion/passenger-docker
 
