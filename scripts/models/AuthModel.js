@@ -39,9 +39,8 @@ Backbone.AuthModel = Backbone.Model.extend({
             }
         }
 
-        if (localStorage) {
-            var parsedAccessToken = parseJwt(localStorage.deviceHiveToken);
-            if (parsedAccessToken.payload.expiration <= timestamp) {
+        if (localStorage && localStorage.deviceHiveToken && localStorage.expiration) {
+            if (localStorage.expiration <= timestamp) {
                 alert("Access token has expired, please get a new access token with your refresh token.");
                 unauthorizedHandler();
                 return;
@@ -63,12 +62,6 @@ Backbone.AuthModel = Backbone.Model.extend({
         return Backbone.sync.apply(this, [method, model, options]);
     }
 });
-
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
-};
 
 // helper function to perform correct logout procedure
 var unauthorizedHandler = function() {
