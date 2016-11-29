@@ -38,6 +38,16 @@ Backbone.AuthModel = Backbone.Model.extend({
                 return;
             }
         }
+
+        if (localStorage) {
+            var parsedAccessToken = parseJwt(localStorage.deviceHiveToken);
+            if (parsedAccessToken.payload.expiration <= timestamp) {
+                alert("Access token has expired, please get a new access token with your refresh token.");
+                unauthorizedHandler();
+                return;
+            }
+        }
+
         localStorage.lastActivity = timestamp;
         options || (options = {});
         // keep original error handler and make wrapper to handle 401 responses
@@ -53,6 +63,12 @@ Backbone.AuthModel = Backbone.Model.extend({
         return Backbone.sync.apply(this, [method, model, options]);
     }
 });
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+};
 
 // helper function to perform correct logout procedure
 var unauthorizedHandler = function() {
