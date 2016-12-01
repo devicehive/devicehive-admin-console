@@ -30,7 +30,7 @@ app.module("Modules.Login", function (users, app) {
             }
         },
         'logout': function() {
-            sessionStorage.removeItem("authenticationError");
+            delete sessionStorage.authenticationError;
             sendLogoutRequest();
         }
     };

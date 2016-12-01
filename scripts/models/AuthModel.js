@@ -42,7 +42,9 @@ Backbone.AuthModel = Backbone.Model.extend({
         if (localStorage && localStorage.deviceHiveToken && localStorage.expiration) {
             if (localStorage.expiration <= timestamp) {
                 sessionStorage.authenticationError = "Access token has expired, please get a new access token with your refresh token";
-                unauthorizedHandler();
+                delete localStorage.deviceHiveToken;
+                Backbone.history.navigate('', { trigger: false });
+                location.reload(true);
                 return;
             }
         }
