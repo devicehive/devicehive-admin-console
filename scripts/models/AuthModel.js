@@ -64,7 +64,6 @@ Backbone.AuthModel = Backbone.Model.extend({
                 catch(e) {
                     message = 'Unable to connect to the DeviceHive server!';
                 }
-                // setTimeout(function(){sessionStorage.authenticationError = message;}, 8000);
                 sessionStorage.authenticationError = message;
                 errorHandler.apply(this, arguments);
             }
