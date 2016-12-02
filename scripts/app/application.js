@@ -196,6 +196,10 @@ app.bind("login", function (options) {
         console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
         if (reply.status == 401) {
             app.trigger('needAuth', reply);
+        } else {
+            delete localStorage.deviceHiveToken;
+            Backbone.history.navigate('', { trigger: false });
+            location.reload(true);
         }
     }});
 });

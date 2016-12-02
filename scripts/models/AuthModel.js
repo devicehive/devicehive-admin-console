@@ -38,6 +38,17 @@ Backbone.AuthModel = Backbone.Model.extend({
                 return;
             }
         }
+
+        if (localStorage && localStorage.deviceHiveToken && localStorage.expiration) {
+            if (localStorage.expiration <= timestamp) {
+                sessionStorage.authenticationError = "Access token has expired, please get a new access token with your refresh token";
+                delete localStorage.deviceHiveToken;
+                Backbone.history.navigate('', { trigger: false });
+                location.reload(true);
+                return;
+            }
+        }
+
         localStorage.lastActivity = timestamp;
         options || (options = {});
         // keep original error handler and make wrapper to handle 401 responses
@@ -46,6 +57,14 @@ Backbone.AuthModel = Backbone.Model.extend({
             if (reply.status == 401) {
                 unauthorizedHandler();
             } else {
+                var message;
+                try {
+                    message = JSON.parse(reply.responseText).message;
+                }
+                catch(e) {
+                    message = 'Unable to connect to the DeviceHive server!';
+                }
+                sessionStorage.authenticationError = message;
                 errorHandler.apply(this, arguments);
             }
         };

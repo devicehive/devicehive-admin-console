@@ -30,18 +30,19 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             e.preventDefault();
             showError(''); // clear error message
             var params = {};
-            params.login = $(e.target).find('[name=login]').val();
-            params.password = $(e.target).find('[name=password]').val();
-            params.providerName = 'password';
-
-            new app.Models.AccessToken(params);
+            // params.login = $(e.target).find('[name=login]').val();
+            // params.password = $(e.target).find('[name=password]').val();
+            // params.providerName = 'password';
+            params.accessToken = $(e.target).find('[name=accessToken]').val();
+            new app.Models.JwtToken(params);
+            // new app.Models.AccessToken(params);
             showError(sessionStorage.authenticationError);
         });
 
         function showError(message) {
             context.$el.find('form .error').html(message);
             if (message) {
-                context.$el.find('form input[type=password]').val('').focus();
+                context.$el.find('form input[type=accessToken]').val('').focus();
             }
             context.$el.find('form .error').toggleClass('ui-helper-hidden', !message);
         }
