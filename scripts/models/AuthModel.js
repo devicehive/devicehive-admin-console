@@ -66,7 +66,7 @@ Backbone.AuthModel = Backbone.Model.extend({
                 }
                 sessionStorage.authenticationError = message;
                 errorHandler.apply(this, arguments);
-            }
+           }
         };
         options.headers = _.extend(options.headers ? options.headers : {}, this.authHeader());
         return Backbone.sync.apply(this, [method, model, options]);
@@ -79,7 +79,12 @@ var unauthorizedHandler = function() {
     if (sessionStorage && !sessionStorage.requestFragment) {
         sessionStorage.requestFragment = Backbone.history.fragment;
     }
-    Backbone.history.navigate('logout', {trigger: true});
+
+    sessionStorage.authenticationError = "Unauthorized";
+    delete localStorage.deviceHiveToken;
+    Backbone.history.navigate('', { trigger: false });
+    location.reload(true);
+    return;
 };
 
 Backbone.AuthCollection = Backbone.Collection.extend({
