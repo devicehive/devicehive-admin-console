@@ -2,7 +2,7 @@
 app.Views.NotificationListItem = Backbone.Marionette.ItemView.extend({
     events: {
         "click .push": "pushAction",
-        "click .close": "closeAction",
+        "click .close-form": "closeAction",
         "click .copy": "copyAction"
     },
     template: "notification-list-item-template",
@@ -15,11 +15,11 @@ app.Views.NotificationListItem = Backbone.Marionette.ItemView.extend({
         }
     },
     showEditableFields: function() {
-        this.$el.find(".editable-zone, .push, .close").show();
+        this.$el.find(".editable-zone, .push, .close-form").show();
         this.$el.find(".data-zone, .copy").hide();
     },
     showInfoFields: function() {
-        this.$el.find(".editable-zone, .push, .close").hide();
+        this.$el.find(".editable-zone, .push, .close-form").hide();
         this.$el.find(".data-zone").show();
     },
     serializeData: function () {
@@ -29,7 +29,7 @@ app.Views.NotificationListItem = Backbone.Marionette.ItemView.extend({
             data["parameters"] = JSON.stringify(data.parameters);
         else
             data["parameters"] = "";
-            
+
         if (_.has(data, "timestamp") && !_.isEmpty(data.timestamp))
             data["timestamp"] = app.f.parseUTCstring(data.timestamp).format("mm/dd/yyyy HH:MM:ss");
         else

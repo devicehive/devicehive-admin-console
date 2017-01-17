@@ -1,4 +1,4 @@
-﻿<script type="text/template" id="device-list-item-template">
+<script type="text/template" id="device-list-item-template">
     <td><%= grant.client.name %></td>
     <td><%= grant.type %></td>
     <td><%= grant.accessType %></td>
@@ -8,5 +8,5 @@
         <%=  net.length > 0 ? net[0].get('name') : 'INCORECT NET ID: '+item %><br/>
     <%  }); %></td>
     <td><%= grant.timestamp %></td>
-    <td><button class='revoke delete-button'>revoke</button></td>
+    <td class="buttons-column"><button class="revoke delete-button btn btn-danger btn-sm">revoke</button></td>
 </script>

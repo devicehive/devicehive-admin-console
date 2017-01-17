@@ -1,4 +1,4 @@
-﻿app.module("Modules.DeviceClasses", function (users, app) {
+app.module("Modules.DeviceClasses", function (users, app) {
 
     var deviceClassesCollection;
     var currentDC;

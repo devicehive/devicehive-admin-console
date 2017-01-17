@@ -1,4 +1,4 @@
-﻿app.Enumeration = function (object) {
+app.Enumeration = function (object) {
     _.extend(this, object);
 };
 

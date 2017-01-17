@@ -1,8 +1,13 @@
-﻿<script type="text/template" id="user-list-item-template">
-            <td class="login"><%= login %></td>
-            <td class="role text-center"><%= role %></td>
-            <td class="status text-center"><%= status %></td>
-            <td class="last-login text-center"><%= lastLogin %></td>
-            <td class="data lg-only"><%= data %></td>
-            <td class="buttons-column"><a href="javascript:void(0)" class="networks view-button">networks</a><a href="javascript:void(0)" class="accessKeys view-button">access keys</a><a href="javascript:void(0)" class="edit view-button">edit</a><a href="javascript:void(0)" class="delete delete-button">delete</a></td>
+<script type="text/template" id="user-list-item-template">
+    <td><%= login %></td>
+    <td><%= role %></td>
+    <td><%= status %></td>
+    <td><%= lastLogin %></td>
+    <td><%= data %></td>
+    <td class="buttons-column">
+        <a href="javascript:void(0)" class="networks btn btn-sm btn-default">networks</a>
+        <a href="javascript:void(0)" class="accessKeys btn btn-sm btn-default">access keys</a>
+        <a href="javascript:void(0)" class="edit btn btn-sm btn-primary">edit</a>
+        <a href="javascript:void(0)" class="delete btn btn-sm btn-danger">delete</a>
+    </td>
 </script>

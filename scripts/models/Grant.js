@@ -1,4 +1,4 @@
-﻿app.Models.Grant = Backbone.AuthModel.extend({
+app.Models.Grant = Backbone.AuthModel.extend({
     urlRoot: function () {
          return app.config.restEndpoint + "/user/current/oauth/grant";
      }

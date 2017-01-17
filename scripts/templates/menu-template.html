@@ -1,18 +1,21 @@
 <script type="text/template" id="menu-template">
+  <nav id="cssmenu" class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">DeviceHive</a>
+      </div>
 
-    <div id='cssmenu' class="paper-panel">
-        <ul>
-            <% for (var i = 0; i< items.length; ++i) {
-            var item = items[i];
-            var selected = item.selected ? 'active': '';
-            var last = i == (items.length-1);
-            %>
-                <li class="<%= last %> <%= selected %>">
-                    <a data-path="<%= item.path %>"><%= item.name %></a>
-                </li>
-            <% } %>
-
-        </ul>
+      <ul class="nav navbar-nav">
+          <% for (var i = 0; i< items.length; ++i) {
+          var item = items[i];
+          var selected = item.selected ? 'active': '';
+          var last = i == (items.length-1);
+          %>
+              <li class="<%= last %> <%= selected %>">
+                  <a data-path="<%= item.path %>"><%= item.name %></a>
+              </li>
+          <% } %>
+      </ul>
     </div>
-
+  </nav>
 </script>

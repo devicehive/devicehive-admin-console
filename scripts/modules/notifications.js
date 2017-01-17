@@ -1,4 +1,4 @@
-﻿app.module("Modules.Notifications", function (users, app) {
+app.module("Modules.Notifications", function (users, app) {
 
     var overlay = $("<div class='overlay'><div class='overlay-loading'></div></div>");
 

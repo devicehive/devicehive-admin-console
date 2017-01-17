@@ -3,7 +3,7 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     events: {
         "click .refresh": "refreshAction",
         "click .push": "pushAction",
-        "click .close": "closeAction",
+        "click .close-form": "closeAction",
         "click .copy": "copyAction"
     },
     initialize: function () {
@@ -185,7 +185,7 @@ app.Views.Commands = Backbone.Marionette.CompositeView.extend({
         var dtBox = this.timeFiltersView.$el;
         var pos = this.$el.find(".show-datetime-filter").offset();
 
-        dtBox.css("top", pos.top);
+        dtBox.css("top", pos.top - 20);
         dtBox.css("left", pos.left);
         dtBox.show();
     },

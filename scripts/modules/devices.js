@@ -1,4 +1,4 @@
-﻿app.module("Modules.Devices", function (users, app) {
+app.module("Modules.Devices", function (users, app) {
 
     var devicesCollection;
     var networksCollection;

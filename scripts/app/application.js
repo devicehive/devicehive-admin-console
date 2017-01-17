@@ -1,4 +1,4 @@
-﻿//instantiate application object, set Models, Views, Regions, Modules agregators
+//instantiate application object, set Models, Views, Regions, Modules agregators
 var app = new Backbone.Marionette.Application();
 
 _.extend(app, {

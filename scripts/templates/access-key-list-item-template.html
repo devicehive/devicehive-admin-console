@@ -1,25 +1,25 @@
-﻿<script type="text/template" id="access-key-list-item-template">
+<script type="text/template" id="access-key-list-item-template">
     <tr>
-        <td class="label-column"><%= label %></td>
-        <td class="key-column"><%= key %></td>
-        <td class="type-column"><%= type %></td>
-        <td class="expiration-column"><%= expirationDate %></td>
-        <td class="buttons-column">
-            <a href="javascript:void(0)" class="details view-button">details</a>
-            <a href="javascript:void(0)" class="edit view-button">edit</a>
-            <a href="javascript:void(0)" class="delete delete-button">delete</a>
+        <td><%= label %></td>
+        <td><%= key %></td>
+        <td><%= type %></td>
+        <td><%= expirationDate %></td>
+        <td class="buttons-column text-nowrap">
+            <a href="javascript:void(0)" class="details btn btn-default btn-sm">details</a>
+            <a href="javascript:void(0)" class="edit btn btn-primary btn-sm">edit</a>
+            <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">delete</a>
         </td>
     </tr>
     <tr class="details-row panel">
         <td colspan="5">
-            <table class="main-table access-key-permissions-table paper-panel">
+            <table class="main-table access-key-permissions-table table table-striped">
                 <thead>
                     <tr>
-                        <th class="domains">Domains</th>
-                        <th class="subnets">Subnets</th>
-                        <th class="actions">Actions</th>
-                        <th class="networks">Networks</th>
-                        <th class="devices">Devices</th>
+                        <th>Domains</th>
+                        <th>Subnets</th>
+                        <th>Actions</th>
+                        <th>Networks</th>
+                        <th>Devices</th>
                     </tr>
                 </thead>
                 <tbody>

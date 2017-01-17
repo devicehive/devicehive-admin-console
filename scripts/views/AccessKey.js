@@ -175,7 +175,7 @@ app.Views.AccessKey = Backbone.Marionette.CompositeView.extend({
                 expirationDate = app.f.toISOString(expirationDateEl.datetimepicker("getDate"));
             }
 
-            var label = this.$el.find(".label").val();
+            var label = this.$el.find(".keylabel").val();
             if (_.isEmpty(label)) {
                 label = null;
             }

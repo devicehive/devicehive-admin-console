@@ -1,4 +1,4 @@
-﻿app.Models.MenuItem = Backbone.Model.extend({
+app.Models.MenuItem = Backbone.Model.extend({
         defaults:{selected:false}
     });
 

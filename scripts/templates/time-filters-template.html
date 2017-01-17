@@ -1,23 +1,37 @@
-﻿<script type="text/template" id="time-filters-template">
-        <table>
-            <tr>
-                <td>from:</td>
-                <td><input type="text" class="start-datetime" value="<%= startDate%>"></td>
-            </tr>
-            <tr>
-                <td>to:</td>
-                <td><input type="text" class="end-datetime" value="<%= endDate%>"></td>
-            </tr>
-        </table>
+<script type="text/template" id="time-filters-template">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" class="close-datetime-filter close view-button">&times;</button>
+        <h4 class="modal-title">Time filter</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <div class="form-group">
+            <label class="col-lg-2 control-label">From:</label>
+            <div class="col-lg-10">
+                <input type="text" class="start-datetime form-control" value="<%= startDate%>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">To:</label>
+            <div class="col-lg-10">
+                <input type="text" class="end-datetime form-control" value="<%= endDate%>">
+            </div>
+        </div>
         <div class="defaut-filter-values">
             <h5>set default ranges:</h5>
-                <a href="javascript:void(0)" class="set-day time-filter-value">day...</a>
-                <a href="javascript:void(0)" class="set-week time-filter-value">week...</a>
-                <a href="javascript:void(0)" class="set-month time-filter-value">month...</a>
-                <a href="javascript:void(0)" class="set-year time-filter-value">year...</a>
+                <a href="javascript:void(0)" class="set-day btn btn-default">day...</a>
+                <a href="javascript:void(0)" class="set-week btn btn-default">week...</a>
+                <a href="javascript:void(0)" class="set-month btn btn-default">month...</a>
+                <a href="javascript:void(0)" class="set-year btn btn-default">year...</a>
         </div>
-        <a href="javascript:void(0)" class="apply-datetime-filter view-button">apply</a>
-        <a href="javascript:void(0)" class="close-datetime-filter view-button">close</a>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" class="apply-datetime-filter btn btn-primary">apply</a>
+        <a href="javascript:void(0)" class="close-datetime-filter btn btn-warning">close</a>
         <br />
         * - if "to" value isn't set - collection will pull latest request from the server in real-time.
+      </div>
+    </div>
+  </div>
 </script>

@@ -1,4 +1,4 @@
-﻿app.Models.TimeFilters = Backbone.Model.extend({
+app.Models.TimeFilters = Backbone.Model.extend({
     initialize: function (options) {
         if (_.isEmpty(options) || !_.has(options, "startDate"))
              this.set("startDate",(new Date()).addDays(-7));

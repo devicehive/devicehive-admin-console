@@ -1,4 +1,4 @@
-﻿app.Models.Equipment = Backbone.AuthModel.extend({
+app.Models.Equipment = Backbone.AuthModel.extend({
     initialize: function (attributes, options) {
         if (!_.isUndefined(attributes) && _.has(attributes, "deviceClass")) {
             this.deviceClass = attributes.deviceClass;

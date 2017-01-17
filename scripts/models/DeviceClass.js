@@ -1,4 +1,4 @@
-﻿app.Models.DeviceClass = Backbone.AuthModel.extend({
+app.Models.DeviceClass = Backbone.AuthModel.extend({
     urlRoot: function () {
         return app.config.restEndpoint + "/device/class";
     },
