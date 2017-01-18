@@ -1,4 +1,4 @@
-app.Models.User = Backbone.AuthModel.extend({
+﻿app.Models.User = Backbone.AuthModel.extend({
     urlRoot: function () { return app.config.restEndpoint + "/user"; },
     urlCurrent: function () { return app.config.restEndpoint + "/user/current"; },
     error: function(e) {console.log('User error %o', e)},

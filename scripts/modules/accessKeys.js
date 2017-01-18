@@ -1,4 +1,4 @@
-app.module("Modules.Networks", function (users, app) {
+﻿app.module("Modules.Networks", function (users, app) {
     var accessKeysCollection;
     var networksCollection;
     var devicesCollection;

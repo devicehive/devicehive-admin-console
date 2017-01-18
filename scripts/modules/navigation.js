@@ -1,4 +1,4 @@
-app.module("Modules.Navigation", function (navigation, app) {
+﻿app.module("Modules.Navigation", function (navigation, app) {
     //private members
 
     var fullCollection = null;

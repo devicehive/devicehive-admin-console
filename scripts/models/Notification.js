@@ -1,4 +1,4 @@
-app.Models.Notification = Backbone.AuthModel.extend({
+﻿app.Models.Notification = Backbone.AuthModel.extend({
     defaults: {
         notification: ''
     },
