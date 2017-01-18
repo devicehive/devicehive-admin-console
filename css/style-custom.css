@@ -47,3 +47,21 @@ table {
 .datetime-filter-area>.modal-dialog {
     width: 400px;
 }
+/* loader */
+.main-table thead  tr.loading-area
+{
+    background-color: white;
+}
+
+.main-table thead  tr.loading-area th
+{
+    background: top center url(images/loadera64.gif) no-repeat;
+    /*background-color: #d3d3d3;*/
+    height: 70px;
+}
+.overlay-loading
+{
+    margin: 200px auto 0;
+    background: top center url(images/loadera64.gif) no-repeat;
+    height: 70px;
+}
