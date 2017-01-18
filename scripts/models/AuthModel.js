@@ -1,3 +1,21 @@
+/*
+  DeviceHive Admin Console business logic
+
+  Copyright (C) 2016 DataArt
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  */
 // AuthModel is intended to be a base model for entities that requires http basic auth for ajax requests
 Backbone.AuthModel = Backbone.Model.extend({
     authHeader: function () {
@@ -20,6 +38,17 @@ Backbone.AuthModel = Backbone.Model.extend({
                 return;
             }
         }
+
+        if (localStorage && localStorage.deviceHiveToken && localStorage.expiration) {
+            if (localStorage.expiration <= timestamp) {
+                sessionStorage.authenticationError = "Access token has expired, please get a new access token with your refresh token";
+                delete localStorage.deviceHiveToken;
+                Backbone.history.navigate('', { trigger: false });
+                location.reload(true);
+                return;
+            }
+        }
+
         localStorage.lastActivity = timestamp;
         options || (options = {});
         // keep original error handler and make wrapper to handle 401 responses
@@ -28,8 +57,16 @@ Backbone.AuthModel = Backbone.Model.extend({
             if (reply.status == 401) {
                 unauthorizedHandler();
             } else {
+                var message;
+                try {
+                    message = JSON.parse(reply.responseText).message;
+                }
+                catch(e) {
+                    message = 'Unable to connect to the DeviceHive server!';
+                }
+                sessionStorage.authenticationError = message;
                 errorHandler.apply(this, arguments);
-            }
+           }
         };
         options.headers = _.extend(options.headers ? options.headers : {}, this.authHeader());
         return Backbone.sync.apply(this, [method, model, options]);
@@ -42,7 +79,12 @@ var unauthorizedHandler = function() {
     if (sessionStorage && !sessionStorage.requestFragment) {
         sessionStorage.requestFragment = Backbone.history.fragment;
     }
-    Backbone.history.navigate('logout', {trigger: true});
+
+    sessionStorage.authenticationError = "Unauthorized";
+    delete localStorage.deviceHiveToken;
+    Backbone.history.navigate('', { trigger: false });
+    location.reload(true);
+    return;
 };
 
 Backbone.AuthCollection = Backbone.Collection.extend({
