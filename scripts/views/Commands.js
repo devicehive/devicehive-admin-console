@@ -66,18 +66,14 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
         return data;
     },
     showEditableFields: function () {
-        this.$el.find(".editable-zone").show();
-        this.$el.find(".data-zone").hide();
+        this.$el.find(".editable-zone, .push, .close-form").show();
 
+        this.$el.find(".data-zone").hide();
         this.$el.find(".refresh").hide();
         this.$el.find(".copy").hide();
-        this.$el.find(".push").show();
-        this.$el.find(".close").show();
     },
     showInfoFields: function () {
-        this.$el.find(".editable-zone").hide();
-        this.$el.find(".push").hide();
-        this.$el.find(".close").hide();
+        this.$el.find(".editable-zone, .push, .close-form").hide();
         this.$el.find(".data-zone").show();
 
         if (!(_.isEmpty(this.model.get("status")))) {
