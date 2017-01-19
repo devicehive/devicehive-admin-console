@@ -59,6 +59,18 @@ table {
     /*background-color: #d3d3d3;*/
     height: 70px;
 }
+
+.overlay
+{
+    background-color: white;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+}
+
 .overlay-loading
 {
     margin: 200px auto 0;
