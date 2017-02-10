@@ -1,4 +1,4 @@
-﻿<script type="text/template" id="device-list-item-template">
+<script type="text/template" id="device-list-item-template">
 <!--
   DeviceHive Admin Console templates
 
@@ -21,7 +21,7 @@
     <td class="status"><span class="current-value"><%= status ||''%></span><span class="new-value"><input type="text" class="new-device-status" value="<%= status || '' %>"/></span></td>
 
     <td class="network">
-    
+
     <span class="current-value"><%= network.name %></span>
     <span class="new-value">
         <select class="new-device-network">
@@ -33,11 +33,11 @@
             <%}}); %>
         </select>
     </span>
-    
+
     </td>
 
     <td class="device-class">
-    
+
     <span class="current-value"><%= deviceClass.name %> (v <%= deviceClass.version %>)</span>
     <span class="new-value">
         <% if (classEditable) { %>
@@ -53,13 +53,20 @@
         <%= deviceClass.name %> (v <%= deviceClass.version %>)
         <% } %>
     </span>
-    
+
     </td>
 
     <td class="data lg-only"><span class="current-value"><%= data %></span><span class="new-value"><textarea class="new-device-data"><%= data %></textarea></span></td>
 
-    <td class="buttons-column">
-        <span class="current-value"><a href="javascript:void(0)" class="detail view-button">detail</a><a href="javascript:void(0)" class="edit view-button">edit</a><a href="javascript:void(0)" class="delete delete-button">delete</a></span>
-        <span class="new-value"><a href="javascript:void(0)" class="cancel view-button">cancel</a><a href="javascript:void(0)" class="save edit-button">save</a></span>
+    <td class="buttons-column text-nowrap">
+        <span class="current-value">
+            <a href="javascript:void(0)" class="detail btn btn-sm btn btn-default">detail</a>
+            <a href="javascript:void(0)" class="edit btn btn-sm btn-primary">edit</a>
+            <a href="javascript:void(0)" class="delete btn btn-sm btn-danger">delete</a>
+        </span>
+        <span class="new-value">
+            <a href="javascript:void(0)" class="save btn btn-sm btn-success">save</a>
+            <a href="javascript:void(0)" class="cancel btn btn-sm btn-warning">cancel</a>
+        </span>
     </td>
 </script>

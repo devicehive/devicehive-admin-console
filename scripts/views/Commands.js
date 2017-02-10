@@ -21,7 +21,7 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     events: {
         "click .refresh": "refreshAction",
         "click .push": "pushAction",
-        "click .close": "closeAction",
+        "click .close-form": "closeAction",
         "click .copy": "copyAction"
     },
     initialize: function () {
@@ -66,18 +66,14 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
         return data;
     },
     showEditableFields: function () {
-        this.$el.find(".editable-zone").show();
-        this.$el.find(".data-zone").hide();
+        this.$el.find(".editable-zone, .push, .close-form").show();
 
+        this.$el.find(".data-zone").hide();
         this.$el.find(".refresh").hide();
         this.$el.find(".copy").hide();
-        this.$el.find(".push").show();
-        this.$el.find(".close").show();
     },
     showInfoFields: function () {
-        this.$el.find(".editable-zone").hide();
-        this.$el.find(".push").hide();
-        this.$el.find(".close").hide();
+        this.$el.find(".editable-zone, .push, .close-form").hide();
         this.$el.find(".data-zone").show();
 
         if (!(_.isEmpty(this.model.get("status")))) {
@@ -203,7 +199,7 @@ app.Views.Commands = Backbone.Marionette.CompositeView.extend({
         var dtBox = this.timeFiltersView.$el;
         var pos = this.$el.find(".show-datetime-filter").offset();
 
-        dtBox.css("top", pos.top);
+        dtBox.css("top", pos.top - 20);
         dtBox.css("left", pos.left);
         dtBox.show();
     },

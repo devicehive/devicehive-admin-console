@@ -56,7 +56,7 @@ app.Views.TimeFilters = Backbone.Marionette.ItemView.extend({
     },
     onRender: function () {
         var that = this;
-        this.$el.addClass("datetime-filter-area");
+        this.$el.addClass("datetime-filter-area modal");
         this.$el.find(".start-datetime").datetimepicker({
             onClose: function (dateText) {
                 if (!_.isEmpty(dateText))

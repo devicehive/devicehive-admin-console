@@ -1,0 +1,79 @@
+/*
+  DeviceHive Admin Console CSS
+
+  Copyright (C) 2016 DataArt
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+*/
+/*
+ * TODO: table templates in this projects are using multiple tbodies,
+ * so we're marking odd `tbody`es instead of odd `tr`s
+ */
+.table-striped-body > tbody:nth-of-type(odd) > tr {
+    background-color: #f9f9f9;
+}
+/* override default theme's `table` font size */
+table {
+    font-size: 14px;
+}
+/* collapse the buttons column */
+.buttons-column {
+    width: 1%;
+    white-space: nowrap;
+}
+/*static text for forms when fields are not shown*/
+.form-static-text  {
+    padding-top: 10px;
+    height: 39px;
+    padding-left: 13px;
+}
+.datetime-filter-area {
+    position: absolute;
+    overflow: visible;
+    display: none;
+}
+.datetime-filter-area.modal,
+.datetime-filter-area>.modal-dialog {
+    width: 400px;
+}
+/* loader */
+.main-table thead  tr.loading-area
+{
+    background-color: white;
+}
+
+.main-table thead  tr.loading-area th
+{
+    background: top center url(images/loadera64.gif) no-repeat;
+    /*background-color: #d3d3d3;*/
+    height: 70px;
+}
+
+.overlay
+{
+    background-color: white;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+}
+
+.overlay-loading
+{
+    margin: 200px auto 0;
+    background: top center url(images/loadera64.gif) no-repeat;
+    height: 70px;
+}

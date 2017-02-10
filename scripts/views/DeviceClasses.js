@@ -25,7 +25,7 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
         "click .delete": "deleteClass",
         "click .edit": "editClass",
         "click .save": "saveClass",
-        "click .close": "closeEdition",
+        "click .close-form": "closeEdition",
         "click .copy": "copyClass"
     },
     initialize: function () {

@@ -1,4 +1,4 @@
-﻿<script type="text/template" id="device-class-create-edit-template">
+<script type="text/template" id="device-class-create-edit-template">
 <!--
   DeviceHive Admin Console templates
 
@@ -17,70 +17,80 @@
   limitations under the License.
 
 -->
-    <h4>Detail view of device "<%= name%>"</h4>
-    <table class="values-table">
-    <tr>
-        <td class="title-column">name:</td>
-        <td class="value-column"><span class="device-value"><%= name%></span><input type="text" class="new-value name" value="<%= name%>"/></td>
-    </tr>
-    <tr>
-        <td class="title-column">status:</td>
-        <td class="value-column"><span class="device-value"><%= status%></span><input type="text" class="new-value status" value="<%= status%>"/></td>
-    </tr>
-    <tr>
-        <td class="title-column">operation:</td>
-        <td class="value-column"><span class="device-value"><%= isBlocked ? "Blocked" : "Normal" %></span>
-            <span class="new-value">
-                <select name="isBlocked">
-                    <option value="0">Normal</option>
-                    <option value="1" <%= isBlocked ? "selected=selected" : "" %>>Blocked</option>
-            </span>
-        </td>
-    </tr>
-    <tr>
-        <td class="title-column">network:</td>
-        <td class="value-column"><span class="device-value"><%= network.name%></span>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Detail view of device "<%= name%>"</h3></div>
+        <div class="panel-body">
+            <div class="form-horizontal col-lg-6">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Name:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= name%></div>
+                        <input type="text" class="new-value name form-control" value="<%= name%>"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Status:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= status%></div>
+                        <input type="text" class="new-value status form-control" value="<%= status%>"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Operation:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= isBlocked ? "Blocked" : "Normal" %></div>
+                        <select class="new-value form-control" name="isBlocked">
+                            <option value="0">Normal</option>
+                            <option value="1" <%= isBlocked ? "selected=selected" : "" %>>Blocked</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Network:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= network.name%></div>
+                        <select class="new-value network form-control">
+                            <% _.each(networks,function(net) {
+                                if(net.id == network.id){ %>
+                                    <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>
+                                <%}else{ %>
+                                    <option value="<%= net.id %>"> <%= net.name %> </option>
+                            <%}}); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Device class:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= deviceClass.name%> (v <%= deviceClass.version %>)</div>
 
-        <select class="new-value network">
-            <% _.each(networks,function(net){ 
-                if(net.id == network.id){ %>
-                    <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>    
-                <%}else{ %>
-                    <option value="<%= net.id %>"> <%= net.name %> </option>
-            <%}}); %>
-        </select>
-        
-        </td>
-    </tr>
-    <tr>
-        <td class="title-column">device class:</td>
-        <td class="value-column"><span class="device-value"><%= deviceClass.name%> (v <%= deviceClass.version %>)</span>
-
-        <span class="new-value">
-            <% if (classEditable) { %>
-            <select class="dclass">
-                <% _.each(classes,function(cls){
-                    if(cls.id == deviceClass.id){ %>
-                        <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>)</option>
-                    <%}else{ %>
-                        <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
-                <%}}); %>
-            </select>
-            <% } else { %>
-            <%= deviceClass.name %> (v <%= deviceClass.version %>)
-            <% } %>
-        </span>
-
-        </td>
-    </tr>
-    <tr>
-        <td class="title-column">data:</td>
-        <td class="value-column"><span class="device-value"><%= data%></span><textarea class="new-value data"><%= data%></textarea></td>
-    </tr>
-    </table>
-
-    <a href="javascript:void(0)" class="edit-device view-button">Edit</a>
-    <a href="javascript:void(0)" class="close-action view-button">Close without saving</a>
-    <a href="javascript:void(0)" class="save-device edit-button">Save</a>
-    
+                        <% if (classEditable) { %>
+                        <select class="new-value dclass form-control">
+                            <% _.each(classes,function(cls){
+                                if(cls.id == deviceClass.id){ %>
+                                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>)</option>
+                                <%}else{ %>
+                                    <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
+                            <%}}); %>
+                        </select>
+                        <% } else { %>
+                        <%= deviceClass.name %> (v <%= deviceClass.version %>)
+                        <% } %>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Data:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= data%></div>
+                        <textarea class="new-value data form-control"><%= data%></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a href="javascript:void(0)" class="edit-device btn btn-primary">Edit</a>
+            <a href="javascript:void(0)" class="save-device btn btn-success">Save</a>
+            <a href="javascript:void(0)" class="close-action btn btn-warning">Close without saving</a>
+        </div>
+    </div>
 </script>

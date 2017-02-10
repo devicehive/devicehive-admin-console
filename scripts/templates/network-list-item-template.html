@@ -1,4 +1,4 @@
-﻿<script type="text/template" id="network-list-item-template">
+<script type="text/template" id="network-list-item-template">
 <!--
   DeviceHive Admin Console templates
 
@@ -21,7 +21,13 @@
     <td class="key"><span class="current-value"><%= key %></span><span class="new-value"><textarea id="new-network-key"><%= key %></textarea></span></td>
     <td class="description lg-only"><span class="current-value"><%= description %></span><span class="new-value"><textarea id="new-network-description"><%= description %></textarea></span></td>
     <td class="buttons-column">
-        <span class="current-value"><a href="javascript:void(0)" class="edit view-button">edit</a><a href="javascript:void(0)" class="delete delete-button">delete</a></span>
-        <span class="new-value"><a href="javascript:void(0)" class="cancel view-button">cancel</a><a href="javascript:void(0)" class="save edit-button">save</a></span>
+        <span class="current-value">
+            <a href="javascript:void(0)" class="edit btn btn-sm btn-primary">edit</a>
+            <a href="javascript:void(0)" class="delete btn btn-sm btn-danger">delete</a>
+        </span>
+        <span class="new-value">
+            <a href="javascript:void(0)" class="save btn btn-sm btn-success">save</a>
+            <a href="javascript:void(0)" class="cancel btn btn-sm btn-warning">cancel</a>
+        </span>
     </td>
 </script>

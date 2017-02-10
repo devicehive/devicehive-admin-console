@@ -138,8 +138,8 @@ app.Views.DevicePanels = Backbone.Marionette.ItemView.extend({
     markTab: function () {
         var tabClassName = "." + this.state + "-tab";
 
-        this.$el.find(".menu-item").removeClass("selected");
-        this.$el.find(tabClassName).addClass("selected");
+        this.$el.find(".menu-item").removeClass("active");
+        this.$el.find(tabClassName).addClass("active");
     },
     template: "device-panels-template",
     //showEquipment: function () {

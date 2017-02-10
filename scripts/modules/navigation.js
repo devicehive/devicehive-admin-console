@@ -1,4 +1,4 @@
-﻿/*
+/*
   DeviceHive Admin Console business logic
 
   Copyright (C) 2016 DataArt
@@ -39,6 +39,7 @@ app.module("Modules.Navigation", function (navigation, app) {
     };
 
     var navigatedTo = function (resourcePath) {
+        resourcePath = resourcePath || "";
         navigationCollection.each(function (menuItem) {
             menuItem.set(
                 "selected",

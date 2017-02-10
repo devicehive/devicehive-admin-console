@@ -1,4 +1,4 @@
-﻿<script type="text/template" id="user-auth">
+<script type="text/template" id="user-auth">
 <!--
   DeviceHive Admin Console templates
 
@@ -16,14 +16,35 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
- -->
-    <div>
+-->
+<div>
     <form class="credentials-form">
-        <div class='fields'>
-            <!--<div><span>Login:</span> <input type="text" name="login" value="" autofocus /></div>-->
-            <!--<div><span>Password:</span> <input type="password" name="password" /></div>-->
-            <div><span>Jwt access token: </span> <input type="text" name="accessToken" value="" autofocus /></div>
-            <div><span></span> <input type="submit" class="view-button" value="Log in" /></div>
+        <div class='fields form-horizontal col-lg-6'>
+            <!--
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Login:</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="text" name="login" value="" autofocus />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Password:</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="password" name="password" />
+                </div>
+            </div>
+            -->
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Jwt access token:</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="text" name="accessToken" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-8">
+                    <input class="btn btn-primary" type="submit" class="view-button" value="Log in" />
+                </div>
+            </div>
         </div>
         <div class="error ui-helper-hidden"></div>
     </form>

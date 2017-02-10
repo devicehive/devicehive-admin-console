@@ -19,7 +19,7 @@
 //push app.Models.User here
 app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     triggers: {
-        "click .close" : "onCloseClick"  
+        "click .close-form" : "onCloseClick"
     },
     events: {
         "click .save": "save"

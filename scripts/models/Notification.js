@@ -1,4 +1,4 @@
-﻿/*
+/*
   DeviceHive Admin Console business logic
 
   Copyright (C) 2016 DataArt

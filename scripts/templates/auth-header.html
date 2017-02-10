@@ -1,4 +1,4 @@
-﻿<script type="text/template" id="auth-header">
+<script type="text/template" id="auth-header">
 <!--
   DeviceHive Admin Console templates
 
@@ -17,9 +17,12 @@
   limitations under the License.
 
 -->
-    <div class="clearfix">
-    <div class="logged-in">
-        <span><a href="" data-path="changepassword" title="Change Password"><%= userLogin %></a> <a href="" data-path="logout">logout</a></span>
+<div class="clearfix">
+    <div class="logged-in pull-right">
+        <span>
+            <a href="" data-path="changepassword" title="Change Password" class="btn btn-link"><%= userLogin %></a>
+            <a href="" data-path="logout" class="btn btn-link">logout</a>
+        </span>
     </div>
     <div class="logged-out"></div>
 </div>
