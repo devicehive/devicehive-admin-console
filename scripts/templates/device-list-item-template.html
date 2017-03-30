@@ -1,4 +1,4 @@
-<script type="text/template" id="device-list-item-template">
+﻿<script type="text/template" id="device-list-item-template">
 <!--
   DeviceHive Admin Console templates
 
@@ -38,19 +38,19 @@
 
     <td class="device-class">
 
-    <span class="current-value"><%= deviceClass.name %> (v <%= deviceClass.version %>)</span>
+    <span class="current-value"><%= deviceClass.name %></span>
     <span class="new-value">
         <% if (classEditable) { %>
         <select class="new-device-class">
             <% _.each(classes,function(cls){ 
                 if(cls.id == deviceClass.id){ %>
-                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>) </option>    
+                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> </option>
                 <% }else{ %>
-                    <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
+                    <option value="<%= cls.id %>"> <%= cls.name %> </option>
             <%}}); %>
         </select>
         <% } else { %>
-        <%= deviceClass.name %> (v <%= deviceClass.version %>)
+        <%= deviceClass.name %>
         <% } %>
     </span>
 

@@ -20,7 +20,7 @@ app.Models.DeviceClass = Backbone.AuthModel.extend({
     urlRoot: function () {
         return app.config.restEndpoint + "/device/class";
     },
-    defaults: { equimpent: [], isPermanent: false, version: 1, offlineTimeout: null },
+    defaults: { equimpent: [], isPermanent: false, offlineTimeout: null },
     //getEquipments: function (success, error) {
     //    if (this.equipmentColl != null) {
     //        if (_.isFunction(success))

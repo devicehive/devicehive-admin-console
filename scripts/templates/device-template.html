@@ -1,4 +1,4 @@
-<script type="text/template" id="device-class-create-edit-template">
+﻿<script type="text/template" id="device-class-create-edit-template">
 <!--
   DeviceHive Admin Console templates
 
@@ -62,19 +62,19 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Device class:</label>
                     <div class="col-lg-9">
-                        <div class="device-value form-static-text"><%= deviceClass.name%> (v <%= deviceClass.version %>)</div>
+                        <div class="device-value form-static-text"><%= deviceClass.name%></div>
 
                         <% if (classEditable) { %>
                         <select class="new-value dclass form-control">
                             <% _.each(classes,function(cls){
                                 if(cls.id == deviceClass.id){ %>
-                                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> (v <%= cls.version %>)</option>
+                                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> </option>
                                 <%}else{ %>
-                                    <option value="<%= cls.id %>"> <%= cls.name %> (v <%= cls.version %>) </option>
+                                    <option value="<%= cls.id %>"> <%= cls.name %> </option>
                             <%}}); %>
                         </select>
                         <% } else { %>
-                        <%= deviceClass.name %> (v <%= deviceClass.version %>)
+                        <%= deviceClass.name %>
                         <% } %>
                     </div>
                 </div>
