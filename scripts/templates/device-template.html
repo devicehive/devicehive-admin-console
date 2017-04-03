@@ -29,19 +29,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">Status:</label>
-                    <div class="col-lg-9">
-                        <div class="device-value form-static-text"><%= status%></div>
-                        <input type="text" class="new-value status form-control" value="<%= status%>"/>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-lg-3 control-label">Operation:</label>
                     <div class="col-lg-9">
                         <div class="device-value form-static-text"><%= isBlocked ? "Blocked" : "Normal" %></div>
                         <select class="new-value form-control" name="isBlocked">
                             <option value="0">Normal</option>
-                            <option value="1" <%= isBlocked ? "selected=selected" : "" %>>Blocked</option>
+                            <option value="1"><%= isBlocked ? "selected=selected" : "" %>>Blocked</option>
                         </select>
                     </div>
                 </div>

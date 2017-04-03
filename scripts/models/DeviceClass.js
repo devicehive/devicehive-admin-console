@@ -20,7 +20,7 @@ app.Models.DeviceClass = Backbone.AuthModel.extend({
     urlRoot: function () {
         return app.config.restEndpoint + "/device/class";
     },
-    defaults: { equimpent: [], isPermanent: false, offlineTimeout: null },
+    defaults: { equimpent: [], isPermanent: false },
     //getEquipments: function (success, error) {
     //    if (this.equipmentColl != null) {
     //        if (_.isFunction(success))
@@ -37,24 +37,6 @@ app.Models.DeviceClass = Backbone.AuthModel.extend({
     //    }
     //    return this.equipmentColl;
     //},
-    setters: {
-        offlineTimeout: function (value) {
-            if (!value || value == "")
-                return null;
-            return parseInt(value);
-        }
-    },
-    validate: function (attrs) {
-        var integer = /^[0-9]*$/;
-        if (attrs.offlineTimeout == "")
-            attrs.offlineTimeout = null;
-            
-        if (attrs.offlineTimeout) {
-            if (!integer.test(attrs.offlineTimeout)) {
-                return "offline timeout should be integer value";
-            }
-        }
-    },
     setStrData: function (value) {
         try {
             this.set("data", jQuery.parseJSON(value));

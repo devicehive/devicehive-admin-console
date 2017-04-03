@@ -57,8 +57,6 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
         else
             data["data"] = "";
 
-        if (data.offlineTimeout == null)
-            data.offlineTimeout = "";
         return data;
     },
     closeEdition: function () {
@@ -85,7 +83,6 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
         var name = this.$el.find(".new-name").val();
         var version = this.$el.find(".new-version").val();
         var isPermanent = this.$el.find(".isPermanent").is(":checked");
-        var offlineTimeout = this.$el.find(".new-timeout").val();
         var data = this.$el.find(".new-data").val();
         if (!this.model.setStrData(data)) { return; }
 
@@ -93,7 +90,6 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
             name: name,
             version: version,
             isPermanent: isPermanent,
-            offlineTimeout: offlineTimeout
         };
         var that = this;
         this.model.save(options, {
