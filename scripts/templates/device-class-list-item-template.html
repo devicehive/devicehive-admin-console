@@ -1,4 +1,4 @@
-<script type="text/template" id="device-class-list-item-template">
+﻿<script type="text/template" id="device-class-list-item-template">
 <!--
   DeviceHive Admin Console templates
 
@@ -21,20 +21,12 @@
         <span class="value-field"><%= name %></span>
         <span class="new-value"><input type="text" value="<%=name %>" class="new-name"/></span>
     </td>
-    <td class="version text-center">
-        <span class="value-field"><%= version %></span>
-        <span class="new-value"><input type="text" value="<%=version %>" class="new-version"/></span>
-    </td>
     <td class="is-permanent text-center">
     <% if(isPermanent == true){ %>
         <input type="checkbox" class="isPermanent" checked="checked" disabled="disabled"/>
     <%}else{ %>
         <input type="checkbox" class="isPermanent" disabled="disabled"/>    
     <%} %>
-    </td>
-    <td class="text-center">
-        <span class="value-field"><%= offlineTimeout %></span>
-        <span class="new-value"><input type="text" value="<%=offlineTimeout %>" class="new-timeout"/></span>
     </td>
     <td class="lg-only">
         <span class="value-field"><%= data %></span>
