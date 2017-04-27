@@ -4,7 +4,7 @@ DeviceHive Admin Console
 [DeviceHive]: http://devicehive.com "DeviceHive framework"
 [DataArt]: http://dataart.com "DataArt"
 
-This is JavaScript Admin console for manage [DeviceHive] api server.
+This is JavaScript Admin console for managing [DeviceHive] api server.
 For more information please see corresponding documentation.
 
 
@@ -22,49 +22,30 @@ libraries. For solutions involving gateways, there is also gateway middleware
 that allows to interface with devices connected to it. Leave communications
 to [DeviceHive] and focus on actual product and innovation.
 
-Docker Usage
+Usage
 ------------------
-Admin Console is a single page application and can be hosted as a set of static files as a part of any other webiste. 
-But it can be easily hosted on its own by using docker image `devicehive/admin-console`:
-```yml
-admin-console:
-  image: devicehive/admin-console
-  links:
-    - "dh"
-  ports:
-    - "80"
+Admin Console is a single page application and can be hosted as a set of static files as a part of any other website. 
 
-dh:
-  image: devicehive/devicehive
-  links:
-    - "postgres"
-    - "kafka"
-    - "zookeeper"
-  ports:
-    - "8080:8080"
-  environment:
-    DH_POSTGRES_USERNAME: "postgres"
-    DH_POSTGRES_PASSWORD: "mysecretpassword"
-    DH_POSTGRES_DB: "postgres"
+For example, the Admin Console can be served by nginx by adding the following config to 'nginx.conf' (replace 
+$ADMIN_CONSOLE_LOCATION with real values)
 
-
-zookeeper:
-  image: jplock/zookeeper:3.4.6
-  ports:
-    - "2181:2181"
-
-kafka:
-  image: ches/kafka:0.8.2.1
-  links:
-    - "zookeeper"
-  expose:
-    - "9092"
-
-postgres:
-  image: postgres:9.4.4
-  ports:
-    - "5432:5432"
 ```
+server {
+ 
+     listen       8081;
+     access_log   logs/access.log;
+     error_log    logs/error-server.log debug;
+ 
+     location /admin {
+         sendfile on;
+         root $ADMIN_CONSOLE_LOCATION;
+         index index.html;
+     }
+ 
+   }
+```
+
+Then, open `scripts/config.js` and change the restEndpoint to the location of your DeviceHive Server.
 
 
 DeviceHive license
@@ -77,5 +58,5 @@ is included. This also means you don't have to contribute the end product or
 modified sources back to Open Source, but if you feel like sharing, you are
 highly encouraged to do so!
 
-&copy; Copyright 2015-2016 DataArt Apps &copy; All Rights Reserved
+&copy; Copyright 2015-2017 DataArt Apps &copy; All Rights Reserved
 
