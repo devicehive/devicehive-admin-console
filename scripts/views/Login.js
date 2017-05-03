@@ -29,12 +29,8 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
             e.preventDefault();
             showError(''); // clear error message
             var params = {};
-            // params.login = $(e.target).find('[name=login]').val();
-            // params.password = $(e.target).find('[name=password]').val();
-            // params.providerName = 'password';
             params.accessToken = $(e.target).find('[name=accessToken]').val();
             new app.Models.JwtToken(params);
-            // new app.Models.AccessToken(params);
             showError(sessionStorage.authenticationError);
         });
 
