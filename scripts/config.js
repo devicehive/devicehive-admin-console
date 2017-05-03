@@ -17,7 +17,7 @@
 
   */
 app.config = {
-    restEndpoint: 'http://localhost:8080/dh/rest',
-    rootUrl: "/",
+    restEndpoint: '/api/rest',
+    rootUrl: "/admin/",
     pushState: false
 };
