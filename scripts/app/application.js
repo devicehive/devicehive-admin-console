@@ -1,21 +1,21 @@
 /*
-  DeviceHive Admin Console business logic
+ DeviceHive Admin Console business logic
 
-  Copyright (C) 2016 DataArt
+ Copyright (C) 2016 DataArt
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
- 
-      http://www.apache.org/licenses/LICENSE-2.0
- 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-  */
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ */
 //instantiate application object, set Models, Views, Regions, Modules agregators
 var app = new Backbone.Marionette.Application();
 
@@ -76,10 +76,10 @@ _.extend(app, {
         return retIt;
     },
     // checks whether app.User is populated
-    isLoggedIn: function() {
+    isLoggedIn: function () {
         return app.User;// && !app.User.isNew();
     },
-    hasCredentials: function() {
+    hasCredentials: function () {
         // if no credentials currently set
         if (!localStorage.deviceHiveToken) {
             return false;
@@ -88,12 +88,8 @@ _.extend(app, {
             return true;
         }
     },
-    isOAuthResponse: function() {
-        return ('state' === location.hash.substring(1, 6) || 'code' === location.search.substring(1,5)
-            || 'state' === location.search.substring(1,6));
-    },
     // checks whether app.User has access to specified role
-    hasRole: function(roles) {
+    hasRole: function (roles) {
         if (!this.isLoggedIn()) {
             return false;
         }
@@ -129,16 +125,11 @@ app.bind("initialize:before", function (options) {
     }
     // merge default options and app.config, store as app.config
     app.config = _.extend(defaultConfig, options);
-
-    var oauthConfig = new app.Models.OAuthConfig().get('providers');
-    app.config.googleConfig = oauthConfig.filter(function(element) {return 'google' === element.name})[0];
-    app.config.facebookConfig = oauthConfig.filter(function(element) {return 'facebook' === element.name})[0];
-    app.config.githubConfig = oauthConfig.filter(function(element) {return 'github' === element.name})[0];
 });
 
 app.bind("initialize:after", function (options) {
     app.User = new app.Models.User();
-    var params = { root: app.config.rootUrl };
+    var params = {root: app.config.rootUrl};
 
     if (_.isObject(options)) {
         if (_.has(options, "pushState")) {
@@ -150,24 +141,22 @@ app.bind("initialize:after", function (options) {
     if (Backbone.history) {
         Backbone.history.start(params);
 
-        if (location.search){
+        if (location.search) {
             var query = app.f.parseQueryString(location.search);
             console.log('Detected starting query', query);
 
             if (query.deviceHiveToken) {
-                localStorage.deviceHiveToken=query.deviceHiveToken;
-                localStorage.lastActivity=(new Date()).valueOf();
+                localStorage.deviceHiveToken = query.deviceHiveToken;
+                localStorage.lastActivity = (new Date()).valueOf();
                 delete sessionStorage.authenticationError;
                 delete query.deviceHiveToken;
                 // remove ath token from query string by recreating url without that parameter
-                history.replaceState(null, null, '?'+app.f.formatQueryString(query)+location.hash);
+                history.replaceState(null, null, '?' + app.f.formatQueryString(query) + location.hash);
             }
         }
 
 
-        if (this.isOAuthResponse()) {
-            app.trigger('oauth');
-        } else if (this.hasCredentials()) {
+        if (this.hasCredentials()) {
             app.trigger('login');
         } else {
             app.trigger('needAuth');
@@ -175,47 +164,37 @@ app.bind("initialize:after", function (options) {
     }
 });
 
-app.bind('launch', function() {
+app.bind('launch', function () {
     app.Regions.statusArea.show(new app.Views.authHeader({user: app.User}));
 });
 
 app.bind("login", function (options) {
     // fetch current user
-    app.User.fetch({ success: function() {
-        if (app.User.id != null) {
-            app.trigger('launch');
-            var target = Backbone.history.fragment;
-            if (sessionStorage && sessionStorage.requestFragment) {
-                target = sessionStorage.requestFragment;
-                delete sessionStorage.requestFragment;
+    app.User.fetch({
+        success: function () {
+            if (app.User.id != null) {
+                app.trigger('launch');
+                var target = Backbone.history.fragment;
+                if (sessionStorage && sessionStorage.requestFragment) {
+                    target = sessionStorage.requestFragment;
+                    delete sessionStorage.requestFragment;
+                }
+                Backbone.history.navigate(target, {trigger: true});
             }
-            Backbone.history.navigate(target, {trigger: true});
+        },
+        error: function (child, reply, obj) {
+            console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
+            if (reply.status == 401) {
+                app.trigger('needAuth', reply);
+            } else {
+                delete localStorage.deviceHiveToken;
+                Backbone.history.navigate('', {trigger: false});
+                location.reload(true);
+            }
         }
-    },
-    error: function(child, reply, obj) {
-        console.warn('init:after error, reply %o, this %o, obj %o', reply, this, obj);
-        if (reply.status == 401) {
-            app.trigger('needAuth', reply);
-        } else {
-            delete localStorage.deviceHiveToken;
-            Backbone.history.navigate('', { trigger: false });
-            location.reload(true);
-        }
-    }});
+    });
 });
 
-app.bind('needAuth', function(opts) {
-    Backbone.history.navigate('auth', { trigger: true });
-});
-
-app.bind("oauth", function(options) {
-    var queryString = location.search.substring(1);
-    if (!queryString) {
-        queryString = location.hash.substring(1);
-    }
-    var params = app.f.parseQueryString(queryString);
-    params.redirect_uri = app.f.getRedirectUri();
-    params.providerName = app.f.parseQueryString(params.state).provider;
-    delete params.state;
-    new app.Models.AccessToken(params);
+app.bind('needAuth', function (opts) {
+    Backbone.history.navigate('auth', {trigger: true});
 });
