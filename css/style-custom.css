@@ -34,8 +34,7 @@ table {
 }
 /*static text for forms when fields are not shown*/
 .form-static-text  {
-    padding-top: 10px;
-    height: 39px;
+    padding-top: 6px;
     padding-left: 13px;
 }
 .datetime-filter-area {
@@ -76,4 +75,9 @@ table {
     margin: 200px auto 0;
     background: top center url(images/loadera64.gif) no-repeat;
     height: 70px;
+}
+
+.navbar-nav
+{
+	cursor: pointer;	
 }

@@ -52,6 +52,10 @@ Backbone.Marionette.Application.prototype.f = {
                         datetimeString.substring(17, 19),
                         datetimeString.substring(20, 23)));
     },
+    parseISOLocal: function (s) {
+  	  var b = s.split(/\D/);
+  	  return new Date(b[0], b[1]-1, b[2], b[3], b[4], b[5]);
+    },
     toISOString: function (date) {
         return date.format(dateFormat.masks.isoUtcDateTime);
     },

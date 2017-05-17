@@ -180,9 +180,9 @@ app.Views.Commands = Backbone.Marionette.CompositeView.extend({
         var end = this.timeFiltersModel.get("endDateUTCString");
 
         if (!_.isEmpty(start))
-            params["start"] = start;
+            params["start"] = app.f.parseISOLocal(start).toUTCString();
         if (!_.isEmpty(end))
-            params["end"] = end;
+            params["end"] = app.f.parseISOLocal(end).toUTCString();
         this.StartLoading();
         this.collection.fetch({
             data: params,
