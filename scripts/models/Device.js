@@ -38,7 +38,7 @@ app.Models.DevicesCollection = Backbone.AuthCollection.extend({
     model: app.Models.Device,
     comparator: function (device) {
         var name = device.get("name");
-        if (device)
+        if (device && name)
             return name.toLowerCase();
         else
             return 1000000;

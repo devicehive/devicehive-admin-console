@@ -28,7 +28,9 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         "click .cancel": "cancelAction"
     },
     initialize: function (options) {
-        this.bindTo(this.model,"change", function () { this.render(); }, this);
+        this.bindTo(this.model,"change", function () {
+            this.render();
+        }, this);
 
         this.networksList = options.networks;
         this.classesList = options.classes;
@@ -37,7 +39,15 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     template: "device-list-item-template",
     tagName: "tr",
     onRender: function () {
-        this.showValuesAreas();
+        if (app.hasRole(app.Enums.UserRole.Administrator)) {
+            if (this.model.isNew())
+                this.showEditableAreas();
+            else
+                this.showValuesAreas();
+        }
+        else {
+            this.showValuesAreas(false);
+        }
     },
     deleteDevice: function () {
         if (confirm("Do you really want to delete this device? All collected information will be lost."))
@@ -47,26 +57,33 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             });
     },
     saveDevice: function () {
+        var name = this.$el.find(".new-device-name").val();
         var data = this.$el.find(".new-device-data").val();
+        var netwId = this.$el.find(".new-device-network :selected").val();
+        var status = this.$el.find(".new-device-status").val();
+        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        var classId = this.$el.find(".new-device-class :selected").val();
+
         if (!this.model.setStrData(data)) { return; }
 
-        var netwId = this.$el.find(".new-device-network :selected").val();
-        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
-
         var changes = {
-            name: this.$el.find(".new-device-name").val(),
-            status: this.$el.find(".new-device-status").val(),
+            name: name,
+            status: status,
             network: network
         };
 
         if (this.classEditable) {
-            var classId = this.$el.find(".new-device-class :selected").val();
             changes.deviceClass =
                 this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
         }
 
         var that = this;
+        if (this.model.isNew()) {
+            //Generate random device ID
+            this.model.set({id: this.makeid()});
+        }
         this.model.save(changes, {
+            type: 'PUT',
             success: function () {
                 that.render();
             }, error: function (model, response) {
@@ -76,8 +93,21 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         });
 
     },
+    makeid: function() {
+        //Generating random ID for new device
+        var newId = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for( var i=0; i < 36; i++ ) {
+            newId += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return newId;
+    },
     cancelAction: function () {
-        this.showValuesAreas();
+        if (this.model.isNew())
+            this.model.destroy();
+        else
+            this.render();
     },
     editDevice: function () {
         this.showEditableAreas();
@@ -101,6 +131,9 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         if (base.network == null)
             base["network"] = { id: 0, name: "---No network---" };
 
+        if (base.deviceClass == null)
+            base["deviceClass"] = { id: 0, name: "---No Device Class---" };
+
         base.networks = [{ id: 0, name: "---No network---"}];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
@@ -112,6 +145,9 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
 
 //collection is an app.Models.NetworksCollection
 app.Views.Devices = Backbone.Marionette.CompositeView.extend({
+    events: {
+        "click .add": "addDevice"
+    },
     itemView: app.Views.DeviceListItem,
     itemViewOptions: function () {
         return {
@@ -134,6 +170,9 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
         this.networks = options.networks;
         this.classes = options.classes;
         this.classEditable = options.classEditable;
+    },
+    addDevice: function() {
+        this.collection.add(new app.Models.Device());
     }
 });
 

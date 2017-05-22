@@ -18,6 +18,6 @@
   */
 app.config = {
     restEndpoint: '/api/rest',
-    rootUrl: "/admin/",
+    rootUrl: "/",
     pushState: false
 };
