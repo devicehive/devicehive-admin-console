@@ -46,7 +46,10 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
                 this.showValuesAreas();
         }
         else {
-            this.showValuesAreas(false);
+            if (this.model.isNew())
+                this.showEditableAreas();
+            else
+                this.showValuesAreas();
         }
     },
     deleteDevice: function () {
@@ -122,6 +125,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
+
         //add backslashes to &quot; entity created during escaping 
         if (_.has(base, "data") && !_.isNull(base.data))
             base["data"] = JSON.stringify(base.data).replace(/&quot;/g,"\\&quot;");
@@ -129,7 +133,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             base["data"] = "";
 
         if (base.network == null)
-            base["network"] = { id: 0, name: "---No network---" };
+            base["network"] = { id: 0, name: "---No network---"};
 
         if (base.deviceClass == null)
             base["deviceClass"] = { id: 0, name: "---No Device Class---" };
@@ -139,6 +143,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
 
         base.classEditable = this.classEditable;
         base.classes = base.classEditable ? this.classesList.toJSON({ escape: true }) : [];
+
         return base;
     }
 });
@@ -167,13 +172,20 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     template: "devices-template",
     itemViewContainer: "tbody",
     initialize: function (options) {
+        this.userData = this.parseJwt(localStorage.deviceHiveToken);
         this.networks = options.networks;
         this.classes = options.classes;
         this.classEditable = options.classEditable;
     },
     addDevice: function() {
-        console.log(this.networks);
         this.collection.add(new app.Models.Device());
-    }
+    },
+    parseJwt: function (token) {
+        if(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse(window.atob(base64));
+        }
+    },
 });
 

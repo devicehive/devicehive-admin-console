@@ -14,8 +14,7 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         this.data = {};
         this.data.accessToken = "";
         this.data.refreshToken = "";
-        //Set default JWT Token live time to 7 day
-        this.expirationTokenDate = (new Date()).addDays(+7).toISOString();
+        this.expirationTokenDate =  ""
 
 
         if (!_.isUndefined(options) && _.has(options, "timeFilters"))
