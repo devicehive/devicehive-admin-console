@@ -16,6 +16,7 @@
   limitations under the License.
 
   */
+
 app.config = {
     restEndpoint: '/api/rest',
     rootUrl: "/",

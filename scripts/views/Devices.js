@@ -159,7 +159,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     emptyView: Backbone.Marionette.ItemView.extend(
         {
             render: function () {
-                this.$el.html("<td colspan='5'>there are no devices has been registered yet.</td>");
+                this.$el.html("<td colspan='5'>No devices has been registered yet.</td>");
                 return this;
             },
             tagName: "tr"
@@ -172,6 +172,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
         this.classEditable = options.classEditable;
     },
     addDevice: function() {
+        console.log(this.networks);
         this.collection.add(new app.Models.Device());
     }
 });

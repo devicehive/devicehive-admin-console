@@ -170,6 +170,13 @@ app.Views.Commands = Backbone.Marionette.CompositeView.extend({
 
         collectionView.$_itemViewContainer.prepend(itemView.el);
     },
+
+    closePolling: function () {
+        if (!_.isEmpty(this.jqXhr)) {
+            this.deleted = true;
+            this.jqXhr.abort("user initiated abort");
+        }
+    },
     refreshCollection: function () {
         this.collection.closePolling();
 

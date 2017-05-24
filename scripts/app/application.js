@@ -81,6 +81,7 @@ _.extend(app, {
     },
     hasCredentials: function () {
         // if no credentials currently set
+        // if no credentials currently set
         if (!localStorage.deviceHiveToken) {
             return false;
         } else {
