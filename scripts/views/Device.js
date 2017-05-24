@@ -92,6 +92,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         this.model.save(changes, {
             success: function () {
                 that.render();
+                app.DataCollections["DevicesCollection"] = null;
             }, error: function (model, response) {
                 that.render();
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
