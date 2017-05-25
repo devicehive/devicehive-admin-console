@@ -20,5 +20,10 @@
 app.config = {
     restEndpoint: '/api/rest',
     rootUrl: "/",
-    pushState: false
+    pushState: false,
+    //Session Life Time in minutes
+    sessionLifeTime: 30,
+    //Session Idle Time in minutes
+    sessionIdleTime: 30,
+    sessionExpiredRedirectUrl: '/#auth'
 };

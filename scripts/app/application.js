@@ -77,7 +77,31 @@ _.extend(app, {
     },
     // checks whether app.User is populated
     isLoggedIn: function () {
+        this.checkSession();
         return app.User;// && !app.User.isNew();
+    },
+    checkSession: function() {
+        if (localStorage.deviceHiveToken) {
+            var currentJwtToken = this.parseJwt(localStorage.deviceHiveToken);
+            var expirationTokenTime = currentJwtToken.payload.expiration;
+            var currentTime = (new Date()).valueOf();
+
+            var msDateDiff = expirationTokenTime - currentTime;
+            var mDateDiff = Math.floor(msDateDiff / 1000 / 60);
+
+            if (mDateDiff < (Math.floor(3 / 4 * app.config.sessionLifeTime))) {
+                console.log("Tokens were refreshed");
+                var JWTTokenModel = new app.Models.JwtToken();
+                JWTTokenModel.refreshJwtToken();
+            }
+        }
+    },
+    parseJwt: function (token) {
+        if(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse(window.atob(base64));
+        }
     },
     hasCredentials: function () {
         // if no credentials currently set

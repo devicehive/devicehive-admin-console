@@ -172,20 +172,13 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     template: "devices-template",
     itemViewContainer: "tbody",
     initialize: function (options) {
-        this.userData = this.parseJwt(localStorage.deviceHiveToken);
+        this.userData = app.parseJwt(localStorage.deviceHiveToken);
         this.networks = options.networks;
         this.classes = options.classes;
         this.classEditable = options.classEditable;
     },
     addDevice: function() {
         this.collection.add(new app.Models.Device());
-    },
-    parseJwt: function (token) {
-        if(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace('-', '+').replace('_', '/');
-            return JSON.parse(window.atob(base64));
-        }
-    },
+    }
 });
 

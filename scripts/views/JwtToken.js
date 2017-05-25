@@ -10,12 +10,11 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
     },
     template: "jwt-token-template",
     initialize: function (options) {
-        this.userData = this.parseJwt(localStorage.deviceHiveToken);
+        this.userData = app.parseJwt(localStorage.deviceHiveToken);
         this.data = {};
         this.data.accessToken = "";
         this.data.refreshToken = "";
-        this.expirationTokenDate =  ""
-
+        this.expirationTokenDate =  "";
 
         if (!_.isUndefined(options) && _.has(options, "timeFilters"))
             this.timeFiltersModel = options.timeFilters;
@@ -29,13 +28,6 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         return {
             'accessToken': this.data.accessToken,
             'refreshToken': this.data.refreshToken,
-        }
-    },
-    parseJwt: function (token) {
-        if(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace('-', '+').replace('_', '/');
-            return JSON.parse(window.atob(base64));
         }
     },
     onRender: function () {
