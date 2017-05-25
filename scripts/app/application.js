@@ -89,7 +89,7 @@ _.extend(app, {
             var msDateDiff = expirationTokenTime - currentTime;
             var mDateDiff = Math.floor(msDateDiff / 1000 / 60);
 
-            if (mDateDiff < (Math.floor(3 / 4 * app.config.sessionLifeTime))) {
+            if (mDateDiff < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime))) {
                 console.log("Tokens were refreshed");
                 var JWTTokenModel = new app.Models.JwtToken();
                 JWTTokenModel.refreshJwtToken();
