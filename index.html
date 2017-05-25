@@ -33,7 +33,7 @@
 
 
     <!-- libs -->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/0.10.0/backbone.marionette.min.js"></script>
@@ -41,7 +41,7 @@
     <!-- ui -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- backbone extensions -->
     <script type="text/javascript" src="scripts/libs/backbone.extensions.js"></script>
@@ -97,6 +97,8 @@
     <script type="text/javascript" src="scripts/views/Commands.js"></script>
     <script type="text/javascript" src="scripts/views/Notifications.js"></script>
     <script type="text/javascript" src="scripts/views/TimeFilters.js"></script>
+    <script type="text/javascript" src="scripts/views/ExpirationTimeSelector.js"></script>
+    <script type="text/javascript" src="scripts/views/JwtToken.js"></script>
 
     <!-- modules -->
     <script type="text/javascript" src="scripts/modules/notifications.js"></script>
@@ -106,6 +108,7 @@
     <script type="text/javascript" src="scripts/modules/devices.js"></script>
     <script type="text/javascript" src="scripts/modules/deviceClasses.js"></script>
     <script type="text/javascript" src="scripts/modules/login.js"></script>
+    <script type="text/javascript" src="scripts/modules/jwtToken.js"></script>
 
     <!-- config -->
     <script type="text/javascript" src="scripts/config.js"></script>
@@ -114,6 +117,7 @@
 <body>
 
 <script type="text/javascript">
+    var idleTime = app.config.sessionLifeTime;
     $(document).ready(function() {
         app.addRegions({
                 menuArea: "#menu-area",
@@ -124,9 +128,30 @@
 
         // see config in scripts/config.js
         app.start(app.config);
+
+        //Increment the idle time counter every minute.
+        setInterval(timerDecrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).click(function () {
+            idleTime = app.config.sessionLifeTime;
+        });
     });
 
+    function timerDecrement() {
+        idleTime = idleTime - 1;
+        if (idleTime < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime))) {
+            idleTime = app.config.sessionLifeTime;
+            alert("Your session has expired");
+            var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
+            //cleaning tokens in local storage
+            localStorage.deviceHiveToken = '';
+            localStorage.deviceHiveRefreshToken = '';
+            localStorage.lastActivity = (new Date()).valueOf();
 
+            location.href = redirectUrl;
+        }
+    }
 </script>
 
 <div id="app-wrapper" class="container">

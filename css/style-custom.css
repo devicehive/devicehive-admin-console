@@ -77,7 +77,16 @@ table {
     height: 70px;
 }
 
-.navbar-nav
-{
-    cursor: pointer;	
+.navbar-nav {
+    cursor: pointer;
+}
+.token-holder {
+    word-wrap: break-word;
+}
+.classWithPad {
+    margin:10px;
+    padding:10px;
+}
+.grey {
+    background-color: #f9f9f9;
 }

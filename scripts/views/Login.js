@@ -18,28 +18,34 @@
   */
 app.Views.Login = Backbone.Marionette.ItemView.extend({
     template: 'user-login',
-    onRender: function() {
+    events: {
+        "submit form": "loginFormSubmit",
+    },
+
+    loginFormSubmit: function(e) {
+
+        e.preventDefault();
+        this.showError(''); // clear error message
+        var params = {};
+        params.login = $(e.target).find('[name=login]').val();
+        params.password= $(e.target).find('[name=password]').val();
+        new app.Models.JwtToken(params);
+        this.showError(sessionStorage.authenticationError);
+    },
+
+    showError: function(message) {
         var context = this;
 
-        if (sessionStorage.authenticationError) {
-            showError(sessionStorage.authenticationError);
+        context.$el.find('form .error').html(message);
+        if (message) {
+            context.$el.find('form input[type=accessToken]').val('').focus();
         }
+        context.$el.find('form .error').toggleClass('ui-helper-hidden', !message);
+    },
 
-        this.$el.find('.credentials-form').on('submit', function(e) {
-            e.preventDefault();
-            showError(''); // clear error message
-            var params = {};
-            params.accessToken = $(e.target).find('[name=accessToken]').val();
-            new app.Models.JwtToken(params);
-            showError(sessionStorage.authenticationError);
-        });
-
-        function showError(message) {
-            context.$el.find('form .error').html(message);
-            if (message) {
-                context.$el.find('form input[type=accessToken]').val('').focus();
-            }
-            context.$el.find('form .error').toggleClass('ui-helper-hidden', !message);
+    onRender: function() {
+        if (sessionStorage.authenticationError) {
+            this.showError(sessionStorage.authenticationError);
         }
     }
 });

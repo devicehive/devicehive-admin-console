@@ -68,6 +68,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         this.$el.find(".device-value").show();
         this.$el.find(".edit-device").show();
     },
+
     saveDevice: function () {
         var data = this.$el.find(".new-value.data").val();
         if (!this.model.setStrData(data)) { return; }

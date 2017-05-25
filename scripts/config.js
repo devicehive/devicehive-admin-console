@@ -16,8 +16,14 @@
   limitations under the License.
 
   */
+
 app.config = {
     restEndpoint: '/api/rest',
-    rootUrl: "/admin/",
-    pushState: false
+    rootUrl: "/",
+    pushState: false,
+    //Session Life Time in minutes
+    sessionLifeTime: 30,
+    //Session Life Time ratio
+    sessionLifeTimeRatio: 1/4,
+    sessionExpiredRedirectUrl: '/#auth'
 };
