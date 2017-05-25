@@ -25,7 +25,5 @@ app.config = {
     sessionLifeTime: 30,
     //Session Life Time ratio
     sessionLifeTimeRatio: 1/4,
-    //Session Idle Time ratio
-    sessionIdleTimeRatio: 3/4,
     sessionExpiredRedirectUrl: '/#auth'
 };

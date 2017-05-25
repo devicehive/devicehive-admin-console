@@ -117,7 +117,7 @@
 <body>
 
 <script type="text/javascript">
-    var idleTime = 0;
+    var idleTime = app.config.sessionLifeTime;
     $(document).ready(function() {
         app.addRegions({
                 menuArea: "#menu-area",
@@ -130,17 +130,18 @@
         app.start(app.config);
 
         //Increment the idle time counter every minute.
-        setInterval(timerIncrement, 60000); // 1 minute
+        setInterval(timerDecrement, 60000); // 1 minute
 
         //Zero the idle timer on mouse movement.
         $(this).click(function () {
-            idleTime = 0;
+            idleTime = app.config.sessionLifeTime;
         });
     });
 
-    function timerIncrement() {
-        idleTime = idleTime + 1;
-        if (idleTime > (app.config.sessionIdleTimeRatio * app.config.sessionLifeTime)) {
+    function timerDecrement() {
+        idleTime = idleTime - 1;
+        if (idleTime < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime))) {
+            idleTime = app.config.sessionLifeTime;
             alert("Your session has expired");
             var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
             //cleaning tokens in local storage
