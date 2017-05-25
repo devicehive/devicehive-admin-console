@@ -54,6 +54,7 @@ app.Models.JwtToken = Backbone.Model.extend({
                 crossDomain: true,
                 cache: false,
                 data: JSON.stringify(userPayload),
+                headers: Backbone.AuthModel.prototype.authHeader(),
                 success: function (tokens) {
                     callback(tokens);
                     return;
