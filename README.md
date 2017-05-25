@@ -27,7 +27,7 @@ Usage
 Admin Console is a single page application and can be hosted as a set of static files as a part of any other website. 
 
 For example, the Admin Console can be served by nginx by adding the following config to 'nginx.conf' (replace 
-$ADMIN_CONSOLE_LOCATION with real values)
+$ADMIN_CONSOLE_LOCATION and $JAVA_SERVER_API_URL with real values)
 
 ```
 server {
@@ -41,8 +41,18 @@ server {
          root $ADMIN_CONSOLE_LOCATION;
          index index.html;
      }
- 
-   }
+
+     location /api/ {
+         proxy_redirect off;
+         proxy_pass $JAVA_SERVER_API_URL;
+         proxy_set_header Host $host;
+         proxy_set_header X-Real-IP $remote_addr;
+         proxy_http_version 1.1;
+         proxy_set_header Upgrade $http_upgrade;
+         proxy_set_header Connection "upgrade";
+     }
+}
+
 ```
 
 Then, open `scripts/config.js` and change the restEndpoint to the location of your DeviceHive Server.
