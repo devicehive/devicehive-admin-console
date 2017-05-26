@@ -140,7 +140,7 @@
 
     function timerDecrement() {
         idleTime = idleTime - 1;
-        if (idleTime < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime))) {
+        if (idleTime < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime)) && localStorage.deviceHiveToken) {
             idleTime = app.config.sessionLifeTime;
             alert("Your session has expired");
             var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
@@ -159,6 +159,9 @@
     <div id="status-area"></div>
     <div id="top-work-area"></div>
     <div id="bottom-work-area"></div>
+    <div id="error-empty-page">
+        <h1>Oops! Something went wrong on server!</h1>
+    </div>
 </div>
 </body>
 </html>

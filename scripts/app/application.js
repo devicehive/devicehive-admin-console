@@ -153,6 +153,7 @@ app.bind("initialize:before", function (options) {
 });
 
 app.bind("initialize:after", function (options) {
+    $("#error-empty-page").hide();
     app.User = new app.Models.User();
     var params = {root: app.config.rootUrl};
 

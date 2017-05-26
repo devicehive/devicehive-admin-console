@@ -84,7 +84,6 @@ app.Views.DeviceClassesListItem = Backbone.Marionette.ItemView.extend({
         var version = this.$el.find(".new-version").val();
         var isPermanent = this.$el.find(".isPermanent").is(":checked");
         var data = this.$el.find(".new-data").val();
-        if (!this.model.setStrData(data)) { return; }
 
         var options = {
             name: name,

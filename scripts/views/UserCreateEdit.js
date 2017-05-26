@@ -48,7 +48,7 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var role = parseInt(this.$el.find("#role :selected").val());
         var status = parseInt(this.$el.find("#status :selected").val());
         var data = this.$el.find("#data").val();
-        if (!this.model.setStrData(data)) { return; }
+
         var googleLogin = this.$el.find("#googleLogin").val();
         if (_.isEmpty(googleLogin)) {
             googleLogin = null;
@@ -80,7 +80,10 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
                 return;
             }
             options.password = pass;
-        };
+        } else  {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+            return;
+        }
 
         var that = this;
         this.model.save(options, { error: this.onSaveFail, success: function (model, response) { that.onSaveSuccess(model, response); }, wait:true });
