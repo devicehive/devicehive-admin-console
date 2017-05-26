@@ -19,7 +19,7 @@
 
 app.config = {
     restEndpoint: '/api/rest',
-    rootUrl: "/",
+    rootUrl: "/admin/",
     pushState: false,
     //Session Life Time in minutes
     sessionLifeTime: 30,
