@@ -44,8 +44,6 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
     },
 
     onRender: function() {
-        if (sessionStorage.authenticationError) {
-            this.showError(sessionStorage.authenticationError);
-        }
+        sessionStorage.authenticationError = "";
     }
 });

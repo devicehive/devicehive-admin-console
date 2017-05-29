@@ -21,7 +21,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
         this.getJwtTokenWithCredentials(params);
     },
     refreshJwtToken: function() {
-        var getTokenUrl = app.config.restEndpoint + '/token';
+        var getTokenUrl = app.config.restEndpoint + '/token/refresh';
         var refreshToken = (localStorage.deviceHiveRefreshToken) ? localStorage.deviceHiveRefreshToken : null;
 
         if(refreshToken) {
@@ -30,7 +30,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
             };
 
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: getTokenUrl,
                 async: false,
                 dataType: "json",
@@ -41,9 +41,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
                 headers: Backbone.AuthModel.prototype.authHeader(),
                 success: function (resp) {
                     var accessToken = (resp.accessToken) ? resp.accessToken : null;
-                    var refreshToken = (resp.refreshToken) ? resp.refreshToken : null;
                     localStorage.deviceHiveToken = accessToken;
-                    localStorage.deviceHiveRefreshToken = refreshToken;
 
                     try {
                         var parsedJwt = app.parseJwt(accessToken);
