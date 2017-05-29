@@ -20,16 +20,11 @@ app.module("Modules.Devices", function (users, app) {
 
     var devicesCollection;
     var networksCollection;
-    var classesCollection;
 
     var devicesView;
     var detailDeviceView;
     var panelsView;
     var selectedDevice;
-
-    var deviceClassEditable = function() {
-        return app.hasRole(app.Enums.UserRole.Administrator);
-    };
 
     var showDevices = function () {
         var retIt = $.Deferred();
@@ -45,9 +40,7 @@ app.module("Modules.Devices", function (users, app) {
                     if (devicesCollection != null) {
                         devicesView = new app.Views.Devices({
                             collection: devicesCollection,
-                            networks: networksCollection,
-                            classes: classesCollection,
-                            classEditable: deviceClassEditable()
+                            networks: networksCollection
                         });
 
                         devicesView.on("itemview:showDetail", function(itemView) {
@@ -80,9 +73,7 @@ app.module("Modules.Devices", function (users, app) {
                     success: function () {
                         detailDeviceView = new app.Views.Device({
                             model: selectedDevice,
-                            networks: networksCollection,
-                            classes: classesCollection,
-                            classEditable: deviceClassEditable()
+                            networks: networksCollection
                         });
 
                         app.Regions.topWorkArea.show(detailDeviceView);
@@ -109,18 +100,8 @@ app.module("Modules.Devices", function (users, app) {
     var initLists = function (success) {
         app.getCollection("NetworksCollection").done(function (res) {
             networksCollection = res;
-            if (deviceClassEditable()) {
-                app.getCollection("DeviceClassesCollection").done(function (clres) {
-                    classesCollection = clres;
-                    if (_.isFunction(success))
-                        success();
-                });
-            }
-            else {
-                classesCollection = [];
-                if (_.isFunction(success))
-                    success();
-            }
+            if (_.isFunction(success))
+                success();
         });
     };
 

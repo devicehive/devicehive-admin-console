@@ -53,25 +53,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">Device class:</label>
-                    <div class="col-lg-9">
-                        <div class="device-value form-static-text"><%= deviceClass.name%></div>
-
-                        <% if (classEditable) { %>
-                        <select class="new-value dclass form-control">
-                            <% _.each(classes,function(cls){
-                                if(cls.id == deviceClass.id){ %>
-                                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> </option>
-                                <%}else{ %>
-                                    <option value="<%= cls.id %>"> <%= cls.name %> </option>
-                            <%}}); %>
-                        </select>
-                        <% } else { %>
-                        <%= deviceClass.name %>
-                        <% } %>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-lg-3 control-label">Data:</label>
                     <div class="col-lg-9">
                         <div class="device-value form-static-text"><%= data%></div>
