@@ -18,6 +18,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /opt/devicehive/
 
+EXPOSE 8080
+
 ENTRYPOINT ["/bin/sh"]
 
 CMD ["./admin-start.sh"]
