@@ -43,7 +43,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             base["data"] = "";
 
         if (base.network == null)
-            base["network"] = { id: 0, name: "---No network---" };
+             base["network"] = { id: 0, name: "---No network---" };
 
         base.networks = [{ id: 0, name: "---No network---"}];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
@@ -71,7 +71,6 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
 
     saveDevice: function () {
         var data = this.$el.find(".new-value.data").val();
-        if (!this.model.setStrData(data)) { return; }
 
         var netwId = this.$el.find(".new-value.network").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
@@ -82,12 +81,6 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             network: network,
             isBlocked: this.$el.find('select.new-value[name=isBlocked]').val() == "1" ? true : false
         };
-
-        if (this.classEditable) {
-            var classId = this.$el.find(".new-value.dclass").val();
-            changes.deviceClass =
-                this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
-        }
 
         var that = this;
         this.model.save(changes, {
@@ -100,7 +93,6 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             },
             wait: true
         });
-
     }
 });
 

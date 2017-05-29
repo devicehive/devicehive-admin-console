@@ -25,6 +25,7 @@
 
     <td class="network">
         <span class="current-value"><%= network.name %></span>
+        <% if (networks.length > 0) {%>
         <span class="new-value">
             <select class="new-device-network">
                 <% _.each(networks,function(net){
@@ -35,24 +36,9 @@
                 <%}}); %>
             </select>
         </span>
-    </td>
-
-    <td class="device-class">
-        <span class="current-value"><%= deviceClass.name %></span>
-        <span class="new-value">
-        <% if (classEditable) { %>
-            <select class="new-device-class">
-                <% _.each(classes,function(cls){
-                    if(cls.id == deviceClass.id){ %>
-                        <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> </option>
-                    <% }else{ %>
-                        <option value="<%= cls.id %>"> <%= cls.name %> </option>
-                <%}}); %>
-            </select>
-        <% } else { %>
-            <%= deviceClass.name %>
-        <% } %>
-        </span>
+        <%} else {%>
+        <span class="new-value"><%= network.name %></span>
+        <%}%>
     </td>
 
     <td class="data lg-only">

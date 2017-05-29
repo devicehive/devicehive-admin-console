@@ -65,20 +65,12 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var netwId = this.$el.find(".new-device-network :selected").val();
         var status = this.$el.find(".new-device-status").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
-        var classId = this.$el.find(".new-device-class :selected").val();
-
-        if (!this.model.setStrData(data)) { return; }
 
         var changes = {
             name: name,
             status: status,
             network: network
         };
-
-        if (this.classEditable) {
-            changes.deviceClass =
-                this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
-        }
 
         var that = this;
         if (this.model.isNew()) {
@@ -132,13 +124,13 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         else
             base["data"] = "";
 
-        if (base.network == null)
+        if (base.network == null) {
             base["network"] = { id: 0, name: "---No network---"};
+        }
 
-        if (base.deviceClass == null)
-            base["deviceClass"] = { id: 0, name: "---No Device Class---" };
 
-        base.networks = [{ id: 0, name: "---No network---"}];
+
+        base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
         base.classEditable = this.classEditable;
