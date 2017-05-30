@@ -27,3 +27,33 @@ app.config = {
     sessionLifeTimeRatio: 1/4,
     sessionExpiredRedirectUrl: '/#auth'
 };
+
+app.hints = {
+    jwtTokenHints: [
+        {'next .create-jwt-token': 'Click to create new JWT Token'},
+        {'click .show-datetime-selector': 'Click to set expiration date for new JWT Token'}
+    ],
+    usersHints: [
+        {'click .add-new-user': 'Click to create new User'},
+        {'next #login': 'Enter User name'},
+        {'next #role': 'Select User role'},
+        {'next #status': 'Select User status'},
+        {'next #password': 'Enter User password'},
+        {'next #password-confirmation': 'Confirm User password'},
+        {'next #data': 'Enter User data'},
+        {'next .btn-success': 'Create new User'}
+    ],
+    devicesHints: [
+        {'click .add-device': 'Click to create new Device'},
+        {'next .new-device-name' : 'Enter Device Name'},
+        {'next .new-device-network' : 'Select Device Network'},
+        {'next .new-device-data' : 'Enter Device Data'},
+        {'click .save-device' : 'Click Save'}
+    ],
+    networksHints: [
+        {'next .networks-table': 'Default Network was created'},
+        {'next a[data-path="devices"]': 'YOu can create new device and assign it to your network via Devices page'},
+        {'next .add-new-network': 'Click to create your own new Network'}
+    ]
+
+};
