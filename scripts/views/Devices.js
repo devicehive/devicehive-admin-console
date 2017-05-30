@@ -65,7 +65,6 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var netwId = this.$el.find(".new-device-network :selected").val();
         var status = this.$el.find(".new-device-status").val();
         if (!netwId  || netwId == 0) {
-            alert("You should have at least one network available to create new device");
             return;
         } else {
             var network = this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
@@ -176,6 +175,12 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     },
     addDevice: function() {
         this.collection.add(new app.Models.Device());
+        if (this.networks.length > 0) {
+            this.$el.find(".save").prop('disabled', false);
+        } else {
+            this.$el.find(".save").addClass("disabled").attr("rel", "tooltip");
+            this.$el.find('[data-toggle="tooltip"]').tooltip();
+        }
     }
 });
 
