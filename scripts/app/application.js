@@ -96,6 +96,9 @@ _.extend(app, {
             }
         }
     },
+    disableNewUserHints: function() {
+        localStorage.introReviewed = true;
+    },
     parseJwt: function (token) {
         if(token) {
             var base64Url = token.split('.')[1];
@@ -214,6 +217,7 @@ app.bind("login", function (options) {
                 app.trigger('needAuth', reply);
             } else {
                 delete localStorage.deviceHiveToken;
+                delete localStorage.introReviewed;
                 Backbone.history.navigate('', {trigger: false});
                 location.reload(true);
             }

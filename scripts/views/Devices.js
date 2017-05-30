@@ -174,12 +174,30 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
         this.classEditable = options.classEditable;
     },
     addDevice: function() {
-        this.collection.add(new app.Models.Device());
-        if (this.networks.length > 0) {
-            this.$el.find(".save").prop('disabled', false);
+        if(this.networks.length > 0) {
+            this.collection.add(new app.Models.Device());
         } else {
-            this.$el.find(".save").addClass("disabled").attr("rel", "tooltip");
+            return;
+        }
+    },
+    onRender: function() {
+        if(this.networks.length > 0) {
+            this.$el.find(".add-device").prop('disabled', false);
+        } else {
+            this.$el.find(".add-device").addClass("disabled").attr("rel", "tooltip");
             this.$el.find('[data-toggle="tooltip"]').tooltip();
+        }
+
+        //New User Devices page hints
+        if ((!(localStorage.introReviewed) || (localStorage.introReviewed === 'false')) && !(this.collection.length > 0)) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_devices_script_steps = app.hints.devicesHints;
+            enjoyhint_instance.set(enjoyhint_devices_script_steps);
+            enjoyhint_instance.run();
+
+            $(".enjoyhint_skip_btn").on("click", function() {
+                app.disableNewUserHints();
+            });
         }
     }
 });

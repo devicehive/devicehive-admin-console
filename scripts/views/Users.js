@@ -71,6 +71,19 @@ app.Views.Users = Backbone.Marionette.CompositeView.extend({
     beforeRender: function () {
         this.$el.addClass("users");
     },
+    onRender: function () {
+        //New User Users page hints
+        if (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false')) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_devices_script_steps = app.hints.usersHints;
+            enjoyhint_instance.set(enjoyhint_devices_script_steps);
+            enjoyhint_instance.run();
+
+            $(".enjoyhint_skip_btn").on("click", function() {
+                app.disableNewUserHints();
+            });
+        }
+    },
     itemView: app.Views.UserListItem,
     itemViewContainer: "tbody",
     template: "user-list-template"
