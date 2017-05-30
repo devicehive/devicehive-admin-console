@@ -124,6 +124,17 @@ app.Views.Networks = Backbone.Marionette.CompositeView.extend({
     },
     onRender: function () {
         this.$el.find(".add").toggle(app.hasRole(app.Enums.UserRole.Administrator));
+
+        //New User Networks page hints
+        if (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false')) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_devices_script_steps = app.hints.networksHints;
+            enjoyhint_instance.set(enjoyhint_devices_script_steps);
+            enjoyhint_instance.run();
+            $(".enjoyhint_skip_btn").on("click", function() {
+                app.disableNewUserHints();
+            });
+        }
     }
 });
 

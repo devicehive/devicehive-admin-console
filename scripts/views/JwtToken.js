@@ -20,7 +20,7 @@
 app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
     events: {
         "click .show-datetime-selector": "showDateTimeFilter",
-        "submit form": "getTokens",
+        "submit form": "getTokens"
     },
     template: "jwt-token-template",
     initialize: function (options) {
@@ -37,7 +37,6 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
 
         this.bindTo(this, "composite:collection:rendered", this.StopLoading, this);
     },
-
     serializeData: function(){
         return {
             'accessToken': this.data.accessToken,
@@ -57,6 +56,18 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         this.timeFiltersView.on("closeFilters", function () {
             that.timeFiltersView.$el.hide();
         });
+
+        //New User JwtToken hints
+        if (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false')) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_script_steps = app.hints.jwtTokenHints;
+            enjoyhint_instance.set(enjoyhint_script_steps);
+            enjoyhint_instance.run();
+
+            $(".enjoyhint_skip_btn").on("click", function() {
+                app.disableNewUserHints();
+            });
+        }
     },
 
     applyDateTimeFilter: function() {
