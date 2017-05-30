@@ -64,7 +64,11 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find(".new-device-data").val();
         var netwId = this.$el.find(".new-device-network :selected").val();
         var status = this.$el.find(".new-device-status").val();
-        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        if (!netwId  || netwId == 0) {
+            return;
+        } else {
+            var network = this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        }
 
         var changes = {
             name: name,
@@ -171,6 +175,12 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     },
     addDevice: function() {
         this.collection.add(new app.Models.Device());
+        if (this.networks.length > 0) {
+            this.$el.find(".save").prop('disabled', false);
+        } else {
+            this.$el.find(".save").addClass("disabled").attr("rel", "tooltip");
+            this.$el.find('[data-toggle="tooltip"]').tooltip();
+        }
     }
 });
 
