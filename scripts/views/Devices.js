@@ -64,7 +64,12 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find(".new-device-data").val();
         var netwId = this.$el.find(".new-device-network :selected").val();
         var status = this.$el.find(".new-device-status").val();
-        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        if (!netwId  || netwId == 0) {
+            alert("You should have at least one network available to create new device");
+            return;
+        } else {
+            var network = this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        }
 
         var changes = {
             name: name,
