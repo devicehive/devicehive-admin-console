@@ -34,7 +34,11 @@
                         <div class="device-value form-static-text"><%= isBlocked ? "Blocked" : "Normal" %></div>
                         <select class="new-value form-control" name="isBlocked">
                             <option value="0">Normal</option>
-                            <option value="1"><%= isBlocked ? "selected=selected" : "" %>>Blocked</option>
+                            <% if (!isBlocked) { %>
+                                <option value="1" >Blocked</option>
+                            <% } else { %>
+                                <option value="1" selected="selected">Blocked</option>
+                            <% } %>
                         </select>
                     </div>
                 </div>

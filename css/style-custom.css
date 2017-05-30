@@ -91,6 +91,7 @@ table {
     background-color: #f9f9f9;
 }
 #error-empty-page {
+    display: none;
     width: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
