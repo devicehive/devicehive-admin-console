@@ -45,7 +45,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         if (base.network == null)
              base["network"] = { id: 0, name: "---No network---" };
 
-        base.networks = [{ id: 0, name: "---No network---"}];
+        base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
         base.classEditable = this.classEditable;
