@@ -73,7 +73,7 @@ app.Views.Users = Backbone.Marionette.CompositeView.extend({
     },
     onRender: function () {
         //New User Users page hints
-        if (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false')) {
+        if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
             var enjoyhint_instance = new EnjoyHint({});
             var enjoyhint_devices_script_steps = app.hints.usersHints;
             enjoyhint_instance.set(enjoyhint_devices_script_steps);

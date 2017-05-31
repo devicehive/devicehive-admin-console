@@ -97,7 +97,7 @@ _.extend(app, {
         }
     },
     disableNewUserHints: function() {
-        localStorage.introReviewed = true;
+        app.User.disableHints();
     },
     parseJwt: function (token) {
         if(token) {
@@ -158,6 +158,10 @@ app.bind("initialize:before", function (options) {
 app.bind("initialize:after", function (options) {
     $("#error-empty-page").hide();
     app.User = new app.Models.User();
+
+    setTimeout(function () {
+        localStorage.introReviewed = app.User.attributes.introReviewed;
+    }, 1000);
     var params = {root: app.config.rootUrl};
 
     if (_.isObject(options)) {

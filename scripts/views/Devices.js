@@ -181,6 +181,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
         }
     },
     onRender: function() {
+        var that = this;
         if(this.networks.length > 0) {
             this.$el.find(".add-device").prop('disabled', false);
         } else {
@@ -189,16 +190,39 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
         }
 
         //New User Devices page hints
-        if ((!(localStorage.introReviewed) || (localStorage.introReviewed === 'false')) && !(this.collection.length > 0)) {
-            var enjoyhint_instance = new EnjoyHint({});
-            var enjoyhint_devices_script_steps = app.hints.devicesHints;
-            enjoyhint_instance.set(enjoyhint_devices_script_steps);
-            enjoyhint_instance.run();
+        setTimeout(function () {
+            if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
+                var enjoyhint_instance = new EnjoyHint({});
+                var enjoyhint_devices_script_steps = []
 
-            $(".enjoyhint_skip_btn").on("click", function() {
-                app.disableNewUserHints();
-            });
-        }
+                if (app.hasRole(app.Enums.UserRole.Administrator)) {
+                    if (!(that.collection.length > 0)) {
+                        enjoyhint_devices_script_steps = app.hints.devicesHintsAdminWithNoDevices;
+                    } else {
+                        enjoyhint_devices_script_steps = app.hints.devicesHintsAdmin;
+                    }
+
+                } else {
+                    if (!(that.collection.length > 0)) {
+                        if (that.networks.length > 0) {
+                            enjoyhint_devices_script_steps = app.hints.devicesHintsWithNetwork;
+                        } else {
+                            enjoyhint_devices_script_steps = app.hints.devicesHintsClientWithNoNetworks;
+                        }
+                    } else {
+                        enjoyhint_devices_script_steps = app.hints.devicesHintsWithDevice;
+                    }
+                }
+
+                enjoyhint_instance.set(enjoyhint_devices_script_steps);
+                enjoyhint_instance.run();
+
+                $(".enjoyhint_skip_btn").on("click", function() {
+                    app.disableNewUserHints();
+                });
+            }
+        }, 1000);
+
     }
 });
 

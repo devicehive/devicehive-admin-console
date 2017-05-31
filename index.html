@@ -138,6 +138,7 @@
             var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
             //cleaning tokens in local storage
             localStorage.deviceHiveToken = '';
+            localStorage.introReviewed = true;
             localStorage.deviceHiveRefreshToken = '';
             localStorage.lastActivity = (new Date()).valueOf();
 
