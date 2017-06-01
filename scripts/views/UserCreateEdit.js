@@ -70,18 +70,31 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
             githubLogin: githubLogin
         };
 
+        var loginRegex = /^[a-zA-Z0-9@.]{6,128}$/;
+        if (!_.isEmpty(login) && login.match(loginRegex)) {
+            options.login = login;
+        } else  {
+            app.vent.trigger("notification", app.Enums.NotificationType.Error,
+                "Login can contain only from 6 to 128 lowercase or uppercase " +
+                "letters, numbers, and some special symbols (@.)");
+            return;
+        }
+
         var pass = this.$el.find("#password").val();
         var passConf = this.$el.find("#password-confirmation").val();
 
-        if (!_.isEmpty(pass)) {
-            if (pass != passConf) {
-                var message = "Pasword confirmation isn't match password";
+        var passwordRegex = /^[a-zA-Z0-9@.,#$%:;]{6,128}$/;
+        if (!_.isEmpty(pass) && pass.match(passwordRegex)) {
+            if (pass !== passConf) {
+                var message = "Password confirmation doesn't match password";
                 app.vent.trigger("notification", app.Enums.NotificationType.Error, message);
                 return;
             }
             options.password = pass;
         } else  {
-            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+            app.vent.trigger("notification", app.Enums.NotificationType.Error,
+                "Password can contain only from 6 to 128 lowercase or uppercase " +
+                "letters, numbers, and some special symbols (@.,#$%@:;)");
             return;
         }
 
