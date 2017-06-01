@@ -54,6 +54,12 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
         var name = this.$el.find("#new-network-name").val();
         var desc = this.$el.find("#new-network-description").val();
 
+        if(!name) {
+            this.$el.find('.new-network-name').tooltip();
+            this.$el.find('.new-network-name').focus();
+            return;
+        }
+
         var that = this;
         this.model.save({ name: name, description: desc}, {
             success: function () {
@@ -105,8 +111,8 @@ app.Views.Networks = Backbone.Marionette.CompositeView.extend({
         {
             render: function () {
                 var text = app.hasRole(app.Enums.UserRole.Administrator)
-                    ? "there are no networks has been registered yet. Create first one!"
-                    : "there are no networks has been registered yet.";
+                    ? "No networks available. Create first one!"
+                    : "No networks available";
                 this.$el.html("<td colspan='4'>" + text + "</td>");
                 return this;
             },

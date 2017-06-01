@@ -170,7 +170,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     emptyView: Backbone.Marionette.ItemView.extend(
         {
             render: function () {
-                this.$el.html("<td colspan='5'>No devices has been registered yet.</td>");
+                this.$el.html("<td colspan='5'>No devices available</td>");
                 return this;
             },
             tagName: "tr"
