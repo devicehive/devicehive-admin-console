@@ -34,7 +34,7 @@ app.module("Modules.Notifications", function (users, app) {
                     sessionStorage.requestFragment = Backbone.history.fragment;
                 }
 
-                sessionStorage.authenticationError = "You have entered an invalid credentials";
+                sessionStorage.authenticationError = "You have entered invalid credentials";
             }
             else if (_.has(errorObject, "responseText") && _.has(errorObject, "status") && _.has(errorObject, "readyState")) {
                 var jResp = errorObject.responseText;
