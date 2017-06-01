@@ -118,7 +118,9 @@ app.module("Modules.Devices", function (users, app) {
     }
     var controller = {
         devices_show: function () {
-            app.vent.trigger("startLoading");
+            if(app.hasCredentials()) {
+                app.vent.trigger("startLoading");
+            }
             // wait until current user object will be fetched from the server
             if (app.User.isNew()) {
                 app.User.on('change', function (e){

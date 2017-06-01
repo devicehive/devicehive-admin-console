@@ -107,14 +107,7 @@ _.extend(app, {
         }
     },
     hasCredentials: function () {
-        // if no credentials currently set
-        // if no credentials currently set
-        if (!localStorage.deviceHiveToken) {
-            return false;
-        } else {
-            //console.log('lets think that we have correct credentials');
-            return true;
-        }
+        return (localStorage.deviceHiveToken) ? true : false;
     },
     // checks whether app.User has access to specified role
     hasRole: function (roles) {
