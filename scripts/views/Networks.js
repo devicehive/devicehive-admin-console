@@ -53,12 +53,9 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
     saveNetwork: function () {
         var name = this.$el.find("#new-network-name").val();
         var desc = this.$el.find("#new-network-description").val();
-        var key = this.$el.find("#new-network-key").val();
-        if (_.isEmpty(key))
-            key = null;
 
         var that = this;
-        this.model.save({ name: name, description: desc, key: key }, {
+        this.model.save({ name: name, description: desc}, {
             success: function () {
                 that.render();
             }, error: function (model, response) {
@@ -93,8 +90,6 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
             data["name"] = "";
         if (!_.has(data, "description"))
             data["description"] = "";
-        if (_.isEmpty(data.key))
-            data.key = "";
 
         return data;
     }
