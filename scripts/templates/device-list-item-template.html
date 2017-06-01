@@ -20,7 +20,7 @@
     <td class="name">
         <span class="current-value"><%= name %></span>
         <span class="new-value">
-        <input type="text" class="new-device-name" value="<%= name %>"/></span>
+        <input type="text" class="new-device-name" maxlength="128" value="<%= name %>" data-toggle="tooltip" title="Device name can not be blank or exceed 128 characters"/></span>
     </td>
 
     <td class="network">
