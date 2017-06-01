@@ -73,6 +73,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var changes = {
             name: name,
             status: status,
+            networkId: netwId,
             network: network
         };
 
@@ -128,8 +129,10 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         else
             base["data"] = "";
 
-        if (base.network == null) {
-            base["network"] = { id: 0, name: "---No network---"};
+        if (base.networkId == null) {
+            base["network"] = { id: 0, name: "---No network---" };
+        } else {
+            base["network"] = this.networksList.find(function (net) { return net.id == base.networkId; }).toJSON({escape: true});
         }
 
 

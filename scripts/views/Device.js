@@ -42,8 +42,12 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         else
             base["data"] = "";
 
-        if (base.network == null)
-             base["network"] = { id: 0, name: "---No network---" };
+        if (base.networkId == null) {
+            base["network"] = { id: 0, name: "---No network---" };
+        } else {
+            base["network"] = this.networksList.find(function (net) { return net.id == base.networkId; }).toJSON({escape: true});
+        }
+
 
         base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
@@ -79,6 +83,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             name: this.$el.find(".new-value.name").val(),
             status: this.$el.find(".new-value.status").val(),
             network: network,
+            networkId: netwId,
             isBlocked: this.$el.find('select.new-value[name=isBlocked]').val() == "1" ? true : false
         };
 
