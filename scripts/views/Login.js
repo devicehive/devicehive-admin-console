@@ -29,7 +29,12 @@ app.Views.Login = Backbone.Marionette.ItemView.extend({
         var params = {};
         params.login = $(e.target).find('[name=login]').val();
         params.password= $(e.target).find('[name=password]').val();
-        new app.Models.JwtToken(params);
+
+        if((params.login.length > 0) && (params.password.length > 0)) {
+            new app.Models.JwtToken(params);
+        } else {
+            sessionStorage.authenticationError = "Please provide Login and Password";
+        }
         this.showError(sessionStorage.authenticationError);
     },
 
