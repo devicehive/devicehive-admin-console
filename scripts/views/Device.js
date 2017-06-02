@@ -75,9 +75,15 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
 
     saveDevice: function () {
         var data = this.$el.find(".new-value.data").val();
-
         var netwId = this.$el.find(".new-value.network").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+
+        if((data.length > 0) && !app.isJson(data)) {
+            this.$el.find('#data-format-error').show();
+            return;
+        } else {
+            this.$el.find('#data-format-error').hide()
+        }
 
         var changes = {
             name: this.$el.find(".new-value.name").val(),

@@ -65,6 +65,12 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var netwId = this.$el.find(".new-device-network :selected").val();
         var status = this.$el.find(".new-device-status").val();
 
+        if((data.length > 0) && !app.isJson(data)) {
+            this.$el.find('.new-device-data').tooltip();
+            this.$el.find('.new-device-data').focus();
+            return;
+        }
+
         if(!name) {
             this.$el.find('.new-device-name').tooltip();
             this.$el.find('.new-device-name').focus();
