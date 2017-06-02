@@ -31,16 +31,6 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     initialize: function () {
         if (_.isUndefined(this.model)) {
             this.model = new app.Models.User();
-        } else {
-            if(this.model.attributes.googleLogin == null) {
-                this.model.attributes.googleLogin = "";
-            }
-            if(this.model.attributes.facebookLogin == null) {
-                this.model.attributes.facebookLogin = "";
-            }
-            if(this.model.attributes.githubLogin == null) {
-                this.model.attributes.githubLogin = "";
-            }
         }
     },
     save: function () {
@@ -49,41 +39,54 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var status = parseInt(this.$el.find("#status :selected").val());
         var data = this.$el.find("#data").val();
 
-        var googleLogin = this.$el.find("#googleLogin").val();
-        if (_.isEmpty(googleLogin)) {
-            googleLogin = null;
+        //Start user form validation
+        var loginPatt = /^[a-zA-Z0-9._@]{3,128}$/;
+
+        if(!login || (login.length < 3) ||  (login.length  > 128)) {
+            this.$el.find('#login-length-error').show();
+            return;
+        } else if (!loginPatt.test(login)) {
+            this.$el.find('#login-length-error').hide();
+            this.$el.find('#login-pattern-error').show();
+            return;
+        } else {
+            this.$el.find('#login-length-error').hide();
+            this.$el.find('#login-pattern-error').hide();
         }
-        var facebookLogin = this.$el.find("#facebookLogin").val();
-        if (_.isEmpty(facebookLogin)) {
-            facebookLogin = null;
-        }
-        var githubLogin = this.$el.find("#githubLogin").val();
-        if (_.isEmpty(githubLogin)) {
-            githubLogin = null;
-        }
-        var options = {
-            login: login,
-            role: role,
-            status: status,
-            googleLogin: googleLogin,
-            facebookLogin: facebookLogin,
-            githubLogin: githubLogin
-        };
+
 
         var pass = this.$el.find("#password").val();
         var passConf = this.$el.find("#password-confirmation").val();
 
-        if (!_.isEmpty(pass)) {
-            if (pass != passConf) {
-                var message = "Pasword confirmation isn't match password";
-                app.vent.trigger("notification", app.Enums.NotificationType.Error, message);
-                return;
-            }
-            options.password = pass;
-        } else  {
-            app.vent.trigger("notification", app.Enums.NotificationType.Error, "Valid javascript object should be entered");
+        if (!pass || pass.length < 6 || pass.length > 128) {
+            this.$el.find('#password-length-error').show();
             return;
+        } else {
+            this.$el.find('#password-length-error').hide();
         }
+
+
+        if (pass !== passConf) {
+            this.$el.find('#password-confirmation-match-error').show();
+            return;
+        } else {
+            this.$el.find('#password-confirmation-match-error').hide();
+        }
+
+        if((data.length > 0) && !app.isJson(data)) {
+            this.$el.find('#data-format-error').show();
+            return;
+        } else {
+            this.$el.find('#data-format-error').hide()
+        }
+        //End user form validation
+        var options = {
+            login: login,
+            role: role,
+            status: status,
+            password: pass,
+            data: data
+        };
 
         var that = this;
         this.model.save(options, { error: this.onSaveFail, success: function (model, response) { that.onSaveSuccess(model, response); }, wait:true });
@@ -110,17 +113,6 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         return base;
     },
 
-    onRender: function() {
-        if (app.config.googleConfig) {
-            this.$el.find(".google-identity-login").removeClass('ui-helper-hidden');
-        }
-        if (app.config.facebookConfig) {
-            this.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden');
-        }
-        if (app.config.githubConfig) {
-            this.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
-        }
-    },
     onShow: function() {
         // scroll to make edit form visible, focus on first input field
         this.$el[0].scrollIntoView(true);

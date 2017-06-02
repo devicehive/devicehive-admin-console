@@ -20,8 +20,7 @@ app.Models.User = Backbone.AuthModel.extend({
     urlRoot: function () { return app.config.restEndpoint + "/user"; },
     urlCurrent: function () { return app.config.restEndpoint + "/user/current"; },
     error: function(e) {console.log('User error %o', e)},
-    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [],
-        googleLogin: "", facebookLogin: "", githubLogin: ""},
+    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: []},
     getters: {
         networksCollection: function () {
             if (this.networksColl == null)

@@ -104,6 +104,14 @@ _.extend(app, {
             return jwt_decode(token);
         }
     },
+    isJson: function(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    },
     hasCredentials: function () {
         return (localStorage.deviceHiveToken) ? true : false;
     },
