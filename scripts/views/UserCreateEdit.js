@@ -40,7 +40,7 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find("#data").val();
 
         //Start user form validation
-        var loginPatt = /^[a-zA-Z0-9._@]{3,128}$/;
+        var loginPatt = /^[a-zA-Z0-9\-._@]{3,128}$/;
 
         if(!login || (login.length < 3) ||  (login.length  > 128)) {
             this.$el.find('#login-length-error').show();
