@@ -58,7 +58,7 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var pass = this.$el.find("#password").val();
         var passConf = this.$el.find("#password-confirmation").val();
 
-        if (!app.hasRole(app.Enums.UserRole.Administrator)) {
+        if (this.model.isNew() || !app.hasRole(app.Enums.UserRole.Administrator)) {
             if (!pass || pass.length < 6 || pass.length > 128) {
                 this.$el.find('#password-length-error').show();
                 return;
