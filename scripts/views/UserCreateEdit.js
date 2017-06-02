@@ -103,10 +103,12 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
 
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        if (_.has(base, "data") && !_.isNull(base.data))
-            base["data"] = JSON.stringify(base.data);
-        else
+        if (_.has(base, "data") && !_.isNull(base.data)) {
+            var data = JSON.stringify(base.data);
+            base["data"] = data.substring(1, data.length-1);
+        } else {
             base["data"] = "";
+        }
         base.Statuses = app.Enums.UserStatus;
         base.Roles = app.Enums.UserRole;
         base.saveButtonText = this.model.isNew() ? "create" : "save";
