@@ -58,19 +58,21 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var pass = this.$el.find("#password").val();
         var passConf = this.$el.find("#password-confirmation").val();
 
-        if (!pass || pass.length < 6 || pass.length > 128) {
-            this.$el.find('#password-length-error').show();
-            return;
-        } else {
-            this.$el.find('#password-length-error').hide();
-        }
+        if (!app.hasRole(app.Enums.UserRole.Administrator)) {
+            if (!pass || pass.length < 6 || pass.length > 128) {
+                this.$el.find('#password-length-error').show();
+                return;
+            } else {
+                this.$el.find('#password-length-error').hide();
+            }
 
 
-        if (pass !== passConf) {
-            this.$el.find('#password-confirmation-match-error').show();
-            return;
-        } else {
-            this.$el.find('#password-confirmation-match-error').hide();
+            if (pass !== passConf) {
+                this.$el.find('#password-confirmation-match-error').show();
+                return;
+            } else {
+                this.$el.find('#password-confirmation-match-error').hide();
+            }
         }
 
         if((data.length > 0) && !app.isJson(data)) {

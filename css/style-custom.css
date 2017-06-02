@@ -110,3 +110,7 @@ table {
     display: none;
     color: red;
 }
+
+.registered-networks-col {
+    padding-left: 0;
+}
