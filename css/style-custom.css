@@ -105,3 +105,8 @@ table {
 .customSkipBtn.customSkipBtn {
     width: 112px;
 }
+
+.validation-errors {
+    display: none;
+    color: red;
+}
