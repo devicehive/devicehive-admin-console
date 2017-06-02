@@ -31,16 +31,6 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     initialize: function () {
         if (_.isUndefined(this.model)) {
             this.model = new app.Models.User();
-        } else {
-            if(this.model.attributes.googleLogin == null) {
-                this.model.attributes.googleLogin = "";
-            }
-            if(this.model.attributes.facebookLogin == null) {
-                this.model.attributes.facebookLogin = "";
-            }
-            if(this.model.attributes.githubLogin == null) {
-                this.model.attributes.githubLogin = "";
-            }
         }
     },
     save: function () {
@@ -90,28 +80,12 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
             this.$el.find('#data-format-error').hide()
         }
         //End user form validation
-
-        var googleLogin = this.$el.find("#googleLogin").val();
-        if (_.isEmpty(googleLogin)) {
-            googleLogin = null;
-        }
-        var facebookLogin = this.$el.find("#facebookLogin").val();
-        if (_.isEmpty(facebookLogin)) {
-            facebookLogin = null;
-        }
-        var githubLogin = this.$el.find("#githubLogin").val();
-        if (_.isEmpty(githubLogin)) {
-            githubLogin = null;
-        }
         var options = {
             login: login,
             role: role,
             status: status,
             password: pass,
-            data: data,
-            googleLogin: googleLogin,
-            facebookLogin: facebookLogin,
-            githubLogin: githubLogin
+            data: data
         };
 
         var that = this;
@@ -139,17 +113,6 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         return base;
     },
 
-    onRender: function() {
-        if (app.config.googleConfig) {
-            this.$el.find(".google-identity-login").removeClass('ui-helper-hidden');
-        }
-        if (app.config.facebookConfig) {
-            this.$el.find(".facebook-identity-login").removeClass('ui-helper-hidden');
-        }
-        if (app.config.githubConfig) {
-            this.$el.find(".github-identity-login").removeClass('ui-helper-hidden');
-        }
-    },
     onShow: function() {
         // scroll to make edit form visible, focus on first input field
         this.$el[0].scrollIntoView(true);

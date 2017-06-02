@@ -47,15 +47,6 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
         else
             data.lastLogin = "";
 
-        if (!_.has(data, "googleLogin") || _.isEmpty(data.googleLogin))
-            data.googleLogin = "";
-
-        if (!_.has(data, "facebookLogin") || _.isEmpty(data.facebookLogin))
-            data.facebookLogin = "";
-
-        if (!_.has(data, "githubLogin") || _.isEmpty(data.githubLogin))
-            data.githubLogin = "";
-
         return data;
     }
 });
