@@ -114,3 +114,7 @@ table {
 .registered-networks-col {
     padding-left: 0;
 }
+
+.password-info-icon {
+    line-height: 35px;
+}

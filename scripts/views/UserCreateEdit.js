@@ -58,21 +58,21 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         var pass = this.$el.find("#password").val();
         var passConf = this.$el.find("#password-confirmation").val();
 
-        if (!app.hasRole(app.Enums.UserRole.Administrator)) {
-            if (!pass || pass.length < 6 || pass.length > 128) {
-                this.$el.find('#password-length-error').show();
-                return;
-            } else {
-                this.$el.find('#password-length-error').hide();
-            }
+        if (this.model.isNew() && (!pass || pass.length < 6 || pass.length > 128)) {
+            this.$el.find('#password-length-error').show();
+            return;
+        } else if(!this.model.isNew() && (pass && (pass.length < 6 || pass.length > 128))) {
+            this.$el.find('#password-length-error').show();
+            return;
+        } else {
+            this.$el.find('#password-length-error').hide();
+        }
 
-
-            if (pass !== passConf) {
-                this.$el.find('#password-confirmation-match-error').show();
-                return;
-            } else {
-                this.$el.find('#password-confirmation-match-error').hide();
-            }
+        if (pass !== passConf) {
+            this.$el.find('#password-confirmation-match-error').show();
+            return;
+        } else {
+            this.$el.find('#password-confirmation-match-error').hide();
         }
 
         if((data.length > 0) && !app.isJson(data)) {
@@ -117,6 +117,9 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
         return base;
     },
 
+    onRender: function() {
+        this.$el.find('.password-info-icon').tooltip();
+    },
     onShow: function() {
         // scroll to make edit form visible, focus on first input field
         this.$el[0].scrollIntoView(true);
