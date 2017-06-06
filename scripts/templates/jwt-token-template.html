@@ -21,13 +21,13 @@
 		<form class="jwt-token-form">
 			<% if(accessToken) {%>
 			<div class="form-group">
-				<div class="col-lg-8 classWithPad grey">
+				<div class="col-lg-8 classWithPad grey jwt-token-container">
 					<p>JWT Token: </p>
 					<span class="token-holder"><%=accessToken%></span>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-lg-8 classWithPad grey">
+				<div class="col-lg-8 classWithPad grey jwt-refresh-token-container">
 					<p>JWT Refresh Token: </p>
 					<span class="token-holder"><%=refreshToken%></span>
 				</div>

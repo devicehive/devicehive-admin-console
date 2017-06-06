@@ -118,3 +118,8 @@ table {
 .password-info-icon {
     line-height: 35px;
 }
+
+
+.kineticjs-content canvas {
+    background: rgba(0, 0, 0, 0.5) !important;
+}

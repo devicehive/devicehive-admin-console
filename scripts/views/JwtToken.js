@@ -60,7 +60,14 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         //New User JwtToken hints
         if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
             var enjoyhint_instance = new EnjoyHint({});
-            var enjoyhint_script_steps = app.hints.jwtTokenHints;
+            var enjoyhint_script_steps = [];
+            var generatedJWTtoken = this.$el.find('.jwt-token-container');
+
+            if(generatedJWTtoken.length > 0) {
+                enjoyhint_script_steps = app.hints.jwtTokenHintsWithToken;
+            } else {
+                enjoyhint_script_steps = app.hints.jwtTokenHints;
+            }
             enjoyhint_instance.set(enjoyhint_script_steps);
             enjoyhint_instance.run();
 
