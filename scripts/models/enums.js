@@ -35,7 +35,7 @@ app.Enums = {};
 
 app.Enums.NotificationType = new app.Enumeration({Debug: 0, Notify: 1, Warning: 2, Error: 3});
 
-app.Enums.UserStatus = new app.Enumeration({Active: 0, LockedOut: 1, Disabled: 2, Deleted: 3});
+app.Enums.UserStatus = new app.Enumeration({Active: 0, LockedOut: 1, Disabled: 2});
 
 app.Enums.UserRole = new app.Enumeration({Administrator: 0, Client: 1});
 
