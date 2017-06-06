@@ -29,6 +29,20 @@ app.config = {
 };
 
 app.hints = {
+    jwtTokenHintsWithToken: [
+        {
+            'next .jwt-token-container': 'This is your JWT Token. You can use it for connecting your devices.',
+            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+        },
+        {
+            'next .jwt-refresh-token-container': 'This is your refresh token. You can use this one to refresh your JWT Token.',
+            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+        },
+        {
+            'click .show-datetime-selector': 'Click to set expiration date for new JWT Token',
+            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+        }
+    ],
     jwtTokenHints: [
         {
             'next .create-jwt-token': 'Click to create new JWT Token',
@@ -91,26 +105,6 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .new-device-name' : 'Enter Device Name',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'next .new-device-network' : 'Select Device Network',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'next .new-device-data' : 'Enter Device Data',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'click .save-device' : 'Click Save',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'click .detail': 'Check out Device details',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
             'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
@@ -147,10 +141,6 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .add-device': 'You can create a new Device',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
             'click .detail': 'Check out Device details',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
@@ -169,7 +159,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="user"]': 'This is the page where you can manage Users.',
+            'next a[data-path="user"]': 'This is the page where you can manage Users: create a new one, edit or delete existing and grant access to networks.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -199,7 +189,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="user"]': 'This is the page where you can manage Users.',
+            'next a[data-path="user"]': 'This is the page where you can manage Users: create a new one, edit or delete existing and grant access to networks.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -211,33 +201,17 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .new-device-name' : 'Enter Device Name',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'next .new-device-network' : 'Select Device Network',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'next .new-device-data' : 'Enter Device Data',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'click .save-device' : 'Click Save',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
-            'click .detail': 'Check out Device details',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
-        },
-        {
             'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
     networksHintsAdmin: [
         {
-            'next .networks-table': 'Default Network was created',
+            'next tr:first': 'You can check your Networks list',
+            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+        },
+        {
+            'click .add-new-network': 'Click to create your own new Network',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -245,13 +219,17 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .add-new-network': 'Click to create your own new Network',
+            'next a[data-path="user"]': 'This is the page where you can manage Users: create a new one, edit or delete existing and grant access to networks.',
+            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+        },
+        {
+            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
     networksHintsClient: [
         {
-            'next .networks-table': 'Default Network was created',
+            'next .networks-table': 'You can check your Networks list',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
