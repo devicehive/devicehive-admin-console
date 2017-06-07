@@ -122,3 +122,11 @@ table {
 .kineticjs-content canvas {
     background: rgba(0, 0, 0, 0.5) !important;
 }
+
+.new-device-network {
+    max-width: 460px;
+}
+
+.network {
+    width: 42%;
+}
