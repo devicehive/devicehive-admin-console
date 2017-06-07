@@ -31,25 +31,25 @@ app.config = {
 app.hints = {
     jwtTokenHintsWithToken: [
         {
-            'next .jwt-token-container': 'This is your JWT Token. You can use it for connecting your devices.',
+            'next .jwt-token-container': 'This is your ACCESS token for any kind of interaction, its lifetime is 30 mins by default. It should be refreshed regularly if you want to continue your work.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .jwt-refresh-token-container': 'This is your refresh token. You can use this one to refresh your JWT Token.',
+            'next .jwt-refresh-token-container': 'This is your REFRESH token for refreshing access token when expired, lifetime - 6 months by default.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click .show-datetime-selector': 'Click to set expiration date for new JWT Token',
+            'click .show-datetime-selector': 'Click here if you want custom expiration date for your tokens.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
     jwtTokenHints: [
         {
-            'next .create-jwt-token': 'Click to create new JWT Token',
+            'next .create-jwt-token': 'JWT tokens are what your devices need to access DeviceHive. Please click this btn to generate ones.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click .show-datetime-selector': 'Click to set expiration date for new JWT Token',
+            'click .show-datetime-selector': 'Click here if you want custom expiration date for your tokens.',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
@@ -93,29 +93,29 @@ app.hints = {
     ],
     devicesHintsWithNetwork: [
         {
-            'next a[data-path="devices"]': 'This is the page where you can manage your devices',
+            'next a[data-path="devices"]': 'Hi, welcome to DeviceHive! Here you can manage your devices',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="networks"]': 'Here you can see available Networks.Please contact administrator for granting access to some particular network.',
+            'next a[data-path="networks"]': "Here you can see your available Networks. Please contact your administrator if you can't see any.",
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click .add-device': 'You can create new device',
+            'click .add-device': 'To create new device push this button please',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
     devicesHintsClientWithNoNetworks: [
         {
-            'next a[data-path="devices"]': 'This is the page where you can manage your devices',
+            'next a[data-path="devices"]': 'Hi, welcome to DeviceHive! Here you can manage your devices',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="networks"]': 'Here you can see available Networks.Please contact administrator for granting access to some particular network.',
+            'next a[data-path="networks"]': "Here you can see your available Networks. Please contact your administrator if you can't see any.",
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -123,21 +123,21 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
     devicesHintsWithDevice: [
         {
-            'next a[data-path="devices"]': 'This is the page where you can manage your devices',
+            'next a[data-path="devices"]': 'Hi, welcome to DeviceHive! Here you can manage your devices',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="networks"]': 'Here you can see available Networks.Please contact administrator for granting access to some particular network.',
+            'next a[data-path="networks"]': "Here you can see your available Networks. Please contact your administrator if you can't see any.",
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next tbody tr:first': 'This device was assign by administrator',
+            'next tbody tr:first': 'Here you can see your available Devices',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -145,7 +145,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
@@ -175,7 +175,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
@@ -201,7 +201,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
@@ -215,7 +215,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="devices"]': 'YOu can create new device and assign it to your network via Devices page',
+            'next a[data-path="devices"]': 'To create new device push this button please',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -223,7 +223,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
@@ -233,11 +233,11 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next a[data-path="devices"]': 'YOu can create new device and assign it to your network via Devices page',
+            'next a[data-path="devices"]': 'To create new device push this button please',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click a[data-path="jwt-token"]': 'Navigate to generate JWT token for your devices.',
+            'click a[data-path="jwt-token"]': 'Please navigate here to continue intro and generate JWT tokens',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         }
     ],
