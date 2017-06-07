@@ -36,11 +36,13 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     template: "device-template",
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        //add backslashes to &quot; entity created during escaping   
-        if (_.has(base, "data") && !_.isNull(base.data))
-            base["data"] = JSON.stringify(base.data).replace(/&quot;/g,"\\&quot;");
-        else
+
+        if (_.has(base, "data") && !_.isNull(base.data)) {
+            base["data"] = JSON.stringify(base.data);
+            base["data"] = base["data"].substring(1, base["data"].length-1);
+        } else  {
             base["data"] = "";
+        }
 
         if (base.networkId == null) {
             base["network"] = { id: 0, name: "---No network---" };
@@ -90,6 +92,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             status: this.$el.find(".new-value.status").val(),
             network: network,
             networkId: netwId,
+            data: data,
             isBlocked: this.$el.find('select.new-value[name=isBlocked]').val() == "1" ? true : false
         };
 
