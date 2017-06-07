@@ -101,8 +101,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .add-device': 'To create new device push this button please',
-            'nextButton': {className: 'customNextBtn', text: 'Click'},
+            'click .add-device': 'To create new device push this button please',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
