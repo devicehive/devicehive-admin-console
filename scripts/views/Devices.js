@@ -152,7 +152,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             base["network"] = this.networksList.find(function (net) {return net.id == base.networkId;}).toJSON({escape: true});
         }
 
-        if (base["isBlocked"].length > 0) {
+        if (base["isBlocked"] && (base["isBlocked"].length > 0)) {
             base["isBlocked"] = (base["isBlocked"] == "false") ? false : true;
         }
 
@@ -197,7 +197,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     },
     addDevice: function() {
         if(this.networks.length > 0) {
-            this.collection.add(new app.Models.Device());
+            this.collection.add(new app.Models.Device({"isBlocked": false}));
         } else {
             return;
         }

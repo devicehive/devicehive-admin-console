@@ -119,7 +119,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next .add-device': 'You will be able to create new Device after administrator will grand you an access to any network',
+            'next .add-device': 'You will be able to create new Device after administrator will grant you an access to any network',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -151,7 +151,7 @@ app.hints = {
     ],
     devicesHintsAdmin: [
         {
-            'next a[data-path="devices"]': 'This is the page where you can manage Devices',
+            'next a[data-path="devices"]': 'Hi, welcome to DeviceHive! Here you can manage your devices',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -163,7 +163,7 @@ app.hints = {
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'next tbody tr:first': 'This is your Devices list',
+            'next thead tr:first': 'This is your Devices list',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -181,7 +181,7 @@ app.hints = {
     ],
     devicesHintsAdminWithNoDevices: [
         {
-            'next a[data-path="devices"]': 'This is the page where you can manage Devices',
+            'next a[data-path="devices"]': 'Hi, welcome to DeviceHive! Here you can manage your devices',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
@@ -243,11 +243,11 @@ app.hints = {
     ],
     userNetworksHintsAdmin : [
         {
-            'next #registered-networks' : 'Select network to grand user access',
+            'next #registered-networks' : 'Select network to grant user access',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
-            'click .accept' : 'Grand user access for selected network',
+            'click .accept' : 'Grant user access for selected network',
             'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
         },
         {
