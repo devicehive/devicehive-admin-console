@@ -40,7 +40,7 @@ app.hints = {
         },
         {
             'click .show-datetime-selector': 'Click here if you want custom expiration date for your tokens.',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+            'skipButton' : {className: 'customSkipBtn', text: 'Finish tutorial'}
         }
     ],
     jwtTokenHints: [
@@ -50,7 +50,7 @@ app.hints = {
         },
         {
             'click .show-datetime-selector': 'Click here if you want custom expiration date for your tokens.',
-            'skipButton' : {className: 'customSkipBtn', text: 'Skip tutorial'}
+            'skipButton' : {className: 'customSkipBtn', text: 'Finish tutorial'}
         }
     ],
     usersHints: [
