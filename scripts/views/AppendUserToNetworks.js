@@ -21,8 +21,13 @@ app.Views.NetworkOption = Backbone.Marionette.ItemView.extend({
     tagName: "option",
     template: "empty",
     onRender: function () {
-        this.$el.attr("value", this.model.escape("id"));
-        this.$el.html(this.model.escape("name"));
+        if (this.model.attributes.name && (this.model.attributes.name.length > 0)) {
+            this.$el.attr("value", this.model.escape("id"));
+            this.$el.html(this.model.escape("name"));
+        } else  {
+            this.$el.hide();
+        }
+
     }
 });
 
