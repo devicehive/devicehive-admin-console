@@ -64,6 +64,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find(".new-device-data").val();
         var netwId = this.$el.find(".new-device-network :selected").val();
         var status = this.$el.find(".new-device-status").val();
+        var isBlocked = this.$el.find(".new-isBlocked-state").val();
 
         if((data.length > 0) && !app.isJson(data)) {
             this.$el.find('.new-device-data').tooltip();
@@ -88,7 +89,8 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             data: data,
             status: status,
             networkId: netwId,
-            network: network
+            network: network,
+            isBlocked: isBlocked
         };
 
         var that = this;
@@ -150,7 +152,9 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             base["network"] = this.networksList.find(function (net) {return net.id == base.networkId;}).toJSON({escape: true});
         }
 
-
+        if (base["isBlocked"].length > 0) {
+            base["isBlocked"] = (base["isBlocked"] == "false") ? false : true;
+        }
 
         base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
