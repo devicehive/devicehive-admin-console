@@ -130,3 +130,7 @@ table {
 .network {
     width: 42%;
 }
+
+.max-rows-number-reached {
+    display: none;
+}

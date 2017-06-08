@@ -146,9 +146,6 @@ app.Views.Notifications = Backbone.Marionette.CompositeView.extend({
         if (this.collection.length >= app.config.deviceNotificationsNum) {
             that.$el.find(".max-rows-number-reached").show();
         }
-        else {
-            that.$el.find(".max-rows-number-reached").hide();
-        }
         
     },
     onClose: function () {
