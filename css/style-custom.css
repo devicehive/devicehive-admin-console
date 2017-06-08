@@ -134,3 +134,7 @@ table {
 .max-rows-number-reached {
     display: none;
 }
+
+.new-notification-params {
+    min-width: 700px;
+}
