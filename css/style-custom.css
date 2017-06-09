@@ -102,8 +102,8 @@ table {
     overflow: auto;
 }
 
-.customSkipBtn.customSkipBtn {
-    width: 112px;
+.enjoyhint .customSkipBtn {
+    width: 130px;
 }
 
 .validation-errors {
