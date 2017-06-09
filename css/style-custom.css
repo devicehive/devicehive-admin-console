@@ -138,3 +138,7 @@ table {
 .new-notification-params {
     min-width: 700px;
 }
+
+.new-isBlocked-state {
+    min-width: 88px;
+}
