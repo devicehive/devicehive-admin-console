@@ -86,7 +86,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
 
         var changes = {
             name: name,
-            data: data,
+            data: (data.length > 0) ? JSON.parse(data) : null,
             status: status,
             networkId: netwId,
             network: network,
@@ -141,7 +141,6 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
 
         if (_.has(base, "data") && !_.isNull(base.data)) {
             base["data"] = JSON.stringify(base.data);
-            base["data"] = base["data"].substring(1, base["data"].length-1);
         } else  {
             base["data"] = "";
         }

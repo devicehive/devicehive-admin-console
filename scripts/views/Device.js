@@ -39,7 +39,6 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
 
         if (_.has(base, "data") && !_.isNull(base.data)) {
             base["data"] = JSON.stringify(base.data);
-            base["data"] = base["data"].substring(1, base["data"].length-1);
         } else  {
             base["data"] = "";
         }
@@ -92,7 +91,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             status: this.$el.find(".new-value.status").val(),
             network: network,
             networkId: netwId,
-            data: data,
+            data: (data.length > 0) ? JSON.parse(data) : null,
             isBlocked: this.$el.find('select.new-value[name=isBlocked]').val() == "1" ? true : false
         };
 
