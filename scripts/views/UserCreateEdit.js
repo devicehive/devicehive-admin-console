@@ -87,7 +87,7 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
             role: role,
             status: status,
             password: pass,
-            data: data
+            data: (data.length > 0) ? JSON.parse(data) : null,
         };
 
         var that = this;
@@ -104,8 +104,7 @@ app.Views.UserCreateEdit = Backbone.Marionette.ItemView.extend({
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
         if (_.has(base, "data") && !_.isNull(base.data)) {
-            var data = JSON.stringify(base.data);
-            base["data"] = data.substring(1, data.length-1);
+            base["data"] = JSON.stringify(base.data);
         } else {
             base["data"] = "";
         }

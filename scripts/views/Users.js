@@ -27,13 +27,13 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
     template: "user-list-item-template",
     serializeData: function () {
         var data = this.model.toJSON({ escape: true });
+
         if (_.has(data, "status"))
             data.status = app.Enums.UserStatus.getName(data.status);
         else
             data.status = "";
         if (_.has(data, "data") && !_.isNull(data.data)) {
-            var dataJson = JSON.stringify(data["data"]);
-            data["data"] = dataJson.substring(1, dataJson.length-1);
+            data["data"] = JSON.stringify(data["data"]);
         } else {
             data["data"] = "";
         }
