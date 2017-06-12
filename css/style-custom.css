@@ -142,3 +142,7 @@ table {
 .new-isBlocked-state {
     min-width: 109px;
 }
+
+.device-data .current-value {
+    word-break: break-word;
+}
