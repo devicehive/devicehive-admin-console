@@ -93,6 +93,10 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
     generateJWTTokens: function() {
         var that = this;
         var JWTTokenModel = new app.Models.JwtToken();
+        if (!this.userData) {
+            this.userData = app.parseJwt(localStorage.deviceHiveToken);
+        }
+
         this.userData.payload.expiration = this.expirationTokenDate;
         JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
             that.data.accessToken = tokens.accessToken;
