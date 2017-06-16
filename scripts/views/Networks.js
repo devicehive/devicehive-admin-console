@@ -43,22 +43,34 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
         }
     },
     deleteNetwork: function () {
-        if (confirm("Do you really want to delete this network? All associations with users will be lost"))
-            this.model.destroy({ error: function (model, response) {
-                app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
-            },
-            wait: true
-            });
+        var that = this;
+        if (confirm("Do you really want to delete this network? All associations with users will be lost")) {
+            this.model.destroy(
+                {
+                    success: function() {
+                        //reloading page to fetch new model
+                        location.reload();
+                    },
+                    error: function (model, response) {
+                        that.render();
+                        app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                    },
+                    wait: true
+                });
+        }
     },
     saveNetwork: function () {
         var name = this.$el.find("#new-network-name").val();
         var desc = this.$el.find("#new-network-description").val();
-        var key = this.$el.find("#new-network-key").val();
-        if (_.isEmpty(key))
-            key = null;
+
+        if(!name) {
+            this.$el.find('.new-network-name').tooltip();
+            this.$el.find('.new-network-name').focus();
+            return;
+        }
 
         var that = this;
-        this.model.save({ name: name, description: desc, key: key }, {
+        this.model.save({ name: name, description: desc}, {
             success: function () {
                 that.render();
             }, error: function (model, response) {
@@ -93,8 +105,6 @@ app.Views.NetworkListItem = Backbone.Marionette.ItemView.extend({
             data["name"] = "";
         if (!_.has(data, "description"))
             data["description"] = "";
-        if (_.isEmpty(data.key))
-            data.key = "";
 
         return data;
     }
@@ -110,8 +120,8 @@ app.Views.Networks = Backbone.Marionette.CompositeView.extend({
         {
             render: function () {
                 var text = app.hasRole(app.Enums.UserRole.Administrator)
-                    ? "there are no networks has been registered yet. Create first one!"
-                    : "there are no networks has been registered yet.";
+                    ? "No networks available. Create first one!"
+                    : "No networks available";
                 this.$el.html("<td colspan='4'>" + text + "</td>");
                 return this;
             },
@@ -124,6 +134,22 @@ app.Views.Networks = Backbone.Marionette.CompositeView.extend({
     },
     onRender: function () {
         this.$el.find(".add").toggle(app.hasRole(app.Enums.UserRole.Administrator));
+
+        //New User Networks page hints
+        if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_devices_script_steps = [];
+            if (app.hasRole(app.Enums.UserRole.Administrator)) {
+                enjoyhint_devices_script_steps = app.hints.networksHintsAdmin;
+            } else {
+                enjoyhint_devices_script_steps = app.hints.networksHintsClient;
+            }
+            enjoyhint_instance.set(enjoyhint_devices_script_steps);
+            enjoyhint_instance.run();
+            $(".enjoyhint_skip_btn").on("click", function() {
+                app.disableNewUserHints();
+            });
+        }
     }
 });
 

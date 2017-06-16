@@ -20,8 +20,7 @@ app.Models.User = Backbone.AuthModel.extend({
     urlRoot: function () { return app.config.restEndpoint + "/user"; },
     urlCurrent: function () { return app.config.restEndpoint + "/user/current"; },
     error: function(e) {console.log('User error %o', e)},
-    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [],
-        googleLogin: "", facebookLogin: "", githubLogin: ""},
+    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: []},
     getters: {
         networksCollection: function () {
             if (this.networksColl == null)
@@ -68,6 +67,33 @@ app.Models.User = Backbone.AuthModel.extend({
                 }
             });
         } 
+        });
+    },
+    disableHints: function() {
+        var params = {'introReviewed' : true};
+
+        $.ajax({
+            type: "PUT",
+            url: this.urlCurrent(),
+            async: false,
+            dataType: "json",
+            contentType: "application/json",
+            crossDomain: true,
+            cache: false,
+            data: JSON.stringify(params),
+            headers: Backbone.AuthModel.prototype.authHeader(),
+            success: function (resp) {
+                localStorage.introReviewed = true;
+            },
+            complete: function (xhr) {
+                // prevent polling if error occur
+                if (xhr.status >= 400) {
+                    app.vent.trigger("notification", app.Enums.NotificationType.Error, xhr);
+                    // return BEFORE running pollUpdates again
+                    return;
+                }
+            },
+            timeout: 30000
         });
     },
     setStrData: function (value) {

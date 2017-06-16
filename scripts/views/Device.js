@@ -36,16 +36,21 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     template: "device-template",
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        //add backslashes to &quot; entity created during escaping   
-        if (_.has(base, "data") && !_.isNull(base.data))
-            base["data"] = JSON.stringify(base.data).replace(/&quot;/g,"\\&quot;");
-        else
+
+        if (_.has(base, "data") && !_.isNull(base.data)) {
+            base["data"] = JSON.stringify(base.data);
+        } else  {
             base["data"] = "";
+        }
 
-        if (base.network == null)
+        if (base.networkId == null) {
             base["network"] = { id: 0, name: "---No network---" };
+        } else {
+            base["network"] = this.networksList.find(function (net) { return net.id == base.networkId; }).toJSON({escape: true});
+        }
 
-        base.networks = [{ id: 0, name: "---No network---"}];
+
+        base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
         base.classEditable = this.classEditable;
@@ -68,25 +73,27 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         this.$el.find(".device-value").show();
         this.$el.find(".edit-device").show();
     },
+
     saveDevice: function () {
         var data = this.$el.find(".new-value.data").val();
-        if (!this.model.setStrData(data)) { return; }
-
         var netwId = this.$el.find(".new-value.network").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+
+        if((data.length > 0) && !app.isJson(data)) {
+            this.$el.find('#data-format-error').show();
+            return;
+        } else {
+            this.$el.find('#data-format-error').hide()
+        }
 
         var changes = {
             name: this.$el.find(".new-value.name").val(),
             status: this.$el.find(".new-value.status").val(),
             network: network,
+            networkId: netwId,
+            data: (data.length > 0) ? JSON.parse(data) : null,
             isBlocked: this.$el.find('select.new-value[name=isBlocked]').val() == "1" ? true : false
         };
-
-        if (this.classEditable) {
-            var classId = this.$el.find(".new-value.dclass").val();
-            changes.deviceClass =
-                this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
-        }
 
         var that = this;
         this.model.save(changes, {
@@ -99,7 +106,6 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             },
             wait: true
         });
-
     }
 });
 

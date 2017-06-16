@@ -18,7 +18,7 @@
   */
 app.Models.Network = Backbone.AuthModel.extend({
     urlRoot: function () { return app.config.restEndpoint + "/network"; },
-    defaults: { devices: [], key: "" }
+    defaults: { devices: []}
 });
 
 app.Models.NetworksCollection = Backbone.AuthCollection.extend({

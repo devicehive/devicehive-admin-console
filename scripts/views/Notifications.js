@@ -43,10 +43,11 @@ app.Views.NotificationListItem = Backbone.Marionette.ItemView.extend({
     serializeData: function () {
         var data = this.model.toJSON({ escape: true });
 
-        if (_.has(data, "parameters") && !_.isNull(data.parameters))
+        if (_.has(data, "parameters") && !_.isNull(data.parameters)) {
             data["parameters"] = JSON.stringify(data.parameters);
-        else
+        } else {
             data["parameters"] = "";
+        }
 
         if (_.has(data, "timestamp") && !_.isEmpty(data.timestamp))
             data["timestamp"] = app.f.parseUTCstring(data.timestamp).format("mm/dd/yyyy HH:MM:ss");
@@ -59,6 +60,12 @@ app.Views.NotificationListItem = Backbone.Marionette.ItemView.extend({
         var fields = {};
         var name = this.$el.find(".new-notification-name").val();
         var parameters = this.$el.find(".new-notification-params").val();
+
+        if ((name.indexOf("$device-update") !== -1) || (name.indexOf("$device-add") !== -1)) {
+            this.$el.find('.new-notification-name').tooltip();
+            this.$el.find('.new-notification-name').focus();
+            return;
+        }
         var that = this;
         if (app.Models.Command.prototype.setStrParameters.apply(this.model, [parameters])) {
             this.model.save({notification: name }, {
@@ -145,9 +152,6 @@ app.Views.Notifications = Backbone.Marionette.CompositeView.extend({
 
         if (this.collection.length >= app.config.deviceNotificationsNum) {
             that.$el.find(".max-rows-number-reached").show();
-        }
-        else {
-            that.$el.find(".max-rows-number-reached").hide();
         }
         
     },

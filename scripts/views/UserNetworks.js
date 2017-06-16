@@ -37,6 +37,23 @@ app.Views.UserNetworks = Backbone.Marionette.CompositeView.extend({
     rejectChild: function (childView) {
         this.model.removeNetwork(childView.model.get("id"));
     },
+    onRender: function () {
+        this.$el.find(".add").toggle(app.hasRole(app.Enums.UserRole.Administrator));
+
+        //New User Networks page hints
+        if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_devices_script_steps = [];
+            if (app.hasRole(app.Enums.UserRole.Administrator)) {
+                enjoyhint_devices_script_steps = app.hints.userNetworksHintsAdmin;
+                enjoyhint_instance.set(enjoyhint_devices_script_steps);
+                enjoyhint_instance.run();
+                $(".enjoyhint_skip_btn").on("click", function() {
+                    app.disableNewUserHints();
+                });
+            }
+        }
+    },
     itemView: app.Views.UserNetworkListItem,
     emptyView: Backbone.Marionette.ItemView.extend({template:"user-networks-empty-template",tagName:"tr"}),
     template: "user-networks-template",

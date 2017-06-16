@@ -17,45 +17,46 @@
   limitations under the License.
 
 -->
-    <td class="name"><span class="current-value"><%= name %></span><span class="new-value"><input type="text" class="new-device-name" value="<%= name %>"/></span></td>
+    <td class="name">
+        <span class="current-value"><%= name %></span>
+        <span class="new-value">
+        <input type="text" class="new-device-name" maxlength="128" value="<%= name %>" data-toggle="tooltip" title="Device name can not be blank or exceed 128 characters"/></span>
+    </td>
 
     <td class="network">
-
-    <span class="current-value"><%= network.name %></span>
-    <span class="new-value">
-        <select class="new-device-network">
-            <% _.each(networks,function(net){ 
-                if(net.id == network.id){ %>
-                    <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>    
-                <%}else{ %>
-                    <option value="<%= net.id %>"> <%= net.name %> </option>
-            <%}}); %>
-        </select>
-    </span>
-
+        <span class="current-value"><%= network.name %></span>
+        <% if (networks.length > 0) {%>
+        <span class="new-value">
+            <select class="new-device-network">
+                <% _.each(networks,function(net){
+                    if(net.id == network.id){ %>
+                        <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>
+                    <%}else{ %>
+                        <option value="<%= net.id %>"> <%= net.name %> </option>
+                <%}}); %>
+            </select>
+        </span>
+        <%} else {%>
+        <span class="new-value"><%= network.name %></span>
+        <%}%>
     </td>
 
-    <td class="device-class">
-
-    <span class="current-value"><%= deviceClass.name %></span>
-    <span class="new-value">
-        <% if (classEditable) { %>
-        <select class="new-device-class">
-            <% _.each(classes,function(cls){ 
-                if(cls.id == deviceClass.id){ %>
-                    <option value="<%= cls.id %>" selected="selected"> <%= cls.name %> </option>
-                <% }else{ %>
-                    <option value="<%= cls.id %>"> <%= cls.name %> </option>
-            <%}}); %>
+    <td class="isBlocked lg-only">
+        <span class="current-value"><%= (isBlocked) ? "Blocked" : "Normal" %></span>
+        <select class="new-value form-control new-isBlocked-state" name="isBlocked">
+            <option value="false">Normal</option>
+            <% if (!isBlocked) { %>
+            <option value="true" >Blocked</option>
+            <% } else { %>
+            <option value="true" selected="selected">Blocked</option>
+            <% } %>
         </select>
-        <% } else { %>
-        <%= deviceClass.name %>
-        <% } %>
-    </span>
-
     </td>
 
-    <td class="data lg-only"><span class="current-value"><%= data %></span><span class="new-value"><textarea class="new-device-data"><%= data %></textarea></span></td>
+    <td class="data lg-only device-data">
+        <span class="current-value"><%= data %></span>
+        <span class="new-value"><textarea class="new-device-data" data-toggle="tooltip" title="Device data should be valid Json or empty field"><%= data %></textarea></span>
+    </td>
 
     <td class="buttons-column text-nowrap">
         <span class="current-value">
@@ -64,8 +65,8 @@
             <a href="javascript:void(0)" class="delete btn btn-sm btn-danger">delete</a>
         </span>
         <span class="new-value">
-            <a href="javascript:void(0)" class="save btn btn-sm btn-success">save</a>
-            <a href="javascript:void(0)" class="cancel btn btn-sm btn-warning">cancel</a>
+            <button class="save btn btn-sm btn-success save-device">save</button>
+            <button class="cancel btn btn-sm btn-warning">cancel</button>
         </span>
     </td>
 </script>

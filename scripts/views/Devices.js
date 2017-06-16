@@ -28,7 +28,9 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         "click .cancel": "cancelAction"
     },
     initialize: function (options) {
-        this.bindTo(this.model,"change", function () { this.render(); }, this);
+        this.bindTo(this.model,"change", function () {
+            this.render();
+        }, this);
 
         this.networksList = options.networks;
         this.classesList = options.classes;
@@ -37,7 +39,18 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     template: "device-list-item-template",
     tagName: "tr",
     onRender: function () {
-        this.showValuesAreas();
+        if (app.hasRole(app.Enums.UserRole.Administrator)) {
+            if (this.model.isNew())
+                this.showEditableAreas();
+            else
+                this.showValuesAreas();
+        }
+        else {
+            if (this.model.isNew())
+                this.showEditableAreas();
+            else
+                this.showValuesAreas();
+        }
     },
     deleteDevice: function () {
         if (confirm("Do you really want to delete this device? All collected information will be lost."))
@@ -47,26 +60,46 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             });
     },
     saveDevice: function () {
+        var name = this.$el.find(".new-device-name").val();
         var data = this.$el.find(".new-device-data").val();
-        if (!this.model.setStrData(data)) { return; }
-
         var netwId = this.$el.find(".new-device-network :selected").val();
-        var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        var status = this.$el.find(".new-device-status").val();
+        var isBlocked = this.$el.find(".new-isBlocked-state").val();
 
-        var changes = {
-            name: this.$el.find(".new-device-name").val(),
-            status: this.$el.find(".new-device-status").val(),
-            network: network
-        };
-
-        if (this.classEditable) {
-            var classId = this.$el.find(".new-device-class :selected").val();
-            changes.deviceClass =
-                this.classesList.find(function (cls) { return cls.id == classId; }).toJSON({ escape: true });
+        if((data.length > 0) && !app.isJson(data)) {
+            this.$el.find('.new-device-data').tooltip();
+            this.$el.find('.new-device-data').focus();
+            return;
         }
 
+        if(!name) {
+            this.$el.find('.new-device-name').tooltip();
+            this.$el.find('.new-device-name').focus();
+            return;
+        }
+
+        if (!netwId  || netwId == 0) {
+            return;
+        } else {
+            var network = this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        }
+
+        var changes = {
+            name: name,
+            data: (data.length > 0) ? JSON.parse(data) : null,
+            status: status,
+            networkId: netwId,
+            network: network,
+            isBlocked: isBlocked
+        };
+
         var that = this;
+        if (this.model.isNew()) {
+            //Generate random device ID
+            this.model.set({id: this.makeid()});
+        }
         this.model.save(changes, {
+            type: 'PUT',
             success: function () {
                 that.render();
             }, error: function (model, response) {
@@ -76,8 +109,21 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         });
 
     },
+    makeid: function() {
+        //Generating random ID for new device
+        var newId = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for( var i=0; i < 36; i++ ) {
+            newId += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return newId;
+    },
     cancelAction: function () {
-        this.showValuesAreas();
+        if (this.model.isNew())
+            this.model.destroy();
+        else
+            this.render();
     },
     editDevice: function () {
         this.showEditableAreas();
@@ -92,26 +138,38 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
     },
     serializeData: function () {
         var base = this.model.toJSON({ escape: true });
-        //add backslashes to &quot; entity created during escaping 
-        if (_.has(base, "data") && !_.isNull(base.data))
-            base["data"] = JSON.stringify(base.data).replace(/&quot;/g,"\\&quot;");
-        else
+
+        if (_.has(base, "data") && !_.isNull(base.data)) {
+            base["data"] = JSON.stringify(base.data);
+        } else  {
             base["data"] = "";
+        }
 
-        if (base.network == null)
-            base["network"] = { id: 0, name: "---No network---" };
+        if (base.networkId == null) {
+            base["network"] = { id: 0, name: "" };
+        } else {
+            base["network"] = this.networksList.find(function (net) {return net.id == base.networkId;}).toJSON({escape: true});
+        }
 
-        base.networks = [{ id: 0, name: "---No network---"}];
+        if (base["isBlocked"] && (base["isBlocked"].length > 0)) {
+            base["isBlocked"] = (base["isBlocked"] == "false") ? false : true;
+        }
+
+        base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
 
         base.classEditable = this.classEditable;
         base.classes = base.classEditable ? this.classesList.toJSON({ escape: true }) : [];
+
         return base;
     }
 });
 
 //collection is an app.Models.NetworksCollection
 app.Views.Devices = Backbone.Marionette.CompositeView.extend({
+    events: {
+        "click .add": "addDevice"
+    },
     itemView: app.Views.DeviceListItem,
     itemViewOptions: function () {
         return {
@@ -123,7 +181,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     emptyView: Backbone.Marionette.ItemView.extend(
         {
             render: function () {
-                this.$el.html("<td colspan='5'>there are no devices has been registered yet.</td>");
+                this.$el.html("<td colspan='5'>No devices available</td>");
                 return this;
             },
             tagName: "tr"
@@ -131,9 +189,61 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     template: "devices-template",
     itemViewContainer: "tbody",
     initialize: function (options) {
+        this.userData = app.parseJwt(localStorage.deviceHiveToken);
         this.networks = options.networks;
         this.classes = options.classes;
         this.classEditable = options.classEditable;
+    },
+    addDevice: function() {
+        if(this.networks.length > 0) {
+            this.collection.add(new app.Models.Device({"isBlocked": false}));
+        } else {
+            return;
+        }
+    },
+    onRender: function() {
+        var that = this;
+        if(this.networks.length > 0) {
+            this.$el.find(".add-device").prop('disabled', false);
+        } else {
+            this.$el.find(".add-device").addClass("disabled").attr("rel", "tooltip");
+            this.$el.find('[data-toggle="tooltip"]').tooltip();
+        }
+
+        //New User Devices page hints
+        setTimeout(function () {
+            if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
+                var enjoyhint_instance = new EnjoyHint({});
+                var enjoyhint_devices_script_steps = []
+
+                if (app.hasRole(app.Enums.UserRole.Administrator)) {
+                    if (!(that.collection.length > 0)) {
+                        enjoyhint_devices_script_steps = app.hints.devicesHintsAdminWithNoDevices;
+                    } else {
+                        enjoyhint_devices_script_steps = app.hints.devicesHintsAdmin;
+                    }
+
+                } else {
+                    if (!(that.collection.length > 0)) {
+                        if (that.networks.length > 0) {
+                            enjoyhint_devices_script_steps = app.hints.devicesHintsWithNetwork;
+                        } else {
+                            enjoyhint_devices_script_steps = app.hints.devicesHintsClientWithNoNetworks;
+                        }
+                    } else {
+                        enjoyhint_devices_script_steps = app.hints.devicesHintsWithDevice;
+                    }
+                }
+
+                enjoyhint_instance.set(enjoyhint_devices_script_steps);
+                enjoyhint_instance.run();
+
+                $(".enjoyhint_skip_btn").on("click", function() {
+                    app.disableNewUserHints();
+                });
+            }
+        }, 1000);
+
     }
 });
 

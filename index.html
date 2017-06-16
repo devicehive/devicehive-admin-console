@@ -22,7 +22,7 @@
     <title>DeviceHive Web Admin</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css">
     <link rel="stylesheet" href="css/style-custom.css">
-    <link rel="stylesheet" type="text/css" href="css/social-buttons.css">
+    <link rel="stylesheet" type="text/css" href="scripts/libs/enjoyhint/enjoyhint.css">
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <!--[if IE]>
@@ -33,7 +33,7 @@
 
 
     <!-- libs -->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/0.10.0/backbone.marionette.min.js"></script>
@@ -41,7 +41,7 @@
     <!-- ui -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- backbone extensions -->
     <script type="text/javascript" src="scripts/libs/backbone.extensions.js"></script>
@@ -57,6 +57,8 @@
 
 
     <!-- bootstrap -->
+    <script type="text/javascript" src="scripts/libs/enjoyhint/enjoyhint.js"></script>
+    <script type="text/javascript" src="scripts/libs/jwt-decode-master/build/jwt-decode.min.js"></script>
     <script type="text/javascript" src="scripts/app/application.js"></script>
 
     <!-- models -->
@@ -66,10 +68,7 @@
     <script type="text/javascript" src="scripts/models/Network.js"></script>
     <script type="text/javascript" src="scripts/models/User.js"></script>
     <script type="text/javascript" src="scripts/models/UserInNetwork.js"></script>
-    <!--<script type="text/javascript" src="scripts/models/Equipment.js"></script>-->
-    <script type="text/javascript" src="scripts/models/DeviceClass.js"></script>
     <script type="text/javascript" src="scripts/models/Device.js"></script>
-    <!--<script type="text/javascript" src="scripts/models/DeviceEquipment.js"></script>-->
     <script type="text/javascript" src="scripts/models/Command.js"></script>
     <script type="text/javascript" src="scripts/models/Notification.js"></script>
     <script type="text/javascript" src="scripts/models/JwtToken.js"></script>
@@ -83,20 +82,15 @@
     <script type="text/javascript" src="scripts/views/UserCreateEdit.js"></script>
     <script type="text/javascript" src="scripts/views/UserNetworks.js"></script>
     <script type="text/javascript" src="scripts/views/Users.js"></script>
-
     <script type="text/javascript" src="scripts/views/Networks.js"></script>
-
-    <script type="text/javascript" src="scripts/views/DeviceClasses.js"></script>
-    <!--<script type="text/javascript" src="scripts/views/EquipmentListItem.js"></script>-->
-    <!--<script type="text/javascript" src="scripts/views/DeviceClassEquipments.js"></script>-->
-
     <script type="text/javascript" src="scripts/views/Devices.js"></script>
     <script type="text/javascript" src="scripts/views/Device.js"></script>
     <script type="text/javascript" src="scripts/views/DevicePanels.js"></script>
-    <!--<script type="text/javascript" src="scripts/views/DeviceEquipments.js"></script>-->
     <script type="text/javascript" src="scripts/views/Commands.js"></script>
     <script type="text/javascript" src="scripts/views/Notifications.js"></script>
     <script type="text/javascript" src="scripts/views/TimeFilters.js"></script>
+    <script type="text/javascript" src="scripts/views/ExpirationTimeSelector.js"></script>
+    <script type="text/javascript" src="scripts/views/JwtToken.js"></script>
 
     <!-- modules -->
     <script type="text/javascript" src="scripts/modules/notifications.js"></script>
@@ -104,8 +98,8 @@
     <script type="text/javascript" src="scripts/modules/users.js"></script>
     <script type="text/javascript" src="scripts/modules/networks.js"></script>
     <script type="text/javascript" src="scripts/modules/devices.js"></script>
-    <script type="text/javascript" src="scripts/modules/deviceClasses.js"></script>
     <script type="text/javascript" src="scripts/modules/login.js"></script>
+    <script type="text/javascript" src="scripts/modules/jwtToken.js"></script>
 
     <!-- config -->
     <script type="text/javascript" src="scripts/config.js"></script>
@@ -114,7 +108,9 @@
 <body>
 
 <script type="text/javascript">
+    var idleTime = app.config.sessionLifeTime;
     $(document).ready(function() {
+        $("#error-empty-page").show();
         app.addRegions({
                 menuArea: "#menu-area",
                 topWorkArea: "#top-work-area",
@@ -124,9 +120,31 @@
 
         // see config in scripts/config.js
         app.start(app.config);
+
+        //Increment the idle time counter every minute.
+        setInterval(timerDecrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).click(function () {
+            idleTime = app.config.sessionLifeTime;
+        });
     });
 
+    function timerDecrement() {
+        idleTime = idleTime - 1;
+        if (idleTime < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime)) && localStorage.deviceHiveToken) {
+            idleTime = app.config.sessionLifeTime;
+            alert("Your session has expired");
+            var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
+            //cleaning tokens in local storage
+            localStorage.deviceHiveToken = '';
+            localStorage.introReviewed = true;
+            localStorage.deviceHiveRefreshToken = '';
+            localStorage.lastActivity = (new Date()).valueOf();
 
+            location.href = redirectUrl;
+        }
+    }
 </script>
 
 <div id="app-wrapper" class="container">
@@ -134,6 +152,9 @@
     <div id="status-area"></div>
     <div id="top-work-area"></div>
     <div id="bottom-work-area"></div>
+    <div id="error-empty-page">
+        <h1>Oops! Something went wrong on server!</h1>
+    </div>
 </div>
 </body>
 </html>

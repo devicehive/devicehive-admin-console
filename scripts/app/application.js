@@ -77,16 +77,43 @@ _.extend(app, {
     },
     // checks whether app.User is populated
     isLoggedIn: function () {
+        this.checkSession();
         return app.User;// && !app.User.isNew();
     },
-    hasCredentials: function () {
-        // if no credentials currently set
-        if (!localStorage.deviceHiveToken) {
-            return false;
-        } else {
-            //console.log('lets think that we have correct credentials');
-            return true;
+    checkSession: function() {
+        if (localStorage.deviceHiveToken) {
+            var currentJwtToken = this.parseJwt(localStorage.deviceHiveToken);
+            var expirationTokenTime = currentJwtToken.payload.expiration;
+            var currentTime = (new Date()).valueOf();
+
+            var msDateDiff = expirationTokenTime - currentTime;
+            var mDateDiff = Math.floor(msDateDiff / 1000 / 60);
+
+            if (mDateDiff < (Math.floor(app.config.sessionLifeTimeRatio * app.config.sessionLifeTime))) {
+                console.log("Tokens were refreshed");
+                var JWTTokenModel = new app.Models.JwtToken();
+                JWTTokenModel.refreshJwtToken();
+            }
         }
+    },
+    disableNewUserHints: function() {
+        app.User.disableHints();
+    },
+    parseJwt: function (token) {
+        if(token) {
+            return jwt_decode(token);
+        }
+    },
+    isJson: function(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    },
+    hasCredentials: function () {
+        return (localStorage.deviceHiveToken) ? true : false;
     },
     // checks whether app.User has access to specified role
     hasRole: function (roles) {
@@ -128,7 +155,12 @@ app.bind("initialize:before", function (options) {
 });
 
 app.bind("initialize:after", function (options) {
+    $("#error-empty-page").hide();
     app.User = new app.Models.User();
+
+    setTimeout(function () {
+        localStorage.introReviewed = app.User.attributes.introReviewed;
+    }, 1000);
     var params = {root: app.config.rootUrl};
 
     if (_.isObject(options)) {
@@ -188,6 +220,7 @@ app.bind("login", function (options) {
                 app.trigger('needAuth', reply);
             } else {
                 delete localStorage.deviceHiveToken;
+                delete localStorage.introReviewed;
                 Backbone.history.navigate('', {trigger: false});
                 location.reload(true);
             }

@@ -77,7 +77,72 @@ table {
     height: 70px;
 }
 
-.navbar-nav
-{
-    cursor: pointer;	
+.navbar-nav {
+    cursor: pointer;
+}
+.token-holder {
+    word-wrap: break-word;
+}
+.classWithPad {
+    margin:10px;
+    padding:10px;
+}
+.grey {
+    background-color: #f9f9f9;
+}
+#error-empty-page {
+    display: none;
+    width: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    resize: both;
+    overflow: auto;
+}
+
+.enjoyhint .customSkipBtn {
+    width: 130px;
+}
+
+.validation-errors {
+    display: none;
+    color: red;
+}
+
+.registered-networks-col {
+    padding-left: 0;
+}
+
+.password-info-icon {
+    line-height: 35px;
+}
+
+.kineticjs-content canvas {
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+
+.new-device-network {
+    max-width: 460px;
+}
+
+.network {
+    width: 42%;
+}
+
+.max-rows-number-reached {
+    display: none;
+}
+
+.new-notification-params {
+    min-width: 700px;
+}
+
+.new-isBlocked-state {
+    min-width: 109px;
+}
+
+.device-data .current-value {
+    word-break: break-word;
 }

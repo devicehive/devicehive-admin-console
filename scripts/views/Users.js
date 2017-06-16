@@ -27,14 +27,16 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
     template: "user-list-item-template",
     serializeData: function () {
         var data = this.model.toJSON({ escape: true });
+
         if (_.has(data, "status"))
             data.status = app.Enums.UserStatus.getName(data.status);
         else
             data.status = "";
-        if (_.has(data, "data") && !_.isNull(data.data))
-            data["data"] = JSON.stringify(data.data);
-        else
+        if (_.has(data, "data") && !_.isNull(data.data)) {
+            data["data"] = JSON.stringify(data["data"]);
+        } else {
             data["data"] = "";
+        }
 
         if (_.has(data, "role"))
             data.role = app.Enums.UserRole.getName(data.role);
@@ -46,15 +48,6 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
             data.lastLogin = app.f.parseUTCstring(data.lastLogin).format("mm/dd/yyyy HH:MM:ss");
         else
             data.lastLogin = "";
-
-        if (!_.has(data, "googleLogin") || _.isEmpty(data.googleLogin))
-            data.googleLogin = "";
-
-        if (!_.has(data, "facebookLogin") || _.isEmpty(data.facebookLogin))
-            data.facebookLogin = "";
-
-        if (!_.has(data, "githubLogin") || _.isEmpty(data.githubLogin))
-            data.githubLogin = "";
 
         return data;
     }
@@ -70,6 +63,19 @@ app.Views.Users = Backbone.Marionette.CompositeView.extend({
     },
     beforeRender: function () {
         this.$el.addClass("users");
+    },
+    onRender: function () {
+        //New User Users page hints
+        if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
+            var enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_devices_script_steps = app.hints.usersHints;
+            enjoyhint_instance.set(enjoyhint_devices_script_steps);
+            enjoyhint_instance.run();
+
+            $(".enjoyhint_skip_btn").on("click", function() {
+                app.disableNewUserHints();
+            });
+        }
     },
     itemView: app.Views.UserListItem,
     itemViewContainer: "tbody",

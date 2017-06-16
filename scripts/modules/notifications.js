@@ -27,28 +27,25 @@ app.module("Modules.Notifications", function (users, app) {
 
         if (_.isString(errorObject)) {
             errorMessage += errorObject;
+            alert(errorMessage);
         } else
-            if (_.has(errorObject, "responseText") && _.has(errorObject, "status") && _.has(errorObject, "readyState")) {
+            if (_.has(errorObject, "responseText") && _.has(errorObject, "status") && _.has(errorObject, "readyState") && errorObject.status == 401) {
+                if (sessionStorage && !sessionStorage.requestFragment) {
+                    sessionStorage.requestFragment = Backbone.history.fragment;
+                }
+
+                sessionStorage.authenticationError = "You have entered invalid credentials";
+            }
+            else if (_.has(errorObject, "responseText") && _.has(errorObject, "status") && _.has(errorObject, "readyState")) {
                 var jResp = errorObject.responseText;
-                try {
-                    jResp = $.parseJSON(errorObject.responseText);
-                    if (_.has(jResp, "message"))
-                        errorMessage += jResp.message;
-                    else if (_.has(jResp, "Message"))
-                        errorMessage += jResp.Message;
-                    else
-                        errorMessage += JSON.stringify(jResp);
-                }
-                catch (ex) {
-                    errorMessage += jResp;
-                }
+                errorMessage = "Oops! Something went wrong on server!";
+                console.log("Error Details: " + jResp);
+                alert(errorMessage);
             }
             else if (_.has(errorObject, "status") && _.has(errorObject, "readyState") && errorObject.status == 500) {
                 errorMessage = "Unknown server error";
+                alert(errorMessage);
             }
-
-
-        alert(errorMessage);
     };
 
     var notificationsHandler = function (status, errorObject, message) {

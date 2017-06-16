@@ -24,11 +24,13 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Login:</label>
                     <div class="col-lg-9">
-                        <input class="form-control" type="text" id="login" value="<%= login %>"/>
+                        <input class="form-control" type="text" id="login" value="<%= login %>" minlength="3" maxlength="128"/>
+                        <span id="login-length-error" class="validation-errors">User name should be at least 3 characters and do not exceed 128 characters</span>
+                        <span id="login-pattern-error" class="validation-errors">User name can contain only letters, numbers and @_.- symbols</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">role:</label>
+                    <label class="col-lg-2 control-label">Role:</label>
                     <div class="col-lg-9">
                         <select class="form-control col-lg-9" id="role">
                            <% _.each(Roles,function(value,key) {
@@ -67,45 +69,31 @@
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Password:</label>
+                    <span class="glyphicon glyphicon-info-sign password-info-icon" data-toggle="tooltip" title="This field is mandatory if you want to create a new user."></span>
                     <div class="col-lg-9">
                         <input class="form-control" id="password" type="password"/>
+                        <span id="password-length-error" class="validation-errors">User password should be at least 6 characters and do not exceed 128 characters</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Password confirmation:</label>
                     <div class="col-lg-9">
                         <input class="form-control" id="password-confirmation" type="password"/>
+                        <span id="password-confirmation-match-error" class="validation-errors">Passwords do not match. Please check them one more time.</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Data:</label>
+                    <label class="col-lg-2 control-label">Data (Json):</label>
                     <div class="col-lg-9">
                         <textarea class="form-control" type="text" id="data" cols="40" rows="5" ><%= data %></textarea>
-                    </div>
-                </div>
-                <div class="form-group google-identity-login ui-helper-hidden">
-                    <label class="col-lg-2 control-label">Google login:</label>
-                    <div class="col-lg-9">
-                        <input class="form-control" type="text" id="googleLogin" value="<%= googleLogin %>"/>
-                    </div>
-                </div>
-                <div class="form-group facebook-identity-login ui-helper-hidden">
-                    <label class="col-lg-2 control-label">Facebook login:</label>
-                    <div class="col-lg-9">
-                        <input class="form-control" type="text" id="facebookLogin" value="<%= facebookLogin %>"/>
-                    </div>
-                </div>
-                <div class="form-group github-identity-login ui-helper-hidden">
-                    <label class="col-lg-2 control-label">Github login:</label>
-                    <div class="col-lg-9">
-                        <input class="form-control" type="text" id="githubLogin" value="<%= githubLogin %>"/>
+                        <span id="data-format-error" class="validation-errors">Data should be valid Json</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="panel-footer">
             <a href="javascript:void(0)" class="save edit-button btn btn-success"><%= saveButtonText %></a>
-            <a href="javascript:void(0)" class="close-form view-button btn btn-warning">Close</a>
+            <a href="javascript:void(0)" class="close-form view-button btn btn-warning">close</a>
         </div>
     </div>
 </script>
