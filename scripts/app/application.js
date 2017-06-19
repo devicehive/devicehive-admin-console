@@ -178,6 +178,10 @@ app.bind("initialize:after", function (options) {
             var query = app.f.parseQueryString(location.search);
             console.log('Detected starting query', query);
 
+            if (query.deviceHiveRefreshToken) {
+                localStorage.deviceHiveRefreshToken = query.deviceHiveRefreshToken;
+            }
+
             if (query.deviceHiveToken) {
                 localStorage.deviceHiveToken = query.deviceHiveToken;
                 localStorage.lastActivity = (new Date()).valueOf();
