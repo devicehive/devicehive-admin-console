@@ -180,6 +180,7 @@ app.bind("initialize:after", function (options) {
 
             if (query.deviceHiveRefreshToken) {
                 localStorage.deviceHiveRefreshToken = query.deviceHiveRefreshToken;
+                delete query.deviceHiveRefreshToken;
             }
 
             if (query.deviceHiveToken) {
