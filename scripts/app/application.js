@@ -174,6 +174,7 @@ app.bind("initialize:after", function (options) {
         Backbone.history.start(params);
 
         if (location.search) {
+            localStorage.clear();
             var query = app.f.parseQueryString(location.search);
             console.log('Detected starting query', query);
 
