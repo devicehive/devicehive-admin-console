@@ -227,7 +227,6 @@ app.bind("login", function (options) {
                     }
                     this.userData.payload.expiration = this.expirationTokenDate;
                     JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
-                        localStorage.deviceHiveToken = tokens.accessToken;
                         localStorage.deviceHiveRefreshToken = tokens.refreshToken;
                     });
                 }
