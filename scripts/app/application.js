@@ -225,7 +225,7 @@ app.bind("login", function (options) {
                     if (!this.userData) {
                         this.userData = app.parseJwt(localStorage.deviceHiveToken);
                     }
-                    this.userData.payload.expiration = this.expirationTokenDate;
+                    this.userData.payload.expiration = null;
                     JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
                         localStorage.deviceHiveRefreshToken = tokens.refreshToken;
                     });
