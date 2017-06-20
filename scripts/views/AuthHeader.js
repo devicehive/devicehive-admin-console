@@ -30,6 +30,14 @@ app.Views.authHeader = Backbone.Marionette.ItemView.extend({
     clickHandler: function(e) {
         e.preventDefault();
         $el = $(e.target);
-        Backbone.history.navigate($el.data('path'), { trigger: true });
+        if (!app.isAdmin(localStorage.deviceHiveToken)) {
+            var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
+            //cleaning local storage
+            localStorage.clear();
+            localStorage.lastActivity = (new Date()).valueOf();
+            location.href = redirectUrl;
+        } else {
+            Backbone.history.navigate($el.data('path'), { trigger: true });
+        }
     }
 });

@@ -137,11 +137,9 @@
             alert("Your session has expired");
             var redirectUrl = app.f.prepareAbsolutePath(app.config.sessionExpiredRedirectUrl);
             //cleaning tokens in local storage
-            localStorage.deviceHiveToken = '';
+            localStorage.clear();
             localStorage.introReviewed = true;
-            localStorage.deviceHiveRefreshToken = '';
             localStorage.lastActivity = (new Date()).valueOf();
-
             location.href = redirectUrl;
         }
     }
