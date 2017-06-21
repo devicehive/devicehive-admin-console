@@ -20,7 +20,9 @@
 app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
     events: {
         "click .show-datetime-selector": "showDateTimeFilter",
-        "submit form": "getTokens"
+        "submit form": "getTokens",
+        "click #refreshTokenHolder": "copyRefreshToken",
+        "click #accessTokenHolder": "copyAccessToken"
     },
     template: "jwt-token-template",
     initialize: function (options) {
@@ -28,6 +30,8 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         this.data = {};
         this.data.accessToken = "";
         this.data.refreshToken = "";
+        this.data.accessTokenExpirationDate = "";
+        this.data.refreshTokenExpirationDate = "";
         this.expirationTokenDate =  "";
 
         if (!_.isUndefined(options) && _.has(options, "timeFilters"))
@@ -41,6 +45,8 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         return {
             'accessToken': this.data.accessToken,
             'refreshToken': this.data.refreshToken,
+            'accessTokenExpirationDate': this.data.accessTokenExpirationDate,
+            'refreshTokenExpirationDate': this.data.refreshTokenExpirationDate
         }
     },
     onRender: function () {
@@ -56,6 +62,7 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         this.timeFiltersView.on("closeFilters", function () {
             that.timeFiltersView.$el.hide();
         });
+        that.$el.find('.token-holder').tooltip();
 
         //New User JwtToken hints
         if (app.User && (!(localStorage.introReviewed) || (localStorage.introReviewed === 'false'))) {
@@ -100,7 +107,9 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         this.userData.payload.expiration = this.expirationTokenDate;
         JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
             that.data.accessToken = tokens.accessToken;
+            that.data.accessTokenExpirationDate = new Date(app.parseJwt(tokens.accessToken).payload.expiration).format("mm/dd/yyyy HH:MM");
             that.data.refreshToken = tokens.refreshToken;
+            that.data.refreshTokenExpirationDate = new Date(app.parseJwt(tokens.refreshToken).payload.expiration).format("mm/dd/yyyy HH:MM");
             that.render();
         });
     },
@@ -117,5 +126,32 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         dtBox.css("top", pos.top - 20);
         dtBox.css("left", pos.left);
         dtBox.show();
+    },
+
+    copyAccessToken: function(element) {
+        var that = this;
+        this.copyToClipboard(element);
+        $('#copy-access-token-message').show();
+        setTimeout(function() {
+            that.$el.find('#copy-access-token-message').fadeOut('fast');
+        }, 1000);
+    },
+
+    copyRefreshToken: function(element) {
+        var that = this;
+        this.copyToClipboard(element);
+        $('#copy-refresh-token-message').show();
+        setTimeout(function() {
+            that.$el.find('#copy-refresh-token-message').fadeOut('fast');
+        }, 1000);
+    },
+
+    // Function to copy to clipboard
+    copyToClipboard: function(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(element.target.innerHTML).select();
+        document.execCommand("copy");
+        $temp.remove();
     }
 });
