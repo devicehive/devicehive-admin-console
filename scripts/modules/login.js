@@ -45,6 +45,7 @@ app.module("Modules.Login", function (users, app) {
 
     var sendLogoutRequest = function () {
         delete localStorage.deviceHiveToken;
+        delete localStorage.deviceHiveRefreshToken;
         Backbone.history.navigate('', {trigger: false});
         location.reload(true);
     };
