@@ -98,27 +98,32 @@ app.Views.CommandListItem = Backbone.Marionette.ItemView.extend({
     copyAction: function () {
         this.model.collection.add(this.model.copyIt());
     },
+
+    saveAction: function(name) {
+        var that = this;
+        this.model.save({command: name }, {
+            error: function (mod, response) {
+                that.model.collection.remove(that.model);
+                app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+            },
+            success: function () {
+                that.model.collection.remove(that.model);
+                app.vent.trigger("notification", app.Enums.NotificationType.Notify, "Command " + name + " has been succesfully send to device " + that.model.device.get("id"));
+            }
+        });
+    },
     pushAction: function () {
-        var fields = {};
         var name = this.$el.find(".new-command-name").val();
 
         var parameters = this.$el.find(".new-command-params").val();
-
-
-        var that = this;
-
-        if (this.model.setStrParameters(parameters)) {
-            this.model.save({command: name }, {
-                error: function (mod, response) {
-                    that.model.collection.remove(that.model);
-                    app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
-                },
-                success: function () {
-                    that.model.collection.remove(that.model);
-                    app.vent.trigger("notification", app.Enums.NotificationType.Notify, "Command " + name + " has been succesfully send to device " + that.model.device.get("id"));
-                }
-            });
+        if (parameters.length > 0) {
+            if(this.model.setStrParameters(parameters)) {
+                this.saveAction(name);
+            }
+        } else {
+            this.saveAction(name);
         }
+
     }
 });
 
