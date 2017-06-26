@@ -24,14 +24,22 @@ app.Models.TimeFilters = Backbone.Model.extend({
     defaults: { startDate: null, endDate: null },
     getters: {
         startDateUTCString: function () {
-            if (_.isDate(this.get("startDate")))
-                return this.get("startDate").format("yyyy-mm-dd'T'HH:MM:ss.l");
-            else return null;
+            var startDate = this.get("startDate");
+            if (_.isDate(startDate)) {
+                var utcStartDate = startDate.getTime() + startDate.getTimezoneOffset() * 60000;
+                return (new Date(utcStartDate)).format("yyyy-mm-dd'T'HH:MM:ss.l");
+            } else {
+                return null;
+            }
         },
         endDateUTCString: function () {
-            if (_.isDate(this.get("endDate")))
-                return this.get("endDate").format("yyyy-mm-dd'T'HH:MM:ss.l");
-            else return null;
+            var endDate = this.get("endDate");
+            if (_.isDate(endDate)) {
+                var utcEndDate = endDate.getTime() + endDate.getTimezoneOffset() * 60000;
+                return (new Date(utcEndDate)).format("yyyy-mm-dd'T'HH:MM:ss.l");
+            } else {
+                return null;
+            }
         }
     }
 });
