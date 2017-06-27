@@ -107,9 +107,9 @@ app.Views.JwtToken= Backbone.Marionette.ItemView.extend({
         this.userData.payload.expiration = this.expirationTokenDate;
         JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
             that.data.accessToken = tokens.accessToken;
-            that.data.accessTokenExpirationDate = new Date(app.parseJwt(tokens.accessToken).payload.expiration).format("mm/dd/yyyy HH:MM");
+            that.data.accessTokenExpirationDate = new Date(app.parseJwt(tokens.accessToken).payload.expiration).format("mm/dd/yyyy HH:MM Z");
             that.data.refreshToken = tokens.refreshToken;
-            that.data.refreshTokenExpirationDate = new Date(app.parseJwt(tokens.refreshToken).payload.expiration).format("mm/dd/yyyy HH:MM");
+            that.data.refreshTokenExpirationDate = new Date(app.parseJwt(tokens.refreshToken).payload.expiration).format("mm/dd/yyyy HH:MM Z");
             that.render();
         });
     },
