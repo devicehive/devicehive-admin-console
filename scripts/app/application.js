@@ -115,6 +115,13 @@ _.extend(app, {
     hasCredentials: function () {
         return (localStorage.deviceHiveToken) ? true : false;
     },
+
+    isAdmin: function(token) {
+        if (token) {
+            var userData = app.parseJwt(token);
+            return (userData.payload.actions[0] === '*');
+        }
+    },
     // checks whether app.User has access to specified role
     hasRole: function (roles) {
         if (!this.isLoggedIn()) {
@@ -174,6 +181,7 @@ app.bind("initialize:after", function (options) {
         Backbone.history.start(params);
 
         if (location.search) {
+            localStorage.clear();
             var query = app.f.parseQueryString(location.search);
             console.log('Detected starting query', query);
 
@@ -211,6 +219,18 @@ app.bind("login", function (options) {
                     target = sessionStorage.requestFragment;
                     delete sessionStorage.requestFragment;
                 }
+
+                if (localStorage.deviceHiveToken && !localStorage.deviceHiveRefreshToken) {
+                    var JWTTokenModel = new app.Models.JwtToken();
+                    if (!this.userData) {
+                        this.userData = app.parseJwt(localStorage.deviceHiveToken);
+                    }
+                    this.userData.payload.expiration = null;
+                    JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
+                        localStorage.deviceHiveRefreshToken = tokens.refreshToken;
+                    });
+                }
+
                 Backbone.history.navigate(target, {trigger: true});
             }
         },

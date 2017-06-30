@@ -22,14 +22,16 @@
 			<% if(accessToken) {%>
 			<div class="form-group">
 				<div class="col-lg-8 classWithPad grey jwt-token-container">
-					<p>JWT Token: </p>
-					<span class="token-holder"><%=accessToken%></span>
+					<div id="copy-access-token-message" class="copy-token-messages">Access token has been copied</div>
+					<p>JWT Token (Expiration date: <%=accessTokenExpirationDate%>): </p>
+					<span class="token-holder" id="accessTokenHolder" data-toggle="tooltip" title="Click to copy"><%=accessToken%></span>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-lg-8 classWithPad grey jwt-refresh-token-container">
-					<p>JWT Refresh Token: </p>
-					<span class="token-holder"><%=refreshToken%></span>
+					<div id="copy-refresh-token-message" class="copy-token-messages">Refresh token has been copied</div>
+					<p>JWT Refresh Token (Expiration date: <%=refreshTokenExpirationDate%>): </p>
+					<span class="token-holder" id="refreshTokenHolder" data-toggle="tooltip" title="Click to copy"><%=refreshToken%></span>
 				</div>
 			</div>
 			<% } %>

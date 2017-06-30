@@ -117,9 +117,9 @@ app.Views.Notifications = Backbone.Marionette.CompositeView.extend({
         var end = this.timeFiltersModel.get("endDateUTCString");
 
         if (!_.isEmpty(start))
-            params["start"] = app.f.parseISOLocal(start).toUTCString();;
+            params["start"] = app.f.parseUTCstring(start).toUTCString();
         if (!_.isEmpty(end))
-            params["end"] = app.f.parseISOLocal(end).toUTCString();
+            params["end"] = app.f.parseUTCstring(end).toUTCString();
 
         this.StartLoading();
         this.collection.fetch({
