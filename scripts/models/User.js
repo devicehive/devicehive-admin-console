@@ -25,7 +25,7 @@ app.Models.User = Backbone.AuthModel.extend({
         networksCollection: function () {
             if (this.networksColl == null)
                 this.networksColl = new app.Models.NetworksCollection(_.map(this.get("networks"), function (netObj) {
-                    return new app.Models.Network(netObj.network);
+                    return new app.Models.Network(netObj);
                 }));
 
             return this.networksColl;
