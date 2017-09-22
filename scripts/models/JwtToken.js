@@ -45,7 +45,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
 
                     try {
                         var parsedJwt = app.parseJwt(accessToken);
-                        localStorage.expiration = parsedJwt.payload.expiration;
+                        localStorage.expiration = parsedJwt.payload.e;
                     } catch (err) {
                         console.log(err);
                     }
@@ -84,7 +84,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
 
                     try {
                         var parsedJwt = app.parseJwt(accessToken);
-                        localStorage.expiration = parsedJwt.payload.expiration;
+                        localStorage.expiration = parsedJwt.payload.e;
                     } catch (err) {
                         console.log(err);
                     }
