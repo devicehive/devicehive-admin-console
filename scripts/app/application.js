@@ -104,7 +104,11 @@ _.extend(app, {
             return jwt_decode(token);
         }
     },
+    isNumeric: function(num){
+        return !isNaN(num)
+    },
     isJson: function(str) {
+        if(app.isNumeric(str)) return false;
         try {
             JSON.parse(str);
         } catch (e) {
