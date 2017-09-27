@@ -69,6 +69,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         this.$el.find(".new-value").hide();
         this.$el.find(".save-device").hide();
         this.$el.find(".close-action").hide();
+        this.$el.find('#data-format-error').hide();
 
         this.$el.find(".device-value").show();
         this.$el.find(".edit-device").show();
