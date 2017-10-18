@@ -21,7 +21,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
         this.getJwtTokenWithCredentials(params);
     },
     refreshJwtToken: function() {
-        var getTokenUrl = app.config.restEndpoint + '/token/refresh';
+        var getTokenUrl = app.config.authRestEndpoint + '/token/refresh';
         var refreshToken = (localStorage.deviceHiveRefreshToken) ? localStorage.deviceHiveRefreshToken : null;
 
         if(refreshToken) {
@@ -45,7 +45,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
 
                     try {
                         var parsedJwt = app.parseJwt(accessToken);
-                        localStorage.expiration = parsedJwt.payload.expiration;
+                        localStorage.expiration = parsedJwt.payload.e;
                     } catch (err) {
                         console.log(err);
                     }
@@ -65,7 +65,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
         }
     },
     getJwtTokenWithCredentials: function(params) {
-        var getTokenUrl = app.config.restEndpoint + '/token';
+        var getTokenUrl = app.config.authRestEndpoint + '/token';
         if(params) {
             $.ajax({
                 type: "POST",
@@ -84,7 +84,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
 
                     try {
                         var parsedJwt = app.parseJwt(accessToken);
-                        localStorage.expiration = parsedJwt.payload.expiration;
+                        localStorage.expiration = parsedJwt.payload.e;
                     } catch (err) {
                         console.log(err);
                     }
@@ -107,7 +107,7 @@ app.Models.JwtToken = Backbone.AuthModel.extend({
     },
 
     generateDeviceJwtTokens: function(userPayload, callback) {
-        var getTokenCreateUrl = app.config.restEndpoint + '/token/create';
+        var getTokenCreateUrl = app.config.authRestEndpoint + '/token/create';
 
         if(app.isLoggedIn() && userPayload) {
             $.ajax({
