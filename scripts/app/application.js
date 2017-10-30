@@ -83,7 +83,7 @@ _.extend(app, {
     checkSession: function() {
         if (localStorage.deviceHiveToken) {
             var currentJwtToken = this.parseJwt(localStorage.deviceHiveToken);
-            var expirationTokenTime = currentJwtToken.payload.expiration;
+            var expirationTokenTime = currentJwtToken.payload.e;
             var currentTime = (new Date()).valueOf();
 
             var msDateDiff = expirationTokenTime - currentTime;
@@ -104,7 +104,54 @@ _.extend(app, {
             return jwt_decode(token);
         }
     },
+    formatPayload: function (sourcePayload) {
+        var names = {
+            "u": "userId",
+            "a": "actions",
+            "n": "networkIds",
+            "d": "deviceIds",
+            "e": "expiration",
+            "t": "tokenType"
+        };
+
+        var actions = {
+            0 : "*",
+            1 : "None",
+            2 : "GetNetwork",
+            3 : "GetDevice",
+            4 : "GetDeviceNotification",
+            5 : "GetDeviceCommand",
+            6 :"RegisterDevice",
+            7 : "CreateDeviceCommand",
+            8 : "UpdateDeviceCommand",
+            9 : "CreateDeviceNotification",
+            10 : "GetCurrentUser",
+            11 : "UpdateCurrentUser",
+            12 : "ManageUser",
+            13 : "ManageConfiguration",
+            14 : "ManageNetwork",
+            15 : "ManageToken"
+        };
+
+        return Object.keys(names).reduce(function(result, key) {
+            if(key === "a"){
+                result[names[key]] = sourcePayload.a.map(function (value) {
+                    return actions[value]
+                })
+            } else{
+                if(key === "t"){
+                    result[names[key]] = sourcePayload.t ? "ACCESS" : "REFRESH"
+                }
+                result[names[key]] = sourcePayload[key];
+            }
+            return result;
+        }, {});
+    },
+    isNumeric: function(num){
+        return !isNaN(num)
+    },
     isJson: function(str) {
+        if(app.isNumeric(str)) return false;
         try {
             JSON.parse(str);
         } catch (e) {
@@ -119,7 +166,7 @@ _.extend(app, {
     isAdmin: function(token) {
         if (token) {
             var userData = app.parseJwt(token);
-            return (userData.payload.actions[0] === '*');
+            return (userData.payload.a[0] === '*');
         }
     },
     // checks whether app.User has access to specified role
@@ -225,8 +272,9 @@ app.bind("login", function (options) {
                     if (!this.userData) {
                         this.userData = app.parseJwt(localStorage.deviceHiveToken);
                     }
-                    this.userData.payload.expiration = null;
-                    JWTTokenModel.generateDeviceJwtTokens(this.userData.payload, function(tokens) {
+                    var extendedPayload = app.formatPayload(this.userData.payload);
+                    extendedPayload.expiration = null;
+                    JWTTokenModel.generateDeviceJwtTokens(extendedPayload, function(tokens) {
                         localStorage.deviceHiveRefreshToken = tokens.refreshToken;
                     });
                 }
