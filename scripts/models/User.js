@@ -20,7 +20,7 @@ app.Models.User = Backbone.AuthModel.extend({
     urlRoot: function () { return app.config.restEndpoint + "/user"; },
     urlCurrent: function () { return app.config.restEndpoint + "/user/current"; },
     error: function(e) {console.log('User error %o', e)},
-    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: []},
+    defaults: { login: "", status: app.Enums.UserStatus.Active, role: app.Enums.UserRole.Administrator, networks: [], deviceTypes: []},
     getters: {
         networksCollection: function () {
             if (this.networksColl == null)
@@ -29,6 +29,14 @@ app.Models.User = Backbone.AuthModel.extend({
                 }));
 
             return this.networksColl;
+        },
+        deviceTypesCollection: function () {
+            if (this.deviceTypesColl == null)
+                this.deviceTypesColl = new app.Models.DeviceTypesCollection(_.map(this.get("deviceTypes"), function (typeObj) {
+                    return new app.Models.DeviceType(typeObj);
+                }));
+
+            return this.deviceTypesColl;
         }
     },
     // override read method to get current user for empty model
@@ -53,6 +61,20 @@ app.Models.User = Backbone.AuthModel.extend({
         }
         );
     },
+    addDeviceType: function (deviceType) {
+        var connector = new app.Models.UserInDeviceType({ UserId: this.get("id"), DeviceTypeId: deviceType.get("id") });
+        var that = this;
+        connector.save(null, {
+                success: function () {
+                    that.get("deviceTypesCollection").add(deviceType);
+                },
+                error: function (model, response) {
+                    app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                },
+                type: "PUT"
+            }
+        );
+    },
     //remove connector from server and remove network record from appropriate collection(just to keep views in sync)
     removeNetwork: function (networkId) {
         var connector = new app.Models.UserInNetwork({ UserId: this.get("id"), NetworkId: networkId });
@@ -67,6 +89,21 @@ app.Models.User = Backbone.AuthModel.extend({
                 }
             });
         } 
+        });
+    },
+    removeDeviceType: function (deviceTypeId) {
+        var connector = new app.Models.UserInDeviceType({ UserId: this.get("id"), DeviceTypeId: deviceTypeId });
+        var that = this;
+        connector.fetch({ success: function (fetchedModel) {
+            connector.destroy({
+                success: function (model) {
+                    that.get("deviceTypesCollection").remove(deviceTypeId);
+                },
+                error: function (model, response) {
+                    app.vent.trigger("notification", app.Enums.NotificationType.Error, response);
+                }
+            });
+        }
         });
     },
     disableHints: function() {
