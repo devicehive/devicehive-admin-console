@@ -103,14 +103,14 @@ app.module("Modules.Devices", function (users, app) {
     var initLists = function (success) {
         app.getCollection("NetworksCollection").done(function (res) {
             networksCollection = res;
-            if (_.isFunction(success))
-                success();
+
+            app.getCollection("DeviceTypesCollection").done(function (res) {
+                deviceTypesCollection = res;
+                if (_.isFunction(success))
+                    success();
+            });
         });
-        app.getCollection("DeviceTypesCollection").done(function (res) {
-            deviceTypesCollection = res;
-            if (_.isFunction(success))
-                success();
-        });
+
     };
 
     function devices_show() {

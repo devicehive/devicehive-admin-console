@@ -89,7 +89,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find(".new-value.data").val();
         var netwId = this.$el.find(".new-value.network").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
-        var devTypeId = this.$el.find(".new-value.deviceType").val();
+        var devTypeId = this.$el.find(".new-value.device-type").val();
         var deviceType = (devTypeId == 0) ? null : this.deviceTypesList.find(function (type) { return type.id == devTypeId; }).toJSON({ escape: true });
 
         if((data.length > 0) && !app.isJson(data)) {
