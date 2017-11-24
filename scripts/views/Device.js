@@ -26,6 +26,7 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
     initialize: function (options) {
         //lists are necessary to render the select boxes throught editing
         this.networksList = options.networks;
+        this.deviceTypesList = options.deviceTypes;
         this.classesList = options.classes;
         this.classEditable = options.classEditable;
     },
@@ -49,9 +50,18 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             base["network"] = this.networksList.find(function (net) { return net.id == base.networkId; }).toJSON({escape: true});
         }
 
+        if (base.deviceTypeId == null) {
+            base["deviceType"] = { id: 0, name: "---No device type---" };
+        } else {
+            base["deviceType"] = this.deviceTypesList.find(function (type) { return type.id == base.deviceTypeId; }).toJSON({escape: true});
+        }
+
 
         base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
+
+        base.deviceTypes = [];
+        base.deviceTypes = base.deviceTypes.concat(this.deviceTypesList.toJSON({ escape: true }));
 
         base.classEditable = this.classEditable;
         base.classes = base.classEditable ? this.classesList.toJSON({ escape: true }) : [];
@@ -79,6 +89,8 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find(".new-value.data").val();
         var netwId = this.$el.find(".new-value.network").val();
         var network = (netwId == 0) ? null : this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
+        var devTypeId = this.$el.find(".new-value.deviceType").val();
+        var deviceType = (devTypeId == 0) ? null : this.deviceTypesList.find(function (type) { return type.id == devTypeId; }).toJSON({ escape: true });
 
         if((data.length > 0) && !app.isJson(data)) {
             this.$el.find('#data-format-error').show();
@@ -92,6 +104,8 @@ app.Views.Device = Backbone.Marionette.ItemView.extend({
             status: this.$el.find(".new-value.status").val(),
             network: network,
             networkId: netwId,
+            deviceType: deviceType,
+            deviceTypeId: devTypeId,
             data: (data.length > 0) ? JSON.parse(data) : null,
             isBlocked: this.$el.find('select.new-value[name=isBlocked]').val() == "1" ? true : false
         };

@@ -64,6 +64,20 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-lg-3 control-label">Device Type:</label>
+                    <div class="col-lg-9">
+                        <div class="device-value form-static-text"><%= deviceType.name%></div>
+                        <select class="new-value device-type form-control">
+                            <% _.each(deviceTypes,function(net) {
+                                if(net.id == deviceType.id){ %>
+                            <option value="<%= net.id %>" selected="selected"> <%= net.name %> </option>
+                            <%}else{ %>
+                                    <option value="<%= net.id %>"> <%= net.name %> </option>
+                            <%}}); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-lg-3 control-label">Data:</label>
                     <div class="col-lg-9">
                         <div class="device-value form-static-text"><%= data%></div>
