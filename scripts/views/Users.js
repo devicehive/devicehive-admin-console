@@ -21,6 +21,7 @@ app.Views.UserListItem = Backbone.Marionette.ItemView.extend({
     tagName: "tr",
     triggers: {
         "click .networks": "networksClicked",
+        "click .device-types": "deviceTypesClicked",
         "click .edit": "editClicked",
         "click .delete": "deleteClicked"
     },
