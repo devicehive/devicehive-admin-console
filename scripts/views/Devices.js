@@ -33,6 +33,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         }, this);
 
         this.networksList = options.networks;
+        this.deviceTypesList = options.deviceTypes;
         this.classesList = options.classes;
         this.classEditable = options.classEditable;
     },
@@ -63,6 +64,7 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
         var name = this.$el.find(".new-device-name").val();
         var data = this.$el.find(".new-device-data").val();
         var netwId = this.$el.find(".new-device-network :selected").val();
+        var devTypeId = this.$el.find(".new-device-device-type :selected").val();
         var status = this.$el.find(".new-device-status").val();
         var isBlocked = this.$el.find(".new-isBlocked-state").val();
 
@@ -84,12 +86,20 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             var network = this.networksList.find(function (net) { return net.id == netwId; }).toJSON({ escape: true });
         }
 
+        if (!devTypeId  || devTypeId == 0) {
+            return;
+        } else {
+            var deviceType = this.deviceTypesList.find(function (type) { return type.id == devTypeId; }).toJSON({ escape: true });
+        }
+
         var changes = {
             name: name,
             data: (data.length > 0) ? JSON.parse(data) : null,
             status: status,
             networkId: netwId,
             network: network,
+            deviceTypeId: devTypeId,
+            deviceType: deviceType,
             isBlocked: isBlocked
         };
 
@@ -151,12 +161,21 @@ app.Views.DeviceListItem = Backbone.Marionette.ItemView.extend({
             base["network"] = this.networksList.find(function (net) {return net.id == base.networkId;}).toJSON({escape: true});
         }
 
+        if (base.deviceTypeId == null) {
+            base["deviceType"] = { id: 0, name: "" };
+        } else {
+            base["deviceType"] = this.deviceTypesList.find(function (type) {return type.id == base.deviceTypeId;}).toJSON({escape: true});
+        }
+
         if (base["isBlocked"] && (base["isBlocked"].length > 0)) {
             base["isBlocked"] = (base["isBlocked"] == "false") ? false : true;
         }
 
         base.networks = [];
         base.networks = base.networks.concat(this.networksList.toJSON({ escape: true }));
+
+        base.deviceTypes = [];
+        base.deviceTypes = base.deviceTypes.concat(this.deviceTypesList.toJSON({ escape: true }));
 
         base.classEditable = this.classEditable;
         base.classes = base.classEditable ? this.classesList.toJSON({ escape: true }) : [];
@@ -174,6 +193,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     itemViewOptions: function () {
         return {
             networks: this.networks,
+            deviceTypes: this.deviceTypes,
             classes: this.classes,
             classEditable: this.classEditable
         };
@@ -191,6 +211,7 @@ app.Views.Devices = Backbone.Marionette.CompositeView.extend({
     initialize: function (options) {
         this.userData = app.parseJwt(localStorage.deviceHiveToken);
         this.networks = options.networks;
+        this.deviceTypes = options.deviceTypes;
         this.classes = options.classes;
         this.classEditable = options.classEditable;
     },

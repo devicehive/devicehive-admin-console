@@ -20,6 +20,7 @@ app.module("Modules.Devices", function (users, app) {
 
     var devicesCollection;
     var networksCollection;
+    var deviceTypesCollection;
 
     var devicesView;
     var detailDeviceView;
@@ -40,7 +41,8 @@ app.module("Modules.Devices", function (users, app) {
                     if (devicesCollection != null) {
                         devicesView = new app.Views.Devices({
                             collection: devicesCollection,
-                            networks: networksCollection
+                            networks: networksCollection,
+                            deviceTypes: deviceTypesCollection
                         });
 
                         devicesView.on("itemview:showDetail", function(itemView) {
@@ -73,7 +75,8 @@ app.module("Modules.Devices", function (users, app) {
                     success: function () {
                         detailDeviceView = new app.Views.Device({
                             model: selectedDevice,
-                            networks: networksCollection
+                            networks: networksCollection,
+                            deviceTypes: deviceTypesCollection
                         });
 
                         app.Regions.topWorkArea.show(detailDeviceView);
@@ -100,9 +103,14 @@ app.module("Modules.Devices", function (users, app) {
     var initLists = function (success) {
         app.getCollection("NetworksCollection").done(function (res) {
             networksCollection = res;
-            if (_.isFunction(success))
-                success();
+
+            app.getCollection("DeviceTypesCollection").done(function (res) {
+                deviceTypesCollection = res;
+                if (_.isFunction(success))
+                    success();
+            });
         });
+
     };
 
     function devices_show() {

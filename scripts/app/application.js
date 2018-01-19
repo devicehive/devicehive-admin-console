@@ -109,7 +109,7 @@ _.extend(app, {
             "u": "userId",
             "a": "actions",
             "n": "networkIds",
-            "d": "deviceIds",
+            "dt": "deviceTypeIds",
             "e": "expiration",
             "t": "tokenType"
         };
@@ -130,7 +130,9 @@ _.extend(app, {
             12 : "ManageUser",
             13 : "ManageConfiguration",
             14 : "ManageNetwork",
-            15 : "ManageToken"
+            15 : "ManageToken",
+            16 : "GetDeviceType",
+            17 : "ManageDeviceType"
         };
 
         return Object.keys(names).reduce(function(result, key) {
